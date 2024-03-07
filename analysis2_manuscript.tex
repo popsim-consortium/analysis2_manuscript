@@ -1,0 +1,176 @@
+\documentclass[hidelinks]{article}
+\usepackage[letterpaper,margin=1.0in]{geometry}
+\usepackage[utf8]{inputenc}
+\pagenumbering{arabic}
+\usepackage{authblk}
+\usepackage{graphicx}
+\usepackage[singlelinecheck=false]{caption} % singlelinecheck makes single line caption left aligned instead of centered
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage[round]{natbib}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+\usepackage{booktabs}
+% hyperlinks
+\usepackage{hyperref}
+
+\usepackage{xspace}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+
+\pagestyle{fancy}
+\fancyhead[R]{\textbf{Expanding \stdpopsim}}
+
+% for highlighting text
+\usepackage{xcolor}
+\usepackage{soul}
+
+% bibliography
+\usepackage[round]{natbib}   % omit 'round' option if you prefer square brackets
+\bibliographystyle{plainnat}
+
+
+
+\newcommand{\Stdpopsim}{\texttt{Stdpopsim}\xspace}
+\newcommand{\stdpopsim}{\texttt{stdpopsim}\xspace}
+
+%commands to format figure and table references in the supplement
+\newcommand{\beginsupplement}{%
+        \fancyhead[L]{Supplemental Material}
+        \setcounter{table}{0}
+        \renewcommand{\thetable}{S\arabic{table}}%
+        \setcounter{figure}{0}
+        \renewcommand{\thefigure}{S\arabic{figure}}%
+     }
+\newcommand{\stopsupplement}{%
+        \setcounter{table}{0}
+        \renewcommand{\thetable}{\arabic{table}}%
+        \setcounter{figure}{0}
+        \renewcommand{\thefigure}{\arabic{figure}}%
+     }
+
+\makeatletter
+\newcommand{\labelname}[1]{\def\@currentlabelname{#1}}
+\makeatother
+
+% Avoid pandoc bug when there are lists in the body.
+\providecommand{\tightlist}{%
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\title{Adding selection to \stdpopsim: oh how the tables have turned}
+
+
+% \author[1,+]{M. Elise Lauterbur}
+% \author[2,*]{Maria Izabel A. Cavassim}
+% \author[3,*]{Ariella L. Gladstein}
+% \author[4,*]{Graham Gower}
+% \author[5*]{Nathaniel S. Pope}
+% \author[6,*]{Georgia Tsambos}
+% \author[5,7]{Jeff Adrion}
+% \author[5]{Saurabh Belsare}
+% \author[8]{Arjun Biddanda}
+% \author[5]{Victoria Caudill}
+% \author[9]{Jean Cury}
+% \author[10]{Ignacio Echevarria}
+% \author[11]{Benjamin C. Haller}
+% \author[12,13]{Ahmed R. Hasan}
+% \author[14,15]{Xin Huang}
+% \author[16]{Leonardo Nicola Martin Iasi}
+% \author[17]{Ekaterina Noskova}
+% \author[18]{Jana Obšteter}
+% \author[19]{Vitor Antonio Corrêa Pavinato}
+% \author[20,21]{Alice Pearson}
+% \author[22,23]{David Peede}
+% \author[24]{Manolo F. Perez}
+% \author[5]{Murillo F. Rodrigues}
+% \author[5]{Chris C. R. Smith}
+% \author[25]{Jeffrey P. Spence}
+% \author[5]{Anastasia Teterina}
+% \author[5]{Silas Tittes}
+% \author[26]{Per Unneberg}
+% \author[27]{Juan Manuel Vazquez}
+% \author[28]{Ryan K. Waples}
+% \author[29]{Anthony Wilder Wohns}
+% \author[30]{Yan Wong}
+% \author[31]{Franz Baumdicker}
+% \author[32]{Reed A. Cartwright}
+% \author[33]{Gregor Gorjanc}
+% \author[34]{Ryan N. Gutenkunst}
+% \author[30]{Jerome Kelleher}
+% \author[5]{Andrew D. Kern}
+% \author[35]{Aaron P. Ragsdale}
+% \author[5,36]{Peter L. Ralph}
+% \author[37]{Daniel R. Schrider}
+% \author[38,+]{Ilan Gronau}
+
+
+% \affil[*]{\small{These authors contributed equally to the paper.}}
+% \affil[+]{\small{Corresponding authors: lauterbur@gmail.com ; ilan.gronau@runi.ac.il.}}
+% \affil[1]{\small{Department of Ecology and Evolutionary Biology, University of Arizona, Tucson AZ 85719, USA}}
+% \affil[2]{\small{Department of Ecology and Evolutionary Biology, University of California, Los Angeles, Los Angeles CA, USA}}
+% \affil[3]{\small{Embark Veterinary, Inc., Boston MA 02111, USA}}
+% \affil[4]{\small{Section for Molecular Ecology and Evolution, Globe Institute, University of Copenhagen, Denmark}}
+% \affil[5]{\small{Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA}}
+% \affil[6]{\small{School of Mathematics and Statistics, University of Melbourne, Australia}}
+% \affil[7]{\small{AncestryDNA, San Francisco CA 94107, USA}}
+% \affil[8]{\small{54Gene, Inc., Washington DC 20005, USA}}
+% \affil[9]{\small{Université Paris-Saclay, CNRS, INRIA, Laboratoire Interdisciplinaire des Sciences du Numérique, UMR 9015 Orsay, France}}
+% \affil[10]{\small{School of Life Sciences, University of Glasgow, Glasgow, UK}}
+% \affil[11]{\small{Department of Computational Biology, Cornell University, Ithaca NY, USA}}
+% \affil[12]{\small{Department of Cell and Systems Biology, University of Toronto, Toronto ON, Canada}}
+% \affil[13]{\small{Department of Biology, University of Toronto Mississauga, Mississauga ON, Canada}}
+% \affil[14]{\small{Department of Evolutionary Anthropology, University of Vienna, Vienna, Austria}}
+% \affil[15]{\small{Human Evolution and Archaeological Sciences (HEAS), University of Vienna, Vienna, Austria}}
+% \affil[16]{\small{Department of Evolutionary Genetics, Max Planck Institute for Evolutionary Anthropology, Leipzig, Germany}}
+% \affil[17]{\small{Computer Technologies Laboratory, ITMO University, St Petersburg, Russia}}
+% \affil[18]{\small{Agricultural Institute of Slovenia, Department of Animal Science, Ljubljana, Slovenia}}
+% \affil[19]{\small{Entomology Department, The Ohio State University, Wooster OH, USA}}
+% \affil[20]{\small{Department of Genetics, University of Cambridge, Cambridge, UK}}
+% \affil[21]{\small{Department of Zoology, University of Cambridge, Cambridge, UK}}
+% \affil[22]{\small{Department of Ecology, Evolution, and Organismal Biology, Brown University, Providence RI, USA}}
+% \affil[23]{\small{Center for Computational Molecular Biology, Brown University, Providence RI, USA}}
+% \affil[24]{\small{Department of Genetics and Evolution, Federal University of Sao Carlos, Sao Carlos 13565905, Brazil}}
+% \affil[25]{\small{Department of Genetics, Stanford University School of Medicine, Stanford CA 94305, USA}}
+% \affil[26]{\small{Department of Cell and Molecular Biology, National Bioinformatics Infrastructure Sweden, Science for Life Laboratory, Uppsala University, Husargatan 3, SE-752 37 Uppsala, Sweden}}
+% \affil[27]{\small{Department of Integrative Biology, University of California, Berkeley, Berkeley CA, USA}}
+% \affil[28]{\small{Department of Biostatistics, University of Washington, Seattle WA, USA}}
+% \affil[29]{\small{Broad Institute of MIT and Harvard, Cambridge MA 02142, USA}}
+% \affil[30]{\small{Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, Oxford OX3 7LF, UK}}
+% \affil[31]{\small{Cluster of Excellence - Controlling Microbes to Fight Infections, Eberhard Karls Universität Tübingen, Tübingen, Baden-Württemberg, Germany}}
+% \affil[32]{\small{School of Life Sciences and The Biodesign Institute, Arizona State University, Tempe AZ, USA}}
+% \affil[33]{\small{The Roslin Institute and Royal (Dick) School of Veterinary Studies, University of Edinburgh, Edinburgh EH25 9RG, UK}}
+% \affil[34]{\small{Department of Molecular and Cellular Biology, University of Arizona, Tucson AZ 85721, USA}}
+% \affil[35]{\small{Department of Integrative Biology, University of Wisconsin-Madison, Madison WI, USA}}
+% \affil[36]{\small{Department of Mathematics, University of Oregon, Eugene OR 97402, USA}}
+% \affil[37]{\small{Department of Genetics, University of North Carolina at Chapel Hill, Chapel Hill NC 27599, USA}}
+% \affil[38]{\small{Efi Arazi School of Computer Science, Reichman University, Herzliya, Israel}}
+
+\date{\small{\today{}}}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Abstract}
+
+\section*{Introduction}
+    \label{introduction}
+
+\section*{Additions to stdpopsim}
+    \label{additions}
+
+
+\section*{Conclusion}
+    \label{conclusion}
+
+\section*{Data availability}\label{data_availability}
+
+
+\section*{Acknowledgments}\label{acknowledgements}
+
+\section*{Funding}
+    \label{funding}
+
+%\bibliography{}
+\end{document}
