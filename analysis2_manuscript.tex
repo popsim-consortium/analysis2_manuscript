@@ -156,45 +156,88 @@
 
 \section*{Introduction}
     \label{introduction}
-As the complexity of population genetic datasets has increased,
-simulation has become a critical tool for interpretation, 
-analysis, and exploration of realistic evolutionary models.
-Simulation in population genetics has a long history 
-including both backward in time coalescent simulations
-\citep{kingman1982genealogy,hudson1983testing, hudson1990gene}
-and forward in time simulations of complex demography and selection
-\citep[e.g.,][]{gillespie1984molecular,thornton2014c++, haller2019slim}.
-The development of simulation tools has been driven by the need to
-understand the effects of complex evolutionary processes on genetic
-variation, to provide a null model for hypothesis testing, to
-to explore the power and limitations of statistical methods, and 
-increasingly to provide a basis for machine learning and other
-simulation-based inference methods.
+    % natural selection
+    Natural selection is a fundamental force in evolution, shaping the
+    genetic diversity of populations and driving the adaptation of
+    species to their environments. The effects of natural selection
+    on genetic variation are complex, and can be difficult to disentangle
+    from other evolutionary processes such as mutation, recombination,
+    and genetic drift. The impact of selection on genetic variation
+    is often studied using population genetic models, which can be
+    used to generate predictions about the patterns of genetic variation
 
-A lingering challenge with simulation in population genetics has been
-reproducibility and the ability to share and compare results among 
-researchers. This challenge has been addressed in part by the development
-of community resources for sharing and distributing simulation software
-via the \stdpopsim project \citep{adrion2020community}. \stdpopsim
-provides a standardized interface for accessing a wide range of
-population genetic models, and has begun to be be widely adopted by the community.
-While that is so, the current version of \stdpopsim does not include
-models of selection, which is a major limitation for many applications
-of population genetic simulation. In particular, modeling selection
-through simulation is critical for understanding the processes such
-as adaptation, the effects of selective sweeps, and the impact of
-background selection on genetic diversity. Ideally, one would like
-to have a single, unified framework for simulating both neutral and
-non-neutral evolutionary processes, and to be able to compare the
-results of these simulations to empirical data in a manner that is
-accessible to a wide range of researchers and highly reproducible. 
-Further the framework should include the complex realities of 
-genomes, including heterogenous recombination rates, 
-variation in the density of functional elements, and relevant
-population size histories. 
+    % simulation
+    As the complexity of population genetic datasets has increased,
+    simulation has become a critical tool for interpretation, 
+    analysis, and exploration of realistic evolutionary models.
+    Simulation in population genetics has a long history 
+    including both backward in time coalescent simulations
+    \citep{kingman1982genealogy,hudson1983testing, hudson1990gene}
+    and forward in time simulations of complex demography and selection
+    \citep[e.g.,][]{gillespie1984molecular,thornton2014c++, haller2019slim}.
+    The development of simulation tools has been driven by the need to
+    understand the effects of complex evolutionary processes on genetic
+    variation, to provide a null model for hypothesis testing, to
+    to explore the power and limitations of statistical methods, and 
+    increasingly to provide a basis for machine learning and other
+    simulation-based inference methods.
+
+    % stdpopsim
+    A lingering challenge with simulation in population genetics has been
+    reproducibility and the ability to share and compare results among 
+    researchers. This challenge has been addressed in part by the development
+    of community resources for sharing and distributing simulation software
+    via the \stdpopsim project \citep{adrion2020community}. \stdpopsim
+    provides a standardized interface for accessing a wide range of
+    population genetic models, and has begun to be be widely adopted by the community.
+    While that is so, the current version of \stdpopsim does not include
+    models of selection, which is a major limitation for many applications
+    of population genetic simulation. In particular, modeling selection
+    through simulation is critical for understanding the processes such
+    as adaptation, the effects of selective sweeps, and the impact of
+    background selection on genetic diversity. Ideally, one would like
+    to have a single, unified framework for simulating both neutral and
+    non-neutral evolutionary processes, and to be able to compare the
+    results of these simulations to empirical data in a manner that is
+    accessible to a wide range of researchers and highly reproducible. 
+    Further the framework should include the complex realities of 
+    genomes, including heterogenous recombination rates, 
+    variation in the density of functional elements, and relevant
+    population size histories. 
 
 
+\section*{outline}
+    \label{outline}
+    \begin{enumerate}
+        \item Single-population demographic inference methods
+        \begin{enumerate}
+            \item mscm2
+            \item stairwaiplot
+            \item GONE
+            \item SMC++
+        \end{enumerate}
+        \item Multi-population demographic inference methods
+        \begin{enumerate}
+            \item dadi
+            \item fastsimcoal
+            \item momi2
+        \end{enumerate}
+        \item DFE inference methods
+        \begin{enumerate}
+            \item dadi
+            \item polyDFE
+            \item DFE-alpha
+            \item GRAPES
+        \end{enumerate} 
+        \item sweeps
+        \begin{enumerate}
+            \item compare effect of BGS on sweep detection
+            \item compare power in different pops
+            \item compare methods
+        \end{enumerate}
+    \end{enumerate}
 
+    
 
 
 
