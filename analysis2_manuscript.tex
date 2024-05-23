@@ -162,13 +162,23 @@
     species to their environments. The effects of natural selection
     on genetic variation are complex, and can be difficult to disentangle
     from other evolutionary processes such as mutation, recombination,
-    and genetic drift. The impact of selection on genetic variation
-    is often studied using population genetic models, which can be
-    used to generate predictions about the patterns of genetic variation
+    and genetic drift \cite[e.g.,][]{gillespie1991causes}.
+    For instance changes in population size can lead to fluctuations
+    in genetic diversity across a recombining chromosome 
+    that can mimic the effects of selection \citep{simonsen1995properties, barton1998effect},
+    and lead to spurious inferences about the strength and targets of genetic adaptation
+    \cite{simonsen1995properties,akey2004population,nielsen2005genomic}.
+    In turn selection can confound our ability to infer demographic 
+    history from allele frequencies \citep{ewing2016consequences} and
+    estimates of inverse coalescent rate \citep{schrider2016effects}.
+    Thus it is imperative to joingly account for the effects of selection
+    and demography when inferring evolutionary history from genetic data
+    however this is a challenging task from a modeling perspective.
 
     % simulation
-    As the complexity of population genetic datasets has increased,
-    simulation has become a critical tool for interpretation, 
+    To meet this need the field of population genetics
+    has turned to simulation.
+    Simulation has become a critical tool for interpretation, 
     analysis, and exploration of realistic evolutionary models.
     Simulation in population genetics has a long history 
     including both backward in time coalescent simulations
@@ -177,10 +187,24 @@
     \citep[e.g.,][]{gillespie1984molecular,thornton2014c++, haller2019slim}.
     The development of simulation tools has been driven by the need to
     understand the effects of complex evolutionary processes on genetic
-    variation, to provide a null model for hypothesis testing, to
-    to explore the power and limitations of statistical methods, and 
-    increasingly to provide a basis for machine learning and other
-    simulation-based inference methods.
+    variation \citep[e.g.,][]{galloway2020few}, to provide a null model for hypothesis testing
+    \citep[e.g.,][]{hudson1992statistical}, to
+    to explore the power and limitations of statistical methods \cite[e.g.,]{przeworski2002signature},
+    and increasingly to provide a basis for machine learning and other
+    simulation-based inference methods \citep[e.g.,]{kern2018diplos}.
+    While this is so, joint simulation of complex demography and selection
+    is challenging, and requires a deep understanding of the underlying
+    evolutionary processes, as well as a number of parameter choices including
+    the strength of selection, the distribution of fitness effects, and the
+    recombination rate, as well as a parameterized model of demography.
+    This is dounting task for many researchers, and can be a barrier to
+    the adoption of simulation-based methods in population genetics.
+    Further, sharing and comparing simulation results among studies can 
+    itself be challenging, as different simulation tools may use different
+    models and parameterizations, and may not be directly comparable.
+    This is a major limitation for the field, as it can make it difficult
+    to assess the robustness of results, and to compare the results of
+    different studies.
 
     % stdpopsim
     A lingering challenge with simulation in population genetics has been
