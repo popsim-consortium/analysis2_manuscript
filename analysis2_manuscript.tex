@@ -209,26 +209,99 @@
     % stdpopsim
     A lingering challenge with simulation in population genetics has been
     reproducibility and the ability to share and compare results among 
-    researchers. This challenge has been addressed in part by the development
+    researchers \citep[][e.g.,]{ragsdale2020lessons}.
+    This challenge has been addressed in part by the development
     of community resources for sharing and distributing simulation software
     via the \stdpopsim project \citep{adrion2020community}. \stdpopsim
     provides a standardized interface for accessing a wide range of
-    population genetic models, and has begun to be be widely adopted by the community.
+    population genetic models, and has begun to be be widely adopted by the community. %maybe add citations here?
     While that is so, the current version of \stdpopsim does not include
-    models of selection, which is a major limitation for many applications
-    of population genetic simulation. In particular, modeling selection
+    models of selection, which is a major limitation for more empirical
+    applications of population genetic simulation. In particular, modeling selection
     through simulation is critical for understanding the processes such
     as adaptation, the effects of selective sweeps, and the impact of
     background selection on genetic diversity. Ideally, one would like
     to have a single, unified framework for simulating both neutral and
     non-neutral evolutionary processes, and to be able to compare the
     results of these simulations to empirical data in a manner that is
-    accessible to a wide range of researchers and highly reproducible. 
+    both accessible to a wide range of researchers and highly reproducible. 
     Further the framework should include the complex realities of 
     genomes, including heterogenous recombination rates, 
     variation in the density of functional elements, and relevant
     population size histories. 
 
+    % goals
+    In this manuscript we provide an overview of a major new addition
+    to \stdpopsim-- the inclusion of models of selection.
+    We begin by describing the models of selection that we have implemented,
+    as well as the parameter choices that are available to the user.
+    This includes models of background selection, selective sweeps, and
+    models of the distribution of fitness effects.
+    Further we describe how these models can be combined with genomic
+    annotations that are specific to a given species available
+    through the \stdpopsim API, and combined with a parameterized model of
+    demography and recombination to provide a complete simulation of
+    genetic variation in a population.
+    We then provide a series of examples of how these models can be used
+    to benchmark and compare the performance of different methods for
+    inferring demographic history, selection, and the distribution of
+    fitness effects from genetic data. 
+
+\section*{Implementing Selection in \stdpopsim}
+    \label{selection}
+
+    % implementing selection
+    \stdpopsim previously provided a wide range of models of neutral
+    demographic history from roughly two dozen species \citep{lauterbur2023expanding}.
+    This was accomplished through the use of a standardized interface
+    and data structure that allowed for curated addition of new
+    species and models, and relied on backend simulation engines,
+    including msprime \citep{Baumdicker2022} and SLiM \citep{haller2019slim},
+    for efficient simulation of genetic variation.
+    To extend this to include models of selection, 
+    we introduce an important new class representing a specfic distribution of fitness effects
+    to the \stdpopsim API, the \texttt{DFE} class. 
+    This class provides an interface for specifying
+    a distribution of the fitness effects of new mutations, and
+    is added to a \texttt{Contig} object to provide a description
+    of the fitness effects of mutations along a chromosome.
+    A \texttt{DFE} object can apply to a specific interval set of a chromosome,
+    and can be combined with other \texttt{DFE} objects to provide, 
+    a rich model of how selection may differ along a chromosome. 
+    Once specified a model of selection is then run in the same way
+    but currently is limited to using SLiM simulation engine, which
+    is probably the most flexible simulation engine for modeling selection currently available.
+    
+
+    \begin{figure}[t!]
+        \centering
+        \includegraphics[width=0.2\textwidth]{figures/schematics/catalog.pdf}
+        \caption{
+        \label{fig:schematic}
+        A schematic of the \stdpopsim catalog for simulating genetic variation
+        in a population. The user specifies a species, a portion of the genome to simulate,
+        and optionally a genetic map, a model of demography, and a model of selection that 
+        itself is composed of a distribution of fitness effects (DFE) and a set of functional
+        annotations.
+        }
+    \end{figure}
+
+    As with other \stdpopsim models, we aim to hew as closely as possible
+    to realistic genomes, and provide public annotations of specices-specific functional
+    elements that can be used along with a \texttt{DFE} object to
+    readily provide realistic model of selection for a specific genome and set of
+    populations. A schematic of the \stdpopsim catalog is shown in Figure \ref{fig:schematic}.
+    From a users perspective, one can specify a species, a portion of the genome to simulate,
+    a genetic map if available, a model of demography, and a model of selection that is
+    composed of a set of annotations and a \texttt{DFE} object. 
+
+    While the vast majority of published DFE estimates are based on a limited number of species,
+    in particular humans and \textit{Drosophila}, these are mix and match with the other species
+    in the catalog. For instance, one could simulate a butterfly species with a Gamma DFE originally
+    estimated from humans, or a human population with a DFE estimated from \textit{Drosophila}.
+
+    % current numbers of DFEs / species / etc
+    the \stdpopsim 
 
 \section*{outline}
     \label{outline}
@@ -266,7 +339,7 @@
 
 
 
-\section*{Additions to stdpopsim}
+\section*{Example applications}
     \label{additions}
 
 
