@@ -271,14 +271,34 @@
     Once specified a model of selection is then run in the same way
     but currently is limited to using SLiM simulation engine, which
     is probably the most flexible simulation engine for modeling selection currently available.
+    
 
+    \begin{figure}[t!]
+        \centering
+        \includegraphics[width=0.2\textwidth]{figures/schematics/catalog.pdf}
+        \caption{
+        \label{fig:schematic}
+        A schematic of the \stdpopsim catalog for simulating genetic variation
+        in a population. The user specifies a species, a portion of the genome to simulate,
+        and optionally a genetic map, a model of demography, and a model of selection that 
+        itself is composed of a distribution of fitness effects (DFE) and a set of functional
+        annotations.
+        }
+    \end{figure}
 
     As with other \stdpopsim models, we aim to hew as closely as possible
     to realistic genomes, and provide public annotations of specices-specific functional
     elements that can be used along with a \texttt{DFE} object to
     readily provide realistic model of selection for a specific genome and set of
-    populations. 
-    % A figure here would be great to show how this works
+    populations. A schematic of the \stdpopsim catalog is shown in Figure \ref{fig:schematic}.
+    From a users perspective, one can specify a species, a portion of the genome to simulate,
+    a genetic map if available, a model of demography, and a model of selection that is
+    composed of a set of annotations and a \texttt{DFE} object. 
+
+    While the vast majority of published DFE estimates are based on a limited number of species,
+    in particular humans and \textit{Drosophila}, these are mix and match with the other species
+    in the catalog. For instance, one could simulate a butterfly species with a Gamma DFE originally
+    estimated from humans, or a human population with a DFE estimated from \textit{Drosophila}.
 
     % current numbers of DFEs / species / etc
     the \stdpopsim 
@@ -319,7 +339,7 @@
 
 
 
-\section*{Additions to stdpopsim}
+\section*{Example applications}
     \label{additions}
 
 
