@@ -13,10 +13,11 @@
 \usepackage{booktabs}
 % hyperlinks
 \usepackage{hyperref}
-
+\usepackage{wrapfig}
 \usepackage{xspace}
 \usepackage{mathrsfs}
 \usepackage{graphicx}
+\usepackage{lipsum}
 
 \pagestyle{fancy}
 \fancyhead[R]{\textbf{Expanding \stdpopsim}}
@@ -272,20 +273,6 @@
     but currently is limited to using SLiM simulation engine, which
     is probably the most flexible simulation engine for modeling selection currently available.
     
-
-    \begin{figure}[t!]
-        \centering
-        \includegraphics[width=0.2\textwidth]{figures/schematics/catalog.pdf}
-        \caption{
-        \label{fig:schematic}
-        A schematic of the \stdpopsim catalog for simulating genetic variation
-        in a population. The user specifies a species, a portion of the genome to simulate,
-        and optionally a genetic map, a model of demography, and a model of selection that 
-        itself is composed of a distribution of fitness effects (DFE) and a set of functional
-        annotations.
-        }
-    \end{figure}
-
     As with other \stdpopsim models, we aim to hew as closely as possible
     to realistic genomes, and provide public annotations of specices-specific functional
     elements that can be used along with a \texttt{DFE} object to
@@ -295,44 +282,126 @@
     a genetic map if available, a model of demography, and a model of selection that is
     composed of a set of annotations and a \texttt{DFE} object. 
 
-    While the vast majority of published DFE estimates are based on a limited number of species,
-    in particular humans and \textit{Drosophila}, these are mix and match with the other species
+    The vast majority of published DFE estimates are based on a limited number of species,
+    so \stdpopsim currently has implemented published DFE from
+    four species: \textit{Arabidopsis thaleana}, \textit{Drosophila melanogaster},
+    humans, and the vaquita porpoise \textit{Phocoena sinus}.
+    While that is so, these DFEs can be mixed and matched with the other species
     in the catalog. For instance, one could simulate a butterfly species with a Gamma DFE originally
     estimated from humans, or a human population with a DFE estimated from \textit{Drosophila}.
+    Furthermore the user can specify a custom DFE, and provide their own annotations
+    of functional elements to simulate selection in a species for which we do not yet have 
+    a published DFE included in the catalog. This flexibility allows for a wide range of
+    models of selection to be simulated, and for the results of these simulations to be
+    compared to empirical data or used as a null model for hypothesis testing.
+
+    % sweep interface
+    In addition to the \texttt{DFE} class, we have also implemented a class (\texttt{stdpopsim.ext.selective\_sweep})
+    enables selective sweeps to be simulated in \stdpopsim.
+    This class augments a demographic model with an ``extended event''
+    which conditions on the introduction of a selected mutation at a given time and position
+    and with a given selection coefficient. Further the user can specify the minimum frequency
+    of the selected allele at the time of sampling. As these extended events are implemented
+    on top of the existing \stdpopsim API, they can be combined with other models of selection
+    and demography to provide a rich model of the combined effects of selection and demography
+    on genetic variation in a population.
 
     % current numbers of DFEs / species / etc
-    the \stdpopsim 
+    At this release the \stdpopsim catalog comprises 24 species (i.e. genome representations)
+    for which we have implemented XX demographic models, have XX genetic maps, and XX DFEs.
+    Additions to the catalog are ongoing -- we point the reader to our previously published 
+    report detailing this effort \citep{lauterbur2023expanding} and we welcome contributions from the community.
 
-\section*{outline}
-    \label{outline}
-    \begin{enumerate}
-        \item Single-population demographic inference methods
-        \begin{enumerate}
-            \item mscm2
-            \item stairwaiplot
-            \item GONE
-            \item SMC++
-        \end{enumerate}
-        \item Multi-population demographic inference methods
-        \begin{enumerate}
-            \item dadi
-            \item fastsimcoal
-            \item momi2
-        \end{enumerate}
-        \item DFE inference methods
-        \begin{enumerate}
-            \item dadi
-            \item polyDFE
-            \item DFE-alpha
-            \item GRAPES
-        \end{enumerate} 
-        \item sweeps
-        \begin{enumerate}
-            \item compare effect of BGS on sweep detection
-            \item compare power in different pops
-            \item compare methods
-        \end{enumerate}
-    \end{enumerate}
+    \begin{wrapfigure}[37]{l}{0.4\textwidth}
+        \vspace{-0.0cm}
+        \includegraphics[width=\linewidth]{figures/schematics/catalog.pdf}
+        \caption{\label{fig:schematic}
+        A schematic of the \stdpopsim catalog for simulating genetic variation
+        in a population. The user specifies a species, a portion of the genome to simulate,
+        and optionally a genetic map, a model of demography, and a model of selection that 
+        itself is composed of a distribution of fitness effects (DFE) and a set of functional
+        annotations.}
+    \end{wrapfigure}
+\hfill
+    
+\section*{Example Applications with Selection}
+In this section we provide a series of examples of how the new models of selection
+in \stdpopsim can be used to benchmark and compare the performance of different
+methods for inferring demographic history, selection, and the distribution of fitness
+effects from genetic data. We focus on three main areas: demographic inference in the 
+single and multi-population settings, inference of the distribution of fitness effects,
+and the detection of selective sweeps, particularly in the context of background selection.
+
+\section*{Inference of $N_e(t)$ in the context of selection}
+One of the most common applications of population genetic inference is to estimate
+the effective population size over time, $N_e(t)$, from genetic data. This can be done
+using a variety of methods, including the pairwise sequentially Markovian coalescent
+(PSMC) \citep{li2011inference}, through use of the site frequency spectrum (SFS),
+as well as through identity by decent information. 
+While that is so, it has been well described that selection, because of its effects on
+local and more global patterns of genetic variation, can drive estimates of $N_e(t)$
+further from true census population sizes simply because selection increases the 
+rate of coalescence in the genome. 
+
+Using \stdpopsim we can simulate genetic data under a model of selection and then 
+examine the performance of different methods for inferring $N_e(t)$ from these simulated 
+data. In Figure \ref{fig:1pop-human-demography} we show the results of such a benchmark
+where we have simulated genomes under a three-population model of human out of Africa (OOA) demography
+with and without background selection on exons. For this simulation we have used
+a genetic map from the 1000 Genomes Project along with a deleterious alleles DFE from \citep{huber2017determining}
+that acts on exonic positions defined from the HAVANA group release 104 for the human genome. 
+These simulations were then used to estimate $N_e(t)$ using four methods: 1) MSMC2 \citep{Schiffels2020}, 
+2)the stairway plot method \citep{liu2020stairway}, 3) GONE \citep{santiago2020recent}, and 4) SMC++ \citep{terhorst2017robust}.
+
+In Figure \ref{fig:1pop-human-demography} we show six panels, each of which shows the estimated $N_e(t)$
+from each independent population in the three-population model of human OOA demography (CEU, CHB, and YRI from left to right).
+The top row shows the results of simulations without background selection on exons, while the bottom row shows the results
+of simulations with a Gamma distributed DFE on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$
+in various colors for the four methods. Dotted lines on the bottom row are to visually reinforce that inference is done
+from a model with selection.  We see that all methods perform well in the absence of selection, but that the presence
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/HomSap/estimated_Ne_t_final}
+    \caption{
+    \label{fig:1pop-human-demography}
+    Performance of methods to infer human OOA model
+    with and without background selection on exons.
+    }
+\end{figure}
+
+\lipsum[20-25]
+
+% \section*{outline}
+%     \label{outline}
+%     \begin{enumerate}
+%         \item Single-population demographic inference methods
+%         \begin{enumerate}
+%             \item mscm2
+%             \item stairwaiplot
+%             \item GONE
+%             \item SMC++
+%         \end{enumerate}
+%         \item Multi-population demographic inference methods
+%         \begin{enumerate}
+%             \item dadi
+%             \item fastsimcoal
+%             \item momi2
+%         \end{enumerate}
+%         \item DFE inference methods
+%         \begin{enumerate}
+%             \item dadi
+%             \item polyDFE
+%             \item DFE-alpha
+%             \item GRAPES
+%         \end{enumerate} 
+%         \item sweeps
+%         \begin{enumerate}
+%             \item compare effect of BGS on sweep detection
+%             \item compare power in different pops
+%             \item compare methods
+%         \end{enumerate}
+%     \end{enumerate}
 
     
 
@@ -342,16 +411,6 @@
 \section*{Example applications}
     \label{additions}
 
-
-    \begin{figure}[ht]
-        \centering
-        \includegraphics[width=\textwidth]{figures/HomSap/estimated_Ne_t_final}
-        \caption{
-        \label{fig:demography}
-        Performance of methods to infer human OOA model
-        with and without background selection on exons.
-        }
-    \end{figure}
 
 
     \begin{figure}[ht]
