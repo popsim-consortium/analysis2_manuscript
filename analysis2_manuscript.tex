@@ -62,11 +62,13 @@
 
 
 % \author[1,+]{M. Elise Lauterbur}
-% \author[2,*]{Maria Izabel A. Cavassim}
 % \author[3,*]{Ariella L. Gladstein}
  \author[4,*]{Graham Gower}
  \author[5*]{Nathaniel S. Pope}
-% \author[6,*]{Georgia Tsambos}
+ \author[5*]{Murillo F. Rodrigues}
+\author[6]{Georgia Tsambos}
+\author[34]{Linh N. Tran}
+\author[2]{Maria Izabel A. Cavassim}
 % \author[5,7]{Jeff Adrion}
 % \author[5]{Saurabh Belsare}
 % \author[8]{Arjun Biddanda}
@@ -75,7 +77,7 @@
 % \author[10]{Ignacio Echevarria}
 % \author[11]{Benjamin C. Haller}
 % \author[12,13]{Ahmed R. Hasan}
-% \author[14,15]{Xin Huang}
+\author[14,15]{Xin Huang}
 % \author[16]{Leonardo Nicola Martin Iasi}
 % \author[17]{Ekaterina Noskova}
 % \author[18]{Jana Obšteter}
@@ -83,11 +85,11 @@
 % \author[20,21]{Alice Pearson}
 % \author[22,23]{David Peede}
 % \author[24]{Manolo F. Perez}
-% \author[5]{Murillo F. Rodrigues}
-% \author[5]{Chris C. R. Smith}
+\author[5]{Chris C. R. Smith}
 % \author[25]{Jeffrey P. Spence}
 % \author[5]{Anastasia Teterina}
-% \author[5]{Silas Tittes}
+\author[5]{Silas Tittes}
+\author[5]{Scott T. Small}
 % \author[26]{Per Unneberg}
 % \author[27]{Juan Manuel Vazquez}
 % \author[28]{Ryan K. Waples}
@@ -96,13 +98,15 @@
 % \author[31]{Franz Baumdicker}
 % \author[32]{Reed A. Cartwright}
 % \author[33]{Gregor Gorjanc}
-% \author[34]{Ryan N. Gutenkunst}
-% \author[30]{Jerome Kelleher}
-% \author[5]{Andrew D. Kern}
-% \author[35]{Aaron P. Ragsdale}
-% \author[5,36]{Peter L. Ralph}
-% \author[37]{Daniel R. Schrider}
-% \author[38,+]{Ilan Gronau}
+\author[4]{Kirk E. Lohmueller}
+\author[34]{Ryan N. Gutenkunst}
+\author[30]{Jerome Kelleher}
+\author[35]{Aaron P. Ragsdale}
+
+\author[37]{Daniel R. Schrider}
+\author[38]{Ilan Gronau}
+\author[5,36]{Peter L. Ralph}
+\author[5]{Andrew D. Kern}
 
 
  \affil[*]{\small{These authors contributed equally to the paper.}}
@@ -136,15 +140,15 @@
 % \affil[27]{\small{Department of Integrative Biology, University of California, Berkeley, Berkeley CA, USA}}
 % \affil[28]{\small{Department of Biostatistics, University of Washington, Seattle WA, USA}}
 % \affil[29]{\small{Broad Institute of MIT and Harvard, Cambridge MA 02142, USA}}
-% \affil[30]{\small{Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, Oxford OX3 7LF, UK}}
+\affil[30]{\small{Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, Oxford OX3 7LF, UK}}
 % \affil[31]{\small{Cluster of Excellence - Controlling Microbes to Fight Infections, Eberhard Karls Universität Tübingen, Tübingen, Baden-Württemberg, Germany}}
 % \affil[32]{\small{School of Life Sciences and The Biodesign Institute, Arizona State University, Tempe AZ, USA}}
 % \affil[33]{\small{The Roslin Institute and Royal (Dick) School of Veterinary Studies, University of Edinburgh, Edinburgh EH25 9RG, UK}}
 % \affil[34]{\small{Department of Molecular and Cellular Biology, University of Arizona, Tucson AZ 85721, USA}}
-% \affil[35]{\small{Department of Integrative Biology, University of Wisconsin-Madison, Madison WI, USA}}
-% \affil[36]{\small{Department of Mathematics, University of Oregon, Eugene OR 97402, USA}}
-% \affil[37]{\small{Department of Genetics, University of North Carolina at Chapel Hill, Chapel Hill NC 27599, USA}}
-% \affil[38]{\small{Efi Arazi School of Computer Science, Reichman University, Herzliya, Israel}}
+\affil[35]{\small{Department of Integrative Biology, University of Wisconsin-Madison, Madison WI, USA}}
+\affil[36]{\small{Department of Mathematics, University of Oregon, Eugene OR 97402, USA}}
+\affil[37]{\small{Department of Genetics, University of North Carolina at Chapel Hill, Chapel Hill NC 27599, USA}}
+\affil[38]{\small{Efi Arazi School of Computer Science, Reichman University, Herzliya, Israel}}
 
 \date{\small{\today{}}}
 
@@ -358,7 +362,19 @@ from each independent population in the three-population model of human OOA demo
 The top row shows the results of simulations without background selection on exons, while the bottom row shows the results
 of simulations with a Gamma distributed DFE on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$
 in various colors for the four methods. Dotted lines on the bottom row are to visually reinforce that inference is done
-from a model with selection.  We see that all methods perform well in the absence of selection, but that the presence
+from a model with selection.  We see that all methods perform reasonably in the absence of selection, 
+although GONE seems to overestimate $N_e(t)$ in the more recent past for the CEU and CHB populations.
+Presumably this could be due to patterns of linkage disequilibrium that result from the combination
+of bottleneck and growth in these populations.
+In the presence of selection, different methods behave differently. 
+For instance stairwaiplot which uses the SFS to infer $N_e(t)$ seems to slightly underestimate $N_e(t)$
+but is reasonably close to the true $N_e(t)$ in the absence of selection.
+Likewise SMC++ seems to be more robust to the presence of selection,
+but there is some added noise to the returned estimates. 
+MSMC2 seems to be the most affected by the presence of selection, 
+estimates of $N_e(t)$ varying quite a bit from the true $N_e(t)$.
+
+
 
 \begin{figure}[t]
     \centering
