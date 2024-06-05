@@ -350,7 +350,7 @@ rate of coalescence in the genome.
 Using \stdpopsim we can simulate genetic data under a model of selection and then 
 examine the performance of different methods for inferring $N_e(t)$ from these simulated 
 data. In Figure \ref{fig:1pop-human-demography} we show the results of such a benchmark
-where we have simulated genomes under a three-population model of human out of Africa (OOA) demography
+where we have simulated genomes under a model of human out of Africa (OOA) demography
 with and without background selection on exons. For this simulation we have used
 a genetic map from the 1000 Genomes Project along with a deleterious alleles DFE from \citep{huber2017determining}
 that acts on exonic positions defined from the HAVANA group release 104 for the human genome. 
@@ -358,7 +358,9 @@ These simulations were then used to estimate $N_e(t)$ using four methods: 1) MSM
 2)the stairway plot method \citep{liu2020stairway}, 3) GONE \citep{santiago2020recent}, and 4) SMC++ \citep{terhorst2017robust}.
 
 In Figure \ref{fig:1pop-human-demography} we show six panels, each of which shows the estimated $N_e(t)$
-from each independent population in the three-population model of human OOA demography (CEU, CHB, and YRI from left to right).
+from each independent sample in a five-population model of human out-of-Africa demography
+from Ragsdale \textit{et al.} (2019)
+with samples taken from three modern geographic groups (CEU, CHB, and YRI from left to right).
 The top row shows the results of simulations without background selection on exons, while the bottom row shows the results
 of simulations with a Gamma distributed DFE on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$
 in various colors for the four methods. Dotted lines on the bottom row are to visually reinforce that inference is done
@@ -381,11 +383,39 @@ estimates of $N_e(t)$ varying quite a bit from the true $N_e(t)$.
     \includegraphics[width=\textwidth]{figures/HomSap/estimated_Ne_t_final}
     \caption{
     \label{fig:1pop-human-demography}
-    Performance of methods to infer human OOA model
-    with and without background selection on exons.
+    Performance of methods to infer $N_e(t)$ from a human out-of-Africa model \citep{ragsdale2019models}
+    with and without background selection on exons. The top row shows estimates of $N_e(t)$ from simulations
+    without selection, while the bottom row shows estimates of $N_e(t)$ from simulations with a Gamma distributed   
+    DFE acting on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$ from four methods:    
+    MSMC2 \citep{Schiffels2020}, stairway plot \citep{liu2020stairway}, GONE \citep{santiago2020recent}, and SMC++ \citep{terhorst2017robust}.  
     }
 \end{figure}
 
+To highlight the ease of comparisons between different species and model enabled by \stdpopsim,
+we have also performed a similar benchmark using the vaquita porpoise \textit{Phocoena sinus}.
+In Figure \ref{fig:1pop-vaquita-demography} we show the results of $N_e(t)$ inference
+where we have simulated genomes under a model of vaquita demography from \cite{robinson2022critically}.
+For these simulations we have used the genome structure and exon annotations from the vaquita genome assembly
+and a DFE from \cite{robinson2022critically} that acts on exonic positions, however no genetic map 
+is currently available, so recombination rates are assumed to be constant across the genome.
+The demographic model is a simple two-epoch model where population size has declined in the recent past
+relative to the ancient past. 
+
+In this case we see that all methods perform well both in the absence and presence of selection.
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/PhoSin/Vaquita2Epoch_1R22/estimated_Ne_t_final}
+    \caption{
+    \label{fig:1pop-vaquita-demography}
+    Performance of methods to infer $N_e(t)$ from a human out-of-Africa model \citep{ragsdale2019models}
+    with and without background selection on exons. The top row shows estimates of $N_e(t)$ from simulations
+    without selection, while the bottom row shows estimates of $N_e(t)$ from simulations with a Gamma distributed   
+    DFE acting on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$ from four methods:    
+    MSMC2 \citep{Schiffels2020}, stairway plot \citep{liu2020stairway}, GONE \citep{santiago2020recent}, and SMC++ \citep{terhorst2017robust}.  
+    }
+\end{figure}
 \lipsum[20-25]
 
 % \section*{outline}
@@ -439,14 +469,14 @@ estimates of $N_e(t)$ varying quite a bit from the true $N_e(t)$.
     \end{figure}
 
 
-    \begin{figure}[ht]
-        \centering
-        \includegraphics[width=\textwidth]{figures/PhoSin/dfe.inference.benchmark}
-        \caption{
-        \label{fig:dfe_vaquita}
-        Performance of methods to infer distribution of fitness effects (DFE).
-        }
-    \end{figure}
+    % \begin{figure}[ht]
+    %     \centering
+    %     \includegraphics[width=\textwidth]{figures/PhoSin/dfe.inference.benchmark}
+    %     \caption{
+    %     \label{fig:dfe_vaquita}
+    %     Performance of methods to infer distribution of fitness effects (DFE).
+    %     }
+    % \end{figure}
 
 
 \section*{Conclusion}
