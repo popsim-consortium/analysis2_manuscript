@@ -171,86 +171,92 @@
     For instance changes in population size can lead to fluctuations
     in genetic diversity across a recombining chromosome 
     that can mimic the effects of selection \citep{simonsen1995properties, barton1998effect},
+    % DRS -- I'm not sure Barton reference is right for this?
     and lead to spurious inferences about the strength and targets of genetic adaptation
     \cite{simonsen1995properties,akey2004population,nielsen2005genomic}.
     In turn selection can confound our ability to infer demographic 
-    history from allele frequencies \citep{ewing2016consequences} and
-    estimates of inverse coalescent rate \citep{schrider2016effects}.
+    history from allele frequencies \citep{ewing2016consequences,schrider2016effects} and
+    estimates of inverse coalescent rate \citep{schrider2016effects, johri2021impact, cousins2024accurate}.
     Thus it is imperative to joingly account for the effects of selection
-    and demography when inferring evolutionary history from genetic data
-    however this is a challenging task from a modeling perspective.
+    and demography when inferring evolutionary history from genetic data \citep{sheehan2016deep,johri2020toward}.
+    However this is a challenging task from a modeling perspective \citep{johri2022prospect}.
 
     % simulation
-    To meet this need the field of population genetics
-    has turned to simulation.
-    Simulation has become a critical tool for interpretation, 
-    analysis, and exploration of realistic evolutionary models.
+    % DRS: lots more refs will be needed in this paragraph. added a few and am happy to help add more later if needed
+    To meet the growing need for the interpretation,
+    analysis, and exploration of realistic and complex evolutionary models
+    the field of population genetics has increasingly turned to simulation.
     Simulation in population genetics has a long history 
-    including both backward in time coalescent simulations
+    including both backward-in-time coalescent simulations
     \citep{kingman1982genealogy,hudson1983testing, hudson1990gene}
-    and forward in time simulations of complex demography and selection
+    and forward-in-time simulations of complex demography and selection
     \citep[e.g.,][]{gillespie1984molecular,thornton2014c++, haller2019slim}.
     The development of simulation tools has been driven by the need to
     understand the effects of complex evolutionary processes on genetic
     variation \citep[e.g.,][]{galloway2020few}, to provide a null model for hypothesis testing
-    \citep[e.g.,][]{hudson1992statistical}, to
-    to explore the power and limitations of statistical methods \cite[e.g.,]{przeworski2002signature},
+    \citep[e.g.,][]{hudson1992statistical,hudson1994evidence,sabeti2002detecting}, to
+    to explore the power and limitations of statistical methods \cite[e.g.,][]{przeworski2002signature},
     and increasingly to provide a basis for machine learning and other
-    simulation-based inference methods \citep[e.g.,]{kern2018diplos}.
+    simulation-based inference methods \citep[e.g.,][]{pavlidis2010searching,lin2011distinguishing,kern2018diplos,mughal2019localizing,sanchez2021deep,wang2021automatic}.
     While this is so, joint simulation of complex demography and selection
     is challenging, and requires a deep understanding of the underlying
     evolutionary processes, as well as a number of parameter choices including
     the strength of selection, the distribution of fitness effects, and the
     recombination rate, as well as a parameterized model of demography.
-    This is dounting task for many researchers, and can be a barrier to
+    This is a daunting task for many researchers, and can be a barrier to
     the adoption of simulation-based methods in population genetics.
-    Further, sharing and comparing simulation results among studies can 
-    itself be challenging, as different simulation tools may use different
-    models and parameterizations, and may not be directly comparable.
+    Furthermore, sharing and comparing simulation results among studies can 
+    itself be challenging, as different simulation tools may use different structures
+    and parameter scalins for their models, and may not be directly comparable.
     This is a major limitation for the field, as it can make it difficult
     to assess the robustness of results, and to compare the results of
     different studies.
 
     % stdpopsim
+    % DRS: lots more refs will be needed in this paragraph. added a few and am happy to help add more later if needed
     A lingering challenge with simulation in population genetics has been
     reproducibility and the ability to share and compare results among 
-    researchers \citep[][e.g.,]{ragsdale2020lessons}.
+    researchers \citep[e.g.,][]{ragsdale2020lessons}.
     This challenge has been addressed in part by the development
     of community resources for sharing and distributing simulation software
     via the \stdpopsim project \citep{adrion2020community}. \stdpopsim
     provides a standardized interface for accessing a wide range of
     population genetic models, and has begun to be be widely adopted by the community. %maybe add citations here?
-    While that is so, the current version of \stdpopsim does not include
+    While that is so, the original version of \stdpopsim did not include
     models of selection, which is a major limitation for more empirical
     applications of population genetic simulation. In particular, modeling selection
-    through simulation is critical for understanding the processes such
-    as adaptation, the effects of selective sweeps, and the impact of
-    background selection on genetic diversity. Ideally, one would like
+    through simulation is critical for understanding processes such
+    as adaptation, the effects of selective sweeps \citep[e.g.][]{braverman1995hitchhiking,fay2000hitchhiking,przeworski2002signature,przeworski2005signature,schrider2015soft}, and the impact of
+    background selection on genetic diversity
+    \citep[e.g.][]{charlesworth1993effect,charlesworth1995pattern,williamson2002genealogy,ewing2016consequences,torres2020temporal}.
+    Ideally, one would like
     to have a single, unified framework for simulating both neutral and
     non-neutral evolutionary processes, and to be able to compare the
     results of these simulations to empirical data in a manner that is
     both accessible to a wide range of researchers and highly reproducible. 
     Further the framework should include the complex realities of 
     genomes, including heterogenous recombination rates, 
-    variation in the density of functional elements, and relevant
-    population size histories. 
+    variation in the size and density of functional elements, and
+    non-equilibrium demographic histories. Ideally, one should be able
+    to model all of these features after estimates/annotations obtained
+    from a species of interest \citep[e.g.][]{schrider2020background}.
 
     % goals
     In this manuscript we provide an overview of a major new addition
-    to \stdpopsim-- the inclusion of models of selection.
+    to \stdpopsim---the inclusion of models of selection.
     We begin by describing the models of selection that we have implemented,
     as well as the parameter choices that are available to the user.
     This includes models of background selection, selective sweeps, and
-    models of the distribution of fitness effects.
+    models of the distribution of fitness effects (DFE).
     Further we describe how these models can be combined with genomic
     annotations that are specific to a given species available
     through the \stdpopsim API, and combined with a parameterized model of
-    demography and recombination to provide a complete simulation of
+    demography and recombination to provide a realistic simulation of
     genetic variation in a population.
     We then provide a series of examples of how these models can be used
     to benchmark and compare the performance of different methods for
-    inferring demographic history, selection, and the distribution of
-    fitness effects from genetic data. 
+    inferring demographic history, the targets of recent positive selection,
+    and the distribution of fitness effects from genetic data. 
 
 \section*{Implementing Selection in \stdpopsim}
     \label{selection}
@@ -259,13 +265,13 @@
     \stdpopsim previously provided a wide range of models of neutral
     demographic history from roughly two dozen species \citep{lauterbur2023expanding}.
     This was accomplished through the use of a standardized interface
-    and data structure that allowed for curated addition of new
-    species and models, and relied on backend simulation engines,
-    including msprime \citep{Baumdicker2022} and SLiM \citep{haller2019slim},
-    for efficient simulation of genetic variation.
-    To extend this to include models of selection, 
+    and data structure that allows for curated addition of new
+    species and models, and can use either
+    msprime \citep{Baumdicker2022} or SLiM \citep{haller2019slim}
+    as the backend engine for efficient population genetic simulation.
+    To extend \stdpopsim's functionality to include models of selection, 
     we introduce an important new class representing a specfic distribution of fitness effects
-    to the \stdpopsim API, the \texttt{DFE} class. 
+    to the \stdpopsim API: the \texttt{DFE} class. 
     This class provides an interface for specifying
     a distribution of the fitness effects of new mutations, and
     is added to a \texttt{Contig} object to provide a description
@@ -275,9 +281,9 @@
     a rich model of how selection may differ along a chromosome. 
     Once specified a model of selection is then run in the same way
     but currently is limited to using SLiM simulation engine, which
-    is probably the most flexible simulation engine for modeling selection currently available.
+    is perhaps the most flexible simulation engine for modeling selection currently available.
     
-    As with other \stdpopsim models, we aim to hew as closely as possible
+    As with other \stdpopsim models, when incorporating selection we aim to hew as closely as possible
     to realistic genomes, and provide public annotations of specices-specific functional
     elements that can be used along with a \texttt{DFE} object to
     readily provide realistic model of selection for a specific genome and set of
@@ -287,9 +293,9 @@
     composed of a set of annotations and a \texttt{DFE} object. 
 
     The vast majority of published DFE estimates are based on a limited number of species,
-    so \stdpopsim currently has implemented published DFE from
-    four species: \textit{Arabidopsis thaleana}, \textit{Drosophila melanogaster},
-    humans, and the vaquita porpoise \textit{Phocoena sinus}.
+    so \stdpopsim currently has implemented published DFEs from
+    four species: \textit{Arabidopsis thaleana} \citep{huber2018gene}, \textit{Drosophila melanogaster} \citep{ragsdale2016triallelic,huber2017determining},
+    humans, and the vaquita porpoise \textit{Phocoena sinus} \citep{robinson2022critically}.
     While that is so, these DFEs can be mixed and matched with the other species
     in the catalog. For instance, one could simulate a butterfly species with a Gamma DFE originally
     estimated from humans, or a human population with a DFE estimated from \textit{Drosophila}.
@@ -301,21 +307,25 @@
 
     % sweep interface
     In addition to the \texttt{DFE} class, we have also implemented a class (\texttt{stdpopsim.ext.selective\_sweep})
-    enables selective sweeps to be simulated in \stdpopsim.
+    that enables selective sweeps to be simulated in \stdpopsim.
     This class augments a demographic model with an ``extended event''
     which conditions on the introduction of a selected mutation at a given time and position
     and with a given selection coefficient. Further the user can specify the minimum frequency
     of the selected allele at the time of sampling. As these extended events are implemented
     on top of the existing \stdpopsim API, they can be combined with other models of selection
-    and demography to provide a rich model of the combined effects of selection and demography
+    and demography to provide a rich model of the combined effects of multiple disparate evolutionary processes
     on genetic variation in a population.
 
     % current numbers of DFEs / species / etc
     At this release the \stdpopsim catalog comprises 24 species (i.e. genome representations)
     for which we have implemented XX demographic models, have XX genetic maps, and XX DFEs.
     Additions to the catalog are ongoing -- we point the reader to our previously published 
-    report detailing this effort \citep{lauterbur2023expanding} and we welcome contributions from the community.
+    report detailing this effort \citep{lauterbur2023expanding} and we welcome contributions from the
+    community---we encourage those interested in contributing to visit https://popsim-consortium.github.io/stdpopsim-docs
+    or contact one of the PopSim Consortium members for guidance.
 
+% DRS: This figure could really use some Python API and comand line examples like in Figs 1B,C
+% form the original stdpopsim paper
     \begin{wrapfigure}[37]{l}{0.4\textwidth}
         \vspace{-0.0cm}
         \includegraphics[width=\linewidth]{figures/schematics/catalog.pdf}
@@ -331,8 +341,8 @@
 \section*{Example Applications with Selection}
 In this section we provide a series of examples of how the new models of selection
 in \stdpopsim can be used to benchmark and compare the performance of different
-methods for inferring demographic history, selection, and the distribution of fitness
-effects from genetic data. We focus on three main areas: demographic inference in the 
+methods for population genetic inference.
+We focus on three main areas: demographic inference in the 
 single and multi-population settings, inference of the distribution of fitness effects,
 and the detection of selective sweeps, particularly in the context of background selection.
 
@@ -352,7 +362,8 @@ examine the performance of different methods for inferring $N_e(t)$ from these s
 data. In Figure \ref{fig:1pop-human-demography} we show the results of such a benchmark
 where we have simulated genomes under a model of human out of Africa (OOA) demography
 with and without background selection on exons. For this simulation we have used
-a genetic map from the 1000 Genomes Project along with a deleterious alleles DFE from \citep{huber2017determining}
+a genetic map from the HapMap Project \citep{international2007second} along with a
+DFE for deleterious alleles (estimated by \cite{huber2017determining})
 that acts on exonic positions defined from the HAVANA group release 104 for the human genome. 
 These simulations were then used to estimate $N_e(t)$ using four methods: 1) MSMC2 \citep{Schiffels2020}, 
 2)the stairway plot method \citep{liu2020stairway}, 3) GONE \citep{santiago2020recent}, and 4) SMC++ \citep{terhorst2017robust}.
@@ -361,10 +372,10 @@ In Figure \ref{fig:1pop-human-demography} we show six panels, each of which show
 from each independent sample in a five-population model of human out-of-Africa demography
 from Ragsdale \textit{et al.} (2019)
 with samples taken from three modern geographic groups (CEU, CHB, and YRI from left to right).
-The top row shows the results of simulations without background selection on exons, while the bottom row shows the results
-of simulations with a Gamma distributed DFE on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$
+The top row shows the results of simulations without selection, while the bottom row shows the results
+of simulations with a Gamma distributed DFE for the deleterious effects of mutations occurring exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$
 in various colors for the four methods. Dotted lines on the bottom row are to visually reinforce that inference is done
-from a model with selection.  We see that all methods perform reasonably in the absence of selection, 
+from a model with selection. We see that these methods generally perform reasonably well in the absence of selection, 
 although GONE seems to overestimate $N_e(t)$ in the more recent past for the CEU and CHB populations.
 Presumably this could be due to patterns of linkage disequilibrium that result from the combination
 of bottleneck and growth in these populations.
@@ -375,6 +386,10 @@ Likewise SMC++ seems to be more robust to the presence of selection,
 but there is some added noise to the returned estimates. 
 MSMC2 seems to be the most affected by the presence of selection, 
 estimates of $N_e(t)$ varying quite a bit from the true $N_e(t)$.
+% DRS: I don't agree with the interpretation in the previous two sentences (starting with "Likewise").
+% MSMC is already barfing a little bit even without selection, and it is not clear to me from these
+% plots that selection makes things any worse. Also, SMC++ is doing quite well without selection so maybe
+% the minor drop in accuracy is meaningful in relative terms.
 
 
 
@@ -398,8 +413,7 @@ where we have simulated genomes under a model of vaquita demography from \cite{r
 For these simulations we have used the genome structure and exon annotations from the vaquita genome assembly
 and a DFE from \cite{robinson2022critically} that acts on exonic positions, however no genetic map 
 is currently available, so recombination rates are assumed to be constant across the genome.
-The demographic model is a simple two-epoch model where population size has declined in the recent past
-relative to the ancient past. 
+The demographic model is a simple two-epoch model where population size has declined in the recent past. 
 
 In this case we see that all methods perform well both in the absence and presence of selection.
 
