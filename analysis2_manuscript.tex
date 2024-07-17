@@ -347,83 +347,84 @@
 
     
 \section*{Example Applications with Selection}
-In this section we provide a series of examples of how the new models of selection
-in \stdpopsim can be used to benchmark and compare the performance of different
-methods for population genetic inference.
-We focus on three main areas: demographic inference in the 
-single and multi-population settings, inference of the distribution of fitness effects,
-and the detection of selective sweeps, particularly in the context of background selection.
+    \label{applications}
+    In this section we provide a series of examples of how the new models of selection
+    in \stdpopsim can be used to benchmark and compare the performance of different
+    methods for population genetic inference.
+    We focus on three main areas: demographic inference in the 
+    single and multi-population settings, inference of the distribution of fitness effects,
+    and the detection of selective sweeps, particularly in the context of background selection.
 
-\section*{Inference of $N_e(t)$ in the context of selection}
-One of the most common applications of population genetic inference is to estimate
-the effective population size over time, $N_e(t)$, from genetic data. This can be done
-using a variety of methods, including the pairwise sequentially Markovian coalescent
-(PSMC) \citep{li2011inference}, through use of the site frequency spectrum (SFS),
-as well as through identity by decent information. 
-While that is so, it has been well described that selection, because of its effects on
-local and more global patterns of genetic variation, can drive estimates of $N_e(t)$
-further from true census population sizes simply because selection increases the 
-rate of coalescence in the genome. 
+    \section*{Inference of $N_e(t)$ in the context of selection}
+    One of the most common applications of population genetic inference is to estimate
+    the effective population size over time, $N_e(t)$, from genetic data. This can be done
+    using a variety of methods, including the pairwise sequentially Markovian coalescent
+    (PSMC) \citep{li2011inference}, through use of the site frequency spectrum (SFS),
+    as well as through identity by decent information. 
+    While that is so, it has been well described that selection, because of its effects on
+    local and more global patterns of genetic variation, can drive estimates of $N_e(t)$
+    further from true census population sizes simply because selection increases the 
+    rate of coalescence in the genome. 
 
-Using \stdpopsim we can simulate genetic data under a model of selection and then 
-examine the performance of different methods for inferring $N_e(t)$ from these simulated 
-data. In Figure \ref{fig:1pop-human-demography} we show the results of such a benchmark
-where we have simulated genomes under a model of human out of Africa (OOA) demography
-with and without background selection on exons. For this simulation we have used
-a genetic map from the HapMap Project \citep{international2007second} along with a
-DFE for deleterious alleles (estimated by \cite{huber2017determining})
-that acts on exonic positions defined from the HAVANA group release 104 for the human genome. 
-These simulations were then used to estimate $N_e(t)$ using four methods: 1) MSMC2 \citep{Schiffels2020}, 
-2)the stairway plot method \citep{liu2020stairway}, 3) GONE \citep{santiago2020recent}, and 4) SMC++ \citep{terhorst2017robust}.
+    Using \stdpopsim we can simulate genetic data under a model of selection and then 
+    examine the performance of different methods for inferring $N_e(t)$ from these simulated 
+    data. In Figure \ref{fig:1pop-human-demography} we show the results of such a benchmark
+    where we have simulated genomes under a model of human out of Africa (OOA) demography
+    with and without background selection on exons. For this simulation we have used
+    a genetic map from the HapMap Project \citep{international2007second} along with a
+    DFE for deleterious alleles (estimated by \cite{huber2017determining})
+    that acts on exonic positions defined from the HAVANA group release 104 for the human genome. 
+    These simulations were then used to estimate $N_e(t)$ using four methods: 1) MSMC2 \citep{Schiffels2020}, 
+    2)the stairway plot method \citep{liu2020stairway}, 3) GONE \citep{santiago2020recent}, and 4) SMC++ \citep{terhorst2017robust}.
 
-In Figure \ref{fig:1pop-human-demography} we show six panels, each of which shows the estimated $N_e(t)$
-from each independent sample in a five-population model of human out-of-Africa demography
-from Ragsdale \textit{et al.} (2019)
-with samples taken from three modern geographic groups (CEU, CHB, and YRI from left to right).
-The top row shows the results of simulations without selection, while the bottom row shows the results
-of simulations with a Gamma distributed DFE for the deleterious effects of mutations occurring exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$
-in various colors for the four methods. Dotted lines on the bottom row are to visually reinforce that inference is done
-from a model with selection. We see that these methods generally perform reasonably well in the absence of selection, 
-although GONE seems to overestimate $N_e(t)$ in the more recent past for the CEU and CHB populations.
-Presumably this could be due to patterns of linkage disequilibrium that result from the combination
-of bottleneck and growth in these populations.
-In the presence of selection, different methods behave differently. 
-For instance stairwaiplot which uses the SFS to infer $N_e(t)$ seems to slightly underestimate $N_e(t)$
-but is reasonably close to the true $N_e(t)$ in the absence of selection.
-Likewise SMC++ seems to be more robust to the presence of selection,
-but there is some added noise to the returned estimates. 
-MSMC2 seems to be the most affected by the presence of selection, 
-estimates of $N_e(t)$ varying quite a bit from the true $N_e(t)$.
-% DRS: I don't agree with the interpretation in the previous two sentences (starting with "Likewise").
-% MSMC is already barfing a little bit even without selection, and it is not clear to me from these
-% plots that selection makes things any worse. Also, SMC++ is doing quite well without selection so maybe
-% the minor drop in accuracy is meaningful in relative terms.
+    In Figure \ref{fig:1pop-human-demography} we show six panels, each of which shows the estimated $N_e(t)$
+    from each independent sample in a five-population model of human out-of-Africa demography
+    from Ragsdale \textit{et al.} (2019)
+    with samples taken from three modern geographic groups (CEU, CHB, and YRI from left to right).
+    The top row shows the results of simulations without selection, while the bottom row shows the results
+    of simulations with a Gamma distributed DFE for the deleterious effects of mutations occurring exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$
+    in various colors for the four methods. Dotted lines on the bottom row are to visually reinforce that inference is done
+    from a model with selection. We see that these methods generally perform reasonably well in the absence of selection, 
+    although GONE seems to overestimate $N_e(t)$ in the more recent past for the CEU and CHB populations.
+    Presumably this could be due to patterns of linkage disequilibrium that result from the combination
+    of bottleneck and growth in these populations.
+    In the presence of selection, different methods behave differently. 
+    For instance stairwaiplot which uses the SFS to infer $N_e(t)$ seems to slightly underestimate $N_e(t)$
+    but is reasonably close to the true $N_e(t)$ in the absence of selection.
+    Likewise SMC++ seems to be more robust to the presence of selection,
+    but there is some added noise to the returned estimates. 
+    MSMC2 seems to be the most affected by the presence of selection, 
+    estimates of $N_e(t)$ varying quite a bit from the true $N_e(t)$.
+    % DRS: I don't agree with the interpretation in the previous two sentences (starting with "Likewise").
+    % MSMC is already barfing a little bit even without selection, and it is not clear to me from these
+    % plots that selection makes things any worse. Also, SMC++ is doing quite well without selection so maybe
+    % the minor drop in accuracy is meaningful in relative terms.
 
 
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=\textwidth]{figures/HomSap/OOA/estimated_Ne_t_final}
-    \caption{
-    \label{fig:1pop-human-demography}
-    Performance of methods to infer $N_e(t)$ from a human out-of-Africa model \citep{ragsdale2019models}
-    with and without background selection on exons. The top row shows estimates of $N_e(t)$ from simulations
-    without selection, while the bottom row shows estimates of $N_e(t)$ from simulations with a Gamma distributed   
-    DFE acting on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$ from four methods:    
-    MSMC2 \citep{Schiffels2020}, stairway plot \citep{liu2020stairway}, GONE \citep{santiago2020recent}, and SMC++ \citep{terhorst2017robust}.  
-    }
-\end{figure}
+    \begin{figure}[t]
+        \centering
+        \includegraphics[width=\textwidth]{figures/HomSap/OOA/estimated_Ne_t_final}
+        \caption{
+        \label{fig:1pop-human-demography}
+        Performance of methods to infer $N_e(t)$ from a human out-of-Africa model \citep{ragsdale2019models}
+        with and without background selection on exons. The top row shows estimates of $N_e(t)$ from simulations
+        without selection, while the bottom row shows estimates of $N_e(t)$ from simulations with a Gamma distributed   
+        DFE acting on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$ from four methods:    
+        MSMC2 \citep{Schiffels2020}, stairway plot \citep{liu2020stairway}, GONE \citep{santiago2020recent}, and SMC++ \citep{terhorst2017robust}.  
+        }
+    \end{figure}
 
-To highlight the ease of comparisons between different species and model enabled by \stdpopsim,
-we have also performed a similar benchmark using the vaquita porpoise \textit{Phocoena sinus}.
-In Figure \ref{fig:1pop-vaquita-demography} we show the results of $N_e(t)$ inference
-where we have simulated genomes under a model of vaquita demography from \cite{robinson2022critically}.
-For these simulations we have used the genome structure and exon annotations from the vaquita genome assembly
-and a DFE from \cite{robinson2022critically} that acts on exonic positions, however no genetic map 
-is currently available, so recombination rates are assumed to be constant across the genome.
-The demographic model is a simple two-epoch model where population size has declined in the recent past. 
-
-In this case we see that all methods perform well both in the absence and presence of selection.
+    To highlight the ease of comparisons between different species and model enabled by \stdpopsim,
+    we have also performed a similar benchmark using the vaquita porpoise \textit{Phocoena sinus}.
+    In Figure \ref{fig:1pop-vaquita-demography} we show the results of $N_e(t)$ inference
+    where we have simulated genomes under a model of vaquita demography from \textcite{robinson2022critically}.
+    For these simulations we have used the genome structure and exon annotations from the vaquita genome assembly
+    and a DFE from \textcite{robinson2022critically} that acts on exonic positions, however no genetic map 
+    is currently available, so recombination rates are assumed to be constant across the genome.
+    The demographic model is a simple two-epoch model where population size has declined in the recent past. 
+    In this case we see that all methods perform well both in the absence and presence of selection,
+    with a close match between the true $N_e(t)$ and the estimated $N_e(t)$ in all cases.
 
 
 \begin{figure}[t]
@@ -431,9 +432,10 @@ In this case we see that all methods perform well both in the absence and presen
     \includegraphics[width=\textwidth]{figures/PhoSin/Vaquita2Epoch_1R22/estimated_Ne_t_final}
     \caption{
     \label{fig:1pop-vaquita-demography}
-    Performance of methods to infer $N_e(t)$ from a human out-of-Africa model \citep{ragsdale2019models}
-    with and without background selection on exons. The top row shows estimates of $N_e(t)$ from simulations
-    without selection, while the bottom row shows estimates of $N_e(t)$ from simulations with a Gamma distributed   
+    Performance of methods to infer $N_e(t)$ from simulations of the vaquita porpoise genome under a single population
+    model of declining population size \citep{robinson2022critically} with and without background selection on exons. 
+    The top panel shows estimates of $N_e(t)$ from simulations
+    without selection, while the bottom panel shows estimates of $N_e(t)$ from simulations with a Gamma distributed   
     DFE acting on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$ from four methods:    
     MSMC2 \citep{Schiffels2020}, stairway plot \citep{liu2020stairway}, GONE \citep{santiago2020recent}, and SMC++ \citep{terhorst2017robust}.  
     }
