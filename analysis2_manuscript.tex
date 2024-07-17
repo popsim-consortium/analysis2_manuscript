@@ -7,7 +7,6 @@
 \usepackage[singlelinecheck=false]{caption} % singlelinecheck makes single line caption left aligned instead of centered
 \usepackage{subcaption}
 \usepackage{amsmath}
-\usepackage[round]{natbib}
 \usepackage{fancyhdr}
 \usepackage{longtable}
 \usepackage{booktabs}
@@ -27,8 +26,15 @@
 \usepackage{soul}
 
 % bibliography
-\usepackage[round]{natbib}   % omit 'round' option if you prefer square brackets
-\bibliographystyle{plainnat}
+\usepackage[
+    backend=biber,
+    natbib=true,
+    style=authoryear,
+    ]{biblatex}
+\addbibresource{references.bib}
+
+%\usepackage[round]{natbib}   % omit 'round' option if you prefer square brackets
+%\bibliographystyle{plainnat}
 
 
 
@@ -315,17 +321,9 @@
     on top of the existing \stdpopsim API, they can be combined with other models of selection
     and demography to provide a rich model of the combined effects of multiple disparate evolutionary processes
     on genetic variation in a population.
-
-    % current numbers of DFEs / species / etc
-    At this release the \stdpopsim catalog comprises 24 species (i.e. genome representations)
-    for which we have implemented XX demographic models, have XX genetic maps, and XX DFEs.
-    Additions to the catalog are ongoing -- we point the reader to our previously published 
-    report detailing this effort \citep{lauterbur2023expanding} and we welcome contributions from the
-    community---we encourage those interested in contributing to visit https://popsim-consortium.github.io/stdpopsim-docs
-    or contact one of the PopSim Consortium members for guidance.
-
-% DRS: This figure could really use some Python API and comand line examples like in Figs 1B,C
-% form the original stdpopsim paper
+    
+    % DRS: This figure could really use some Python API and comand line examples like in Figs 1B,C
+    % form the original stdpopsim paper
     \begin{wrapfigure}[37]{l}{0.4\textwidth}
         \vspace{-0.0cm}
         \includegraphics[width=\linewidth]{figures/schematics/catalog.pdf}
@@ -336,7 +334,17 @@
         itself is composed of a distribution of fitness effects (DFE) and a set of functional
         annotations.}
     \end{wrapfigure}
-\hfill
+    \hfill
+
+    % current numbers of DFEs / species / etc
+    At this release the \stdpopsim catalog comprises 24 species (i.e. genome representations)
+    for which we have implemented XX demographic models, have XX genetic maps, and XX DFEs.
+    Additions to the catalog are ongoing -- we point the reader to our previously published 
+    report detailing this effort \citep{lauterbur2023expanding} and we welcome contributions from the
+    community---we encourage those interested in contributing to visit https://popsim-consortium.github.io/stdpopsim-docs
+    or contact one of the PopSim Consortium members for guidance.
+
+
     
 \section*{Example Applications with Selection}
 In this section we provide a series of examples of how the new models of selection
@@ -504,5 +512,5 @@ In this case we see that all methods perform well both in the absence and presen
 \section*{Funding}
     \label{funding}
 
-\bibliography{references.bib}
+\printbibliography
 \end{document}
