@@ -440,6 +440,29 @@
     MSMC2 \citep{Schiffels2020}, stairway plot \citep{liu2020stairway}, GONE \citep{santiago2020recent}, and SMC++ \citep{terhorst2017robust}.  
     }
 \end{figure}
+
+\section*{Estimation of the Distribution of Fitness effects}
+    \label{dfe}
+    Another common application of population genetic inference is to estimate the distribution of fitness effects (DFE)
+    from genetic data. Here we show how the new models of selection in \stdpopsim can be used to benchmark and compare
+    the performance of different methods for inferring the DFE from genetic data. Here we have performed simulations using the 
+    human and vaquita porpoise models described above, with complex demographic histories and models of selection acting on exons.
+    To remind the reader, the model of selection in each case is a Gamma distributed DFE for deleterious mutations.
+
+    \begin{figure}[t]
+        \centering
+        \includegraphics[width=0.5\textwidth]{figures/HomSap/OOA/dfe.inference.benchmark.pdf}
+        \caption{
+        \label{fig:homsap-dfe}
+        A comparison of methods for inferring the distribution of fitness effects (DFE) from genetic data.
+        Simulations were performed using a human out-of-Africa model \citep{ragsdale2019models} with a Gamma distributed DFE
+        acting on exons parameterized by a mean selection coefficient and a shape parameter. On each row we show the true parameter
+        as a red line, and the estimates as boxplots from replicate simulations. The human model has three extant populations (CEU, CHB, and YRI).
+        Each row of the figure shows estimates from a different method: 1) dadi \citep{gutenkunst2009inferring}, 2) polyDFE \citep{tataru2020polydfe},
+        3) DFE-alpha \citep{eyre2009estimating}, and 4) GRAPES \citep{galtier2016adaptive}.
+        }
+    \end{figure}
+
 \lipsum[20-25]
 
 % \section*{outline}
@@ -451,12 +474,6 @@
 %             \item stairwaiplot
 %             \item GONE
 %             \item SMC++
-%         \end{enumerate}
-%         \item Multi-population demographic inference methods
-%         \begin{enumerate}
-%             \item dadi
-%             \item fastsimcoal
-%             \item momi2
 %         \end{enumerate}
 %         \item DFE inference methods
 %         \begin{enumerate}
@@ -478,29 +495,6 @@
 
 
 
-\section*{Example applications}
-    \label{additions}
-
-
-
-    \begin{figure}[ht]
-        \centering
-        \includegraphics[width=\textwidth]{figures/HomSap/OOA/dfe.inference.benchmark}
-        \caption{
-        \label{fig:dfe_humans}
-        Performance of methods to infer distribution of fitness effects (DFE).
-        }
-    \end{figure}
-
-
-    % \begin{figure}[ht]
-    %     \centering
-    %     \includegraphics[width=\textwidth]{figures/PhoSin/dfe.inference.benchmark}
-    %     \caption{
-    %     \label{fig:dfe_vaquita}
-    %     Performance of methods to infer distribution of fitness effects (DFE).
-    %     }
-    % \end{figure}
 
 
 \section*{Conclusion}
