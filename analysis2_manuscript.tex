@@ -449,19 +449,55 @@
     human and vaquita porpoise models described above, with complex demographic histories and models of selection acting on exons.
     To remind the reader, the model of selection in each case is a Gamma distributed DFE for deleterious mutations.
 
-    \begin{figure}[t]
+    \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.5\textwidth]{figures/HomSap/OOA/dfe.inference.benchmark.pdf}
-        \caption{
-        \label{fig:homsap-dfe}
-        A comparison of methods for inferring the distribution of fitness effects (DFE) from genetic data.
+        \begin{subfigure}{.5\textwidth}
+          \centering
+          \includegraphics[width=\linewidth]{figures/HomSap/Constant/dfe.inference.benchmark.pdf}
+          \caption{constant population size}
+          \label{fig:homsap-dfe.constant}
+        \end{subfigure}%
+        \begin{subfigure}{.5\textwidth}
+          \centering
+          \includegraphics[width=\linewidth]{figures/HomSap/OOA/dfe.inference.benchmark.pdf}
+          \caption{out-of-Africa demographic history}
+          \label{fig:homsap-dfe.ooa}
+        \end{subfigure}
+        \caption{A comparison of methods for inferring the distribution of fitness effects (DFE) from genetic data.
         Simulations were performed using a human out-of-Africa model \citep{ragsdale2019models} with a Gamma distributed DFE
         acting on exons parameterized by a mean selection coefficient and a shape parameter. On each row we show the true parameter
         as a red line, and the estimates as boxplots from replicate simulations. The human model has three extant populations (CEU, CHB, and YRI).
         Each row of the figure shows estimates from a different method: 1) dadi \citep{gutenkunst2009inferring}, 2) polyDFE \citep{tataru2020polydfe},
-        3) DFE-alpha \citep{eyre2009estimating}, and 4) GRAPES \citep{galtier2016adaptive}.
-        }
+        3) DFE-alpha \citep{eyre2009estimating}, and 4) GRAPES \citep{galtier2016adaptive}.}
+        \label{fig:homsap-dfe}
     \end{figure}
+
+In Figure \ref{fig:homsap-dfe} we show a comparison of estimates from four software packages for inferring the DFE from genetic data-- 
+dadi \citep{gutenkunst2009inferring}, polyDFE \citep{tataru2020polydfe}, DFE-alpha \citep{eyre2009estimating}, and GRAPES \citep{galtier2016adaptive}. 
+Figure \ref{fig:homsap-dfe.constant} show estimates from a single, constant size population of humans, 
+while Figure \ref{fig:homsap-dfe.ooa} shows estimates from a model of human out-of-Africa demography.
+In a constant size population, all methods perform reasonably well, although GRAPES seems to
+perform slightly worse that the other methods, and polyDFE slightly better. %ADK-- maybe we move constant size to the supplement?
+In the out-of-Africa model the performance of the methods is more mixed. 
+In particular variation in accuracy of the parameters estimated in each
+sample population depends on the methods used, and each method seems to 
+have its own biases with respect to the way in which population history 
+affects parameter estimates. For instance for dadi we see that estimates of 
+the shape parameter are most accurate in the YRI sample, while for DFE-alpha
+estimates are consistently least accurate in the YRI sample. 
+%ADK-- want to add a new figure here that simply compares relative MSE among
+% methods for each parameter in each population
+
+\section*{Detection of Selective Sweeps}
+    \label{sweeps}
+    Finally, we show how the new models of selection in \stdpopsim can be used to benchmark and compare
+    the performance of different methods for detecting selective sweeps from genetic data. 
+    Here we have performed simulations using the human and vaquita porpoise models described above, with complex demographic histories and models of selection acting on exons.
+    To remind the reader, the model of selection in each case is a Gamma distributed DFE for deleterious mutations.
+
+  
+
+    In Figure \
 
 \lipsum[20-25]
 
