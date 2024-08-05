@@ -19,7 +19,7 @@
 \usepackage{lipsum}
 
 \pagestyle{fancy}
-\fancyhead[R]{\textbf{Expanding \stdpopsim}}
+\fancyhead[R]{\textbf{\stdpopsim with selection}}
 
 % for highlighting text
 \usepackage{xcolor}
@@ -376,7 +376,10 @@
     that acts on exonic positions defined from the HAVANA group release 104 for the human genome. 
     These simulations were then used to estimate $N_e(t)$ using four methods: 1) MSMC2 \citep{Schiffels2020}, 
     2)the stairway plot method \citep{liu2020stairway}, 3) GONE \citep{santiago2020recent}, and 4) SMC++ \citep{terhorst2017robust}.
-
+    In this and what follows we have performed 3 replicate whole genome simulations, so uncertainty in estimates might
+    be roughly assessed, however we are mindful of wasted compute as thorough benchmarking
+    isn't the main purpose of this manuscript.
+    
     In Figure \ref{fig:1pop-human-demography} we show six panels, each of which shows the estimated $N_e(t)$
     from each independent sample in a five-population model of human out-of-Africa demography
     from Ragsdale \textit{et al.} (2019)
@@ -451,29 +454,20 @@
 
     \begin{figure}[htbp]
         \centering
-        \begin{subfigure}{.5\textwidth}
-          \centering
-          \includegraphics[width=\linewidth]{figures/HomSap/Constant/HomSap_Constant_Gamma_K17_ensembl_havana_104_exons_DFE_plot}
-          \caption{constant population size}
-          \label{fig:homsap-dfe.constant}
-        \end{subfigure}%
-        \begin{subfigure}{.5\textwidth}
-          \centering
-          \includegraphics[width=\linewidth]{figures/HomSap/OOA/HomSap_OutOfAfricaArchaicAdmixture_5R19_Gamma_K17_ensembl_havana_104_exons_DFE_plot}
-          \caption{out-of-Africa demographic history}
-          \label{fig:homsap-dfe.ooa}
-        \end{subfigure}
+        \includegraphics[width=\linewidth]{figures/HomSap/OOA/HomSap_OutOfAfricaArchaicAdmixture_5R19_Gamma_K17_ensembl_havana_104_exons_DFE_plot}
         \caption{A comparison of methods for inferring the distribution of fitness effects (DFE) from genetic data.
         Simulations were performed using a human out-of-Africa model \citep{ragsdale2019models} with a Gamma distributed DFE
         acting on exons parameterized by a mean selection coefficient and a shape parameter. On each row we show the true parameter
         as a red line, and the estimates as boxplots from replicate simulations. The human model has three extant populations (CEU, CHB, and YRI).
         Each row of the figure shows estimates from a different method: 1) dadi \citep{gutenkunst2009inferring}, 2) polyDFE \citep{tataru2020polydfe},
         3) DFE-alpha \citep{eyre2009estimating}, and 4) GRAPES \citep{galtier2016adaptive}.}
-        \label{fig:homsap-dfe}
+        \label{fig:homsap-dfe.ooa}
     \end{figure}
 
-In Figure \ref{fig:homsap-dfe} we show a comparison of estimates from four software packages for inferring the DFE from genetic data-- 
-dadi \citep{gutenkunst2009inferring}, polyDFE \citep{tataru2020polydfe}, DFE-alpha \citep{eyre2009estimating}, and GRAPES \citep{galtier2016adaptive}. 
+In Figures \ref{fig:homsap-dfe.constant} and \ref{fig:homsap-dfe.ooa} we show a comparison of estimates
+from four software packages for inferring the DFE from genetic data-- 
+dadi \citep{gutenkunst2009inferring}, polyDFE \citep{tataru2020polydfe}, 
+DFE-alpha \citep{eyre2009estimating}, and GRAPES \citep{galtier2016adaptive}. 
 Figure \ref{fig:homsap-dfe.constant} show estimates from a single, constant size population of humans, 
 while Figure \ref{fig:homsap-dfe.ooa} shows estimates from a model of human out-of-Africa demography.
 In a constant size population, all methods perform reasonably well, although GRAPES seems to
@@ -487,6 +481,20 @@ the shape parameter are most accurate in the YRI sample, while for DFE-alpha
 estimates are consistently least accurate in the YRI sample. 
 %ADK-- want to add a new figure here that simply compares relative MSE among
 % methods for each parameter in each population
+
+    %add PhoSin DFE figure here
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{figures/PhoSin/Vaquita2Epoch_1R22/PhoSin_Vaquita2Epoch_1R22_Gamma_R22_Phocoena_sinus.mPhoSin1.pri.110_exons_DFE_plot.pdf}
+        \caption{
+        \label{fig:vaquita-dfe}
+        A comparison of methods for inferring the distribution of fitness effects (DFE) from genetic data.
+        Simulations were performed using a model of vaquita porpoise demography \citep{robinson2022critically} with a Gamma distributed DFE
+        acting on exons parameterized by a mean selection coefficient and a shape parameter. On each row we show the true parameter
+        as a red line, and the estimates as boxplots from replicate simulations. The vaquita model has a single population with a recent
+        bottleneck. Each row of the figure shows estimates from a different method: 1) dadi \citep{gutenkunst2009inferring}, 2) polyDFE \citep{tataru2020polydfe},
+        3) DFE-alpha \citep{eyre2009estimating}, and 4) GRAPES \citep{galtier2016adaptive}.}
+    \end{figure}
 
 \section*{Detection of Selective Sweeps}
     \label{sweeps}
@@ -545,4 +553,28 @@ estimates are consistently least accurate in the YRI sample.
     \label{funding}
 
 \printbibliography
+
+%%%%%%%% supplementary material
+\clearpage
+\beginsupplement
+
+\section*{Supplementary Material}
+
+% constant size DFE figure
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{figures/HomSap/Constant/HomSap_Constant_Gamma_K17_ensembl_havana_104_exons_DFE_plot}
+    \caption{
+    \label{fig:homsap-dfe.constant}
+    Performance of methods to infer the distribution of fitness effects (DFE) from genetic data.
+    Simulations were performed using a human constant size model with a Gamma distributed DFE
+    acting on exons parameterized by a mean selection coefficient and a shape parameter. On each row we show the true parameter 
+    as a red line, and the estimates as boxplots from replicate simulations. The human model has three extant populations (CEU, CHB, and YRI).  
+    Each row of the figure shows estimates from a different method: 1) dadi \citep{gutenkunst2009inferring}, 2) polyDFE \citep{tataru2020polydfe},  
+    3) DFE-alpha \citep{eyre2009estimating}, and 4) GRAPES \citep{galtier2016adaptive}.  
+    }
+    
+\end{figure}
+
+\stopsupplement
 \end{document}
