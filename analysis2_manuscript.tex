@@ -515,13 +515,15 @@
     decline towards the present, we see that methods to infer the DFE perform no better-- again each method 
     signficiantly underestimates the mean selection coefficient and overestimates the shape parameter.
     %ADK: add why we think this is the case-- is this a bug? or a feature of the genome?
-    
+
 \section*{Detection of Selective Sweeps}
     \label{sweeps}
-    Finally, we show how the new models of selection in \stdpopsim can be used to benchmark and compare
+    We next highlight how the new models of selection in \stdpopsim can be used to benchmark and compare
     the performance of different methods for detecting selective sweeps from genetic data. 
-    Here we have performed simulations using the human and vaquita porpoise models described above, with complex demographic histories and models of selection acting on exons.
-    To remind the reader, the model of selection in each case is a Gamma distributed DFE for deleterious mutations.
+    Here we have performed simulations using the human and vaquita porpoise models described above, 
+    with complex demographic histories and models of purifying selection acting on exons 
+    (the model of selection in each case is a Gamma distributed DFE for deleterious mutations),
+    but overlay on top of this a model of selective sweeps.
 
   
 
