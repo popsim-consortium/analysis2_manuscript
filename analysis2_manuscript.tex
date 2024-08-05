@@ -457,30 +457,39 @@
         \includegraphics[width=\linewidth]{figures/HomSap/OOA/HomSap_OutOfAfricaArchaicAdmixture_5R19_Gamma_K17_ensembl_havana_104_exons_DFE_plot}
         \caption{A comparison of methods for inferring the distribution of fitness effects (DFE) from genetic data.
         Simulations were performed using a human out-of-Africa model \citep{ragsdale2019models} with a Gamma distributed DFE
-        acting on exons parameterized by a mean selection coefficient and a shape parameter. On each row we show the true parameter
-        as a red line, and the estimates as boxplots from replicate simulations. The human model has three extant populations (CEU, CHB, and YRI).
-        Each row of the figure shows estimates from a different method: 1) dadi \citep{gutenkunst2009inferring}, 2) polyDFE \citep{tataru2020polydfe},
-        3) DFE-alpha \citep{eyre2009estimating}, and 4) GRAPES \citep{galtier2016adaptive}.}
+        acting on exons parameterized by a mean selection coefficient and a shape parameter. Estimates of the 
+        parameters of the DFE are shown in the left ($\lvert E(s) \rvert $) and right hand panels (shape) respectively.
+        The human model has three extant populations (CEU, CHB, and YRI), and parameter estimates from each
+        sample are shown in different colors.
+        Estimates from three different methods are shown: 1) GRAPES \cite{galtier2016adaptive}, 2) polyDFE \citep{tataru2020polydfe},
+        and 3) dadi \citep{gutenkunst2009inferring}.}
         \label{fig:homsap-dfe.ooa}
     \end{figure}
 
-In Figures \ref{fig:homsap-dfe.constant} and \ref{fig:homsap-dfe.ooa} we show a comparison of estimates
-from four software packages for inferring the DFE from genetic data-- 
-dadi \citep{gutenkunst2009inferring}, polyDFE \citep{tataru2020polydfe}, 
-DFE-alpha \citep{eyre2009estimating}, and GRAPES \citep{galtier2016adaptive}. 
-Figure \ref{fig:homsap-dfe.constant} show estimates from a single, constant size population of humans, 
-while Figure \ref{fig:homsap-dfe.ooa} shows estimates from a model of human out-of-Africa demography.
-In a constant size population, all methods perform reasonably well, although GRAPES seems to
-perform slightly worse that the other methods, and polyDFE slightly better. %ADK-- maybe we move constant size to the supplement?
-In the out-of-Africa model the performance of the methods is more mixed. 
-In particular variation in accuracy of the parameters estimated in each
-sample population depends on the methods used, and each method seems to 
-have its own biases with respect to the way in which population history 
-affects parameter estimates. For instance for dadi we see that estimates of 
-the shape parameter are most accurate in the YRI sample, while for DFE-alpha
-estimates are consistently least accurate in the YRI sample. 
-%ADK-- want to add a new figure here that simply compares relative MSE among
-% methods for each parameter in each population
+    In Figures \ref{fig:homsap-dfe.constant} and \ref{fig:homsap-dfe.ooa} we show a comparison of estimates
+    from three software packages for inferring the DFE from genetic data-- 
+    dadi \citep{gutenkunst2009inferring}, polyDFE \citep{tataru2020polydfe}, 
+    and GRAPES \citep{galtier2016adaptive}. 
+    Figure \ref{fig:homsap-dfe.constant} shows estimates from a single, constant size population of humans, 
+    while Figure \ref{fig:homsap-dfe.ooa} shows estimates from a model of human out-of-Africa demography.
+    In a constant size population, all methods perform reasonably well, although dadi seems to
+    perform slightly worse than the other methods examined, at least for the small number of replicates we simulated here.
+    Notably only polyDFE overlapped the true mean selection coefficient, whereas 
+    the other methods slightly underestimated the strength of selection. 
+    For the shape parameter in constant size simulations GRAPES and polyDFE are roughly
+    equivalent in their performance whereas dadi seems to yield overestimates. 
+    
+    In the out-of-Africa model (fig \ref{fig:homsap-dfe.ooa}) the performance of the methods is more mixed. 
+    In particular variation in accuracy of the parameters estimated in each
+    sample population depends on the methods used, and each method seems to 
+    have its own biases with respect to the way in which population history 
+    affects parameter estimates. For instance for dadi we see that estimates of 
+    the shape parameter are most accurate in the YRI sample, while for polyDFE
+    estimates are consistently least accurate in the YRI sample. 
+    With respect to the strength of selection, as in constant size populations,
+    all methods are performing reasonably well, although dadi seems to
+    trail in terms of accuracy. 
+
 
     %add PhoSin DFE figure here
     \begin{figure}
@@ -490,12 +499,23 @@ estimates are consistently least accurate in the YRI sample.
         \label{fig:vaquita-dfe}
         A comparison of methods for inferring the distribution of fitness effects (DFE) from genetic data.
         Simulations were performed using a model of vaquita porpoise demography \citep{robinson2022critically} with a Gamma distributed DFE
-        acting on exons parameterized by a mean selection coefficient and a shape parameter. On each row we show the true parameter
-        as a red line, and the estimates as boxplots from replicate simulations. The vaquita model has a single population with a recent
-        bottleneck. Each row of the figure shows estimates from a different method: 1) dadi \citep{gutenkunst2009inferring}, 2) polyDFE \citep{tataru2020polydfe},
-        3) DFE-alpha \citep{eyre2009estimating}, and 4) GRAPES \citep{galtier2016adaptive}.}
+        acting on exons parameterized by a mean selection coefficient and a shape parameter. Estimates of the 
+        parameters of the DFE are shown in the left ($\lvert E(s) \rvert $) and right hand panels (shape) respectively.
+        This vaquita model has a single extant population, labelled pop 0, and parameter estimates from each
+        of the three different methods are shown: 1) GRAPES \cite{galtier2016adaptive}, 2) polyDFE \citep{tataru2020polydfe},
+        and 3) dadi \citep{gutenkunst2009inferring}.}
     \end{figure}
-
+    
+    In Figures \ref{fig:vaquita-dfe.constant} and \ref{fig:vaquita-dfe} we show a comparison of estimates
+    from the same three software packages for inferring the DFE from genetic data, but for simulations of the
+    vaquita porpoise genome. In the constant size model (fig \ref{fig:vaquita-dfe.constant}) we see that all methods
+    perform uniformly worse that in the human genome simulations, which consistent underestimation of the mean selection coefficient    
+    and overestimation of the shape parameter. 
+    In context of our model of vaquita porpoise demography \citep{robinson2022critically}, which models a population
+    decline towards the present, we see that methods to infer the DFE perform no better-- again each method 
+    signficiantly underestimates the mean selection coefficient and overestimates the shape parameter.
+    %ADK: add why we think this is the case-- is this a bug? or a feature of the genome?
+    
 \section*{Detection of Selective Sweeps}
     \label{sweeps}
     Finally, we show how the new models of selection in \stdpopsim can be used to benchmark and compare
@@ -565,7 +585,6 @@ estimates are consistently least accurate in the YRI sample.
     \centering
     \includegraphics[width=\textwidth]{figures/HomSap/Constant/HomSap_Constant_Gamma_K17_ensembl_havana_104_exons_DFE_plot}
     \caption{
-    \label{fig:homsap-dfe.constant}
     Performance of methods to infer the distribution of fitness effects (DFE) from genetic data.
     Simulations were performed using a human constant size model with a Gamma distributed DFE
     acting on exons parameterized by a mean selection coefficient and a shape parameter. On each row we show the true parameter 
@@ -573,8 +592,21 @@ estimates are consistently least accurate in the YRI sample.
     Each row of the figure shows estimates from a different method: 1) dadi \citep{gutenkunst2009inferring}, 2) polyDFE \citep{tataru2020polydfe},  
     3) DFE-alpha \citep{eyre2009estimating}, and 4) GRAPES \citep{galtier2016adaptive}.  
     }
-    
+    \label{fig:homsap-dfe.constant}    
 \end{figure}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/PhoSin/Constant/PhoSin_Constant_Gamma_R22_Phocoena_sinus.mPhoSin1.pri.110_exons_DFE_plot.pdf}
+    \caption{
+    \label{fig:vaquita-dfe.constant}
+    A comparison of methods for inferring the distribution of fitness effects (DFE) from genetic data.
+    Simulations were performed using a model of vaquita porpoise genome under constant population size with a Gamma distributed DFE
+    acting on exons parameterized by a mean selection coefficient and a shape parameter. Estimates of the 
+    parameters of the DFE are shown in the left ($\lvert E(s) \rvert $) and right hand panels (shape) respectively.
+    This vaquita model has a single extant population, labelled pop 0, and parameter estimates from each
+    of the three different methods are shown: 1) GRAPES \cite{galtier2016adaptive}, 2) polyDFE \citep{tataru2020polydfe},
+    and 3) dadi \citep{gutenkunst2009inferring}.}
+\end{figure}
 \stopsupplement
 \end{document}
