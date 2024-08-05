@@ -610,5 +610,55 @@
     of the three different methods are shown: 1) GRAPES \cite{galtier2016adaptive}, 2) polyDFE \citep{tataru2020polydfe},
     and 3) dadi \citep{gutenkunst2009inferring}.}
 \end{figure}
+
+% constant all site size DFE figure
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{figures/HomSap/Constant/HomSap_Constant_Gamma_K17_all_sites_DFE_plot}
+    \caption{
+    \label{fig:homsap-dfe.constant.all_sites}
+    Performance of methods to infer the distribution of fitness effects (DFE) from genetic data
+    where all sites along the simulated chromosome can experience selected and neutral mutation
+    as opposed to exonic regions only.
+    }
+\end{figure}
+
+
+\begin{table}[ht]
+\centering
+\small
+\caption{\bf{Performance of DFE methods across the simulation scenerios}. 
+Bold rows show the lowest mean absolute error (MAE) for the two DFE parameters
+for each species.}
+\begin{tabular}{rrllll}
+MAE $E|s|$ & MAE shape & method & species ID & demography & annotation \\
+\hline
+\hline
+0.001152 & 0.029568 & dadi & HomSap & Constant & exon \\
+0.002667 & \bf{0.000712} & dadi & HomSap & Constant & all\_sites \\
+\bf{0.000807} & 0.008626 & grapes & HomSap & Constant & exon \\
+0.004931 & 0.028638 & grapes & HomSap & Constant & all\_sites \\
+0.001773 & 0.014414 & polyDFE & HomSap & Constant & all\_sites \\
+0.002344 & 0.006828 & polyDFE & HomSap & Constant & exon \\
+0.011556 & 0.026502 & dadi & HomSap & OOA\_5R19 & all\_sites \\
+0.013851 & 0.030905 & dadi & HomSap & OOA\_5R19 & exon \\
+0.004859 & 0.051345 & grapes & HomSap & OOA\_5R19 & exon \\
+0.007921 & 0.055497 & grapes & HomSap & OOA\_5R19 & all\_sites \\
+0.007188 & 0.024394 & polyDFE & HomSap & OOA\_5R19 & exon \\
+0.007422 & 0.035366 & polyDFE & HomSap & OOA\_5R19 & all\_sites \\
+0.024292 & 0.209159 & dadi & PhoSin & Constant & all\_sites \\
+0.024365 & 0.233357 & dadi & PhoSin & Constant & exons \\
+0.023567 & 0.250249 & grapes & PhoSin & Constant & exons \\
+0.023853 & 0.235067 & grapes & PhoSin & Constant & all\_sites \\
+0.024439 & 0.234464 & polyDFE & PhoSin & Constant & exons \\
+0.024476 & 0.187955 & polyDFE & PhoSin & Constant & all\_sites \\
+0.024136 & \bf{0.179650} & dadi & PhoSin & Vaquita2Epoch\_1R22 & exons \\
+\bf{0.022866} & 0.230358 & grapes & PhoSin & Vaquita2Epoch\_1R22 & exons \\
+0.024026 & 0.205934 & polyDFE & PhoSin & Vaquita2Epoch\_1R22 & exons \\
+\hline
+\end{tabular}
+\label{tab:dfe_table}
+\end{table}
+
 \stopsupplement
 \end{document}
