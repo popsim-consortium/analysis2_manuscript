@@ -17,6 +17,9 @@
 \usepackage{mathrsfs}
 \usepackage{graphicx}
 \usepackage{lipsum}
+\usepackage{makecell}
+
+
 
 \pagestyle{fancy}
 \fancyhead[R]{\textbf{\stdpopsim with selection}}
@@ -702,38 +705,27 @@
 \begin{table}[ht]
 \centering
 \small
-\caption{\bf{Performance of DFE methods across the simulation scenerios}. 
+\caption{\bf{Performance of DFE methods across the simulation scenarios}. 
 Bold rows show the lowest mean absolute error (MAE) for the two DFE parameters
 for each species.}
-\begin{tabular}{rrllll}
-MAE $E|s|$ & MAE shape & method & species ID & demography & annotation \\
-\hline
-\hline
-0.001152 & 0.029568 & dadi & HomSap & Constant & exon \\
-0.002667 & \bf{0.000712} & dadi & HomSap & Constant & all\_sites \\
-\bf{0.000807} & 0.008626 & grapes & HomSap & Constant & exon \\
-0.004931 & 0.028638 & grapes & HomSap & Constant & all\_sites \\
-0.001773 & 0.014414 & polyDFE & HomSap & Constant & all\_sites \\
-0.002344 & 0.006828 & polyDFE & HomSap & Constant & exon \\
-0.011556 & 0.026502 & dadi & HomSap & OOA\_5R19 & all\_sites \\
-0.013851 & 0.030905 & dadi & HomSap & OOA\_5R19 & exon \\
-0.004859 & 0.051345 & grapes & HomSap & OOA\_5R19 & exon \\
-0.007921 & 0.055497 & grapes & HomSap & OOA\_5R19 & all\_sites \\
-0.007188 & 0.024394 & polyDFE & HomSap & OOA\_5R19 & exon \\
-0.007422 & 0.035366 & polyDFE & HomSap & OOA\_5R19 & all\_sites \\
-0.024292 & 0.209159 & dadi & PhoSin & Constant & all\_sites \\
-0.024365 & 0.233357 & dadi & PhoSin & Constant & exons \\
-0.023567 & 0.250249 & grapes & PhoSin & Constant & exons \\
-0.023853 & 0.235067 & grapes & PhoSin & Constant & all\_sites \\
-0.024439 & 0.234464 & polyDFE & PhoSin & Constant & exons \\
-0.024476 & 0.187955 & polyDFE & PhoSin & Constant & all\_sites \\
-0.024136 & \bf{0.179650} & dadi & PhoSin & Vaquita2Epoch\_1R22 & exons \\
-\bf{0.022866} & 0.230358 & grapes & PhoSin & Vaquita2Epoch\_1R22 & exons \\
-0.024026 & 0.205934 & polyDFE & PhoSin & Vaquita2Epoch\_1R22 & exons \\
-\hline
+\begin{tabular}{lllrrrrrr}
+\toprule
+species ID & demography & annotation & \makecell{MAE \\ $E|s|$ \\ dadi} & \makecell{MAE \\ $E|s|$ \\ grapes} & \makecell{MAE \\ $E|s|$ \\ polyDFE} & \makecell{MAE \\ shape \\ dadi} & \makecell{MAE \\ shape \\ grapes} & \makecell{MAE \\ shape \\ polyDFE} \\
+\midrule
+HomSap & Constant & all sites & 0.0027 & 0.0049 & \bf{0.0018} & \bf{0.00071} & 0.029 & 0.014 \\
+HomSap & Constant & exons & 0.0012 & \bf{0.00081} & 0.0023 & 0.030 & 0.0086 & \bf{0.0068} \\
+HomSap & OOA 5R19 & all sites & 0.012 & 0.0079 & \bf{0.0074} & \bf{0.027} & 0.055 & 0.035 \\
+HomSap & OOA 5R19 & exons & 0.014 & \bf{0.0049} & 0.0072 & 0.031 & 0.051 & \bf{0.024} \\
+PhoSin & Constant & all sites & 0.024 & \bf{0.024} & 0.024 & 0.21 & 0.24 & \bf{0.19} \\
+PhoSin & Constant & exons & 0.024 & \bf{0.024} & 0.024 & \bf{0.23} & 0.25 & 0.23 \\
+PhoSin & Vaquita2Epoch 1R22 & all sites & 0.024 & \bf{0.023} & 0.024 & 0.20 & 0.23 & \bf{0.18} \\
+PhoSin & Vaquita2Epoch 1R22 & exons & 0.024 & \bf{0.023} & 0.024 & \bf{0.18} & 0.23 & 0.21 \\
+\bottomrule
 \end{tabular}
 \label{tab:dfe_table}
 \end{table}
+
+
 
 
 
