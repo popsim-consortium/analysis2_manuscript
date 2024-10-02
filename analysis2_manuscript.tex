@@ -643,6 +643,33 @@
 \section*{Conclusion}
     \label{conclusion}
 
+\section*{Methods}
+    \label{methods}
+
+    \subsection*{Simulations}
+    In this study we performed simulations of the human and vaquita porpoise genomes
+    using the \stdpopsim{} framework. As stated above, simulations included a model 
+    of selection acting on exonic regions, matched to the human and vaquita porpoise genomes.
+    Three replications of full genome simulations were performed for each species, with 
+    a sample size of 100 diploid individuals. Demographic models are as stated above, each
+    using the exon annotations from the human and vaquita porpoise genomes respectively.
+    For simulations with selection, a SLiM scaling factor of 1 (corresponding to no scaling)
+    was used, with a burn-in of 10 ticks. 
+
+    \subsection*{Demographic inference}
+    \subsection*{Distribution of fitness effects inference}
+    \subsection*{Selective sweeps detection}
+    We ran simulations of chromosome 1 of the human genome with an without
+    purifying selection acting on exonic regions, and under a the three population
+    out-of-Africa model of human demography \citep{gutenkunst2009inferring}, 
+    along with the HapMap II genetic map \citep{international2007second}.
+    Single beneficial mutations were introduced at each location with a selection coefficient of $s = 0.03$,
+    and only sampled if they reached a terminal frequency of 0.95 or greater. 
+    We then benchmarked the performance of three methods for detecting sweeps: 1) sweepfinder2 \citep{degiorgio2016sweepfinder2},
+    2) diploshic \citep{kern2018diplos}, and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity.
+    diploshic was trained on simulated data under a model of equilibrium population size, so we expected it to perform suboptimally
+    given the variation in population size in the out-of-Africa model. 
+
 \section*{Data availability}\label{data_availability}
 
 
