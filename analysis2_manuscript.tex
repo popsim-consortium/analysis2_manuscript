@@ -498,15 +498,19 @@
     \begin{figure}
         \centering
         \includegraphics[width=\textwidth]{figures/PhoSin/Vaquita2Epoch_1R22/PhoSin_Vaquita2Epoch_1R22_Gamma_R22_Phocoena_sinus.mPhoSin1.pri.110_exons_DFE_plot.pdf}
+\includegraphics{figures/PhoSin/Vaquita2Epoch_1R22/hs_hist.pdf}
         \caption{
         \label{fig:vaquita-dfe}
         A comparison of methods for inferring the distribution of fitness effects (DFE) from genetic data.
         Simulations were performed using a model of vaquita porpoise demography \citep{robinson2022critically} with a Gamma distributed DFE
-        acting on exons parameterized by a mean selection coefficient and a shape parameter. Estimates of the 
+        acting on exons parameterized by a mean selection coefficient, a shape parameter, and a relationship between selection and domiance. Estimates of the 
         parameters of the DFE are shown in the left ($\lvert E(s) \rvert $) and right hand panels (shape) respectively.
         This vaquita model has a single extant population, labelled pop 0, and parameter estimates from each
         of the three different methods are shown: 1) GRAPES \cite{galtier2016adaptive}, 2) polyDFE \citep{tataru2020polydfe},
-        and 3) dadi \citep{gutenkunst2009inferring}.}
+        and 3) dadi \citep{gutenkunst2009inferring,kim2017inference}.
+        C) Shown is the simulated distribution of $2 h s$, where $h$ is the dominance coefficient, along with the simulated distribution of $s$ and the median inferred DFEs. The distribution of $2 h s$ is multimodal because the simulated relationship between $h$ and $s$ is not continuous.
+        % RNG: For C, need to extract inferred values from pipeline.
+        }
     \end{figure}
     
     In Figures \ref{fig:vaquita-dfe.constant} and \ref{fig:vaquita-dfe} we show a comparison of estimates
@@ -514,10 +518,11 @@
     vaquita porpoise genome. In the constant size model (fig \ref{fig:vaquita-dfe.constant}) we see that all methods
     perform uniformly worse that in the human genome simulations, which consistent underestimation of the mean selection coefficient    
     and overestimation of the shape parameter. 
-    In context of our model of vaquita porpoise demography \citep{robinson2022critically}, which models a population
-    decline towards the present, we see that methods to infer the DFE perform no better-- again each method 
-    signficiantly underestimates the mean selection coefficient and overestimates the shape parameter.
-    %ADK: add why we think this is the case-- is this a bug? or a feature of the genome?
+A critical distinction is that the previous human simulations employed a DFE that assumed all selected mutations had additive effects (no dominance, $h = 1/2$), whereas the vaquita simulations use a DFE in which more deleterious mutations are more recessive ($h < 1/2$).
+For all three software packages, the inferred mean and shape of the distribution of selection coefficients is consistent with the mean and shape of the distribution of $2 h s$, the product of the dominance coefficient and the selection coefficient (Fig.~\ref{fig:vaquita-dfe}C).
+This is likely because deleterious alleles are typically at low frequency and thus heterozygous, where their selective effect is $h s$, and all these tools assume additivity  ($h = 1/2$).
+Strongly deleterious alleles are often observed to be recessive in many species \citep{}, so these results suggest caution in interpreting DFE inferences.
+%RNG: Could use Kirk's help with the best references here
 
 \section*{Detection of Selective Sweeps}
     \label{sweeps}
