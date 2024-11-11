@@ -63,6 +63,22 @@
 \newcommand{\labelname}[1]{\def\@currentlabelname{#1}}
 \makeatother
 
+% add commands for msmc2, stairway plot, gone, and smc++
+\newcommand{\msmc}{\texttt{msmc2}\xspace}
+\newcommand{\stairway}{\texttt{stairwayplot}\xspace}
+\newcommand{\gone}{\texttt{GONE}\xspace}
+\newcommand{\smcpp}{\texttt{SMC++}\xspace}
+
+% add commands for the DFE inference methods
+\newcommand{\dfe}{\texttt{dfe-alpha}\xspace}
+\newcommand{\polydfe}{\texttt{polyDFE}\xspace}
+\newcommand{\dadi}{$\partial$\texttt{a}$\partial$\texttt{i}\xspace}
+\newcommand{\grapes}{\texttt{GRAPES}\xspace}
+
+% add commands for the sweep detection methods
+\newcommand{\sweepfinder}{\texttt{sweepfinder2}\xspace}
+\newcommand{\diploshic}{\texttt{diploshic}\xspace}
+
 % Avoid pandoc bug when there are lists in the body.
 \providecommand{\tightlist}{%
 \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -377,8 +393,8 @@
     a genetic map from the HapMap Project \citep{international2007second} along with a
     DFE for deleterious alleles (estimated by \cite{huber2017determining})
     that acts on exonic positions defined from the HAVANA group release 104 for the human genome. 
-    These simulations were then used to estimate $N_e(t)$ using four methods: 1) MSMC2 \citep{Schiffels2020}, 
-    2)the stairway plot method \citep{liu2020stairway}, 3) GONE \citep{santiago2020recent}, and 4) SMC++ \citep{terhorst2017robust}.
+    These simulations were then used to estimate $N_e(t)$ using four methods: 1) \msmc \citep{Schiffels2020}, 
+    2)\stairway method \citep{liu2020stairway}, 3) \gone \citep{santiago2020recent}, and 4) \smcpp \citep{terhorst2017robust}.
     In this and what follows we have performed 3 replicate whole genome simulations, so uncertainty in estimates might
     be roughly assessed, however we are mindful of wasted compute as thorough benchmarking
     isn't the main purpose of this manuscript.
@@ -397,9 +413,9 @@
     In the presence of selection, different methods behave differently. 
     For instance stairwaiplot which uses the SFS to infer $N_e(t)$ seems to slightly underestimate $N_e(t)$
     but is reasonably close to the true $N_e(t)$ in the absence of selection.
-    Likewise SMC++ seems to be more robust to the presence of selection,
+    Likewise \smcpp seems to be more robust to the presence of selection,
     but there is some added noise to the returned estimates. 
-    MSMC2 seems to be the most affected by the presence of selection, 
+    \msmc seems to be the most affected by the presence of selection, 
     estimates of $N_e(t)$ varying quite a bit from the true $N_e(t)$.
     % DRS: I don't agree with the interpretation in the previous two sentences (starting with "Likewise").
     % MSMC is already barfing a little bit even without selection, and it is not clear to me from these
@@ -417,7 +433,7 @@
         with and without background selection on exons. The top row shows estimates of $N_e(t)$ from simulations
         without selection, while the bottom row shows estimates of $N_e(t)$ from simulations with a Gamma distributed   
         DFE acting on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$ from four methods:    
-        MSMC2 \citep{Schiffels2020}, stairway plot \citep{liu2020stairway}, GONE \citep{santiago2020recent}, and SMC++ \citep{terhorst2017robust}.  
+        \msmc \citep{Schiffels2020}, \stairway \citep{liu2020stairway}, \gone \citep{santiago2020recent}, and \smcpp \citep{terhorst2017robust}.  
         }
     \end{figure}
 
@@ -443,7 +459,7 @@
     The top panel shows estimates of $N_e(t)$ from simulations
     without selection, while the bottom panel shows estimates of $N_e(t)$ from simulations with a Gamma distributed   
     DFE acting on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$ from four methods:    
-    MSMC2 \citep{Schiffels2020}, stairway plot \citep{liu2020stairway}, GONE \citep{santiago2020recent}, and SMC++ \citep{terhorst2017robust}.  
+    \msmc \citep{Schiffels2020}, \stairway \citep{liu2020stairway}, \gone \citep{santiago2020recent}, and \smcpp \citep{terhorst2017robust}.  
     }
 \end{figure}
 
@@ -464,33 +480,33 @@
         parameters of the DFE are shown in the left ($\lvert E(s) \rvert $) and right hand panels (shape) respectively.
         The human model has three extant populations (CEU, CHB, and YRI), and parameter estimates from each
         sample are shown in different colors.
-        Estimates from three different methods are shown: 1) GRAPES \cite{galtier2016adaptive}, 2) polyDFE \citep{tataru2020polydfe},
-        and 3) dadi \citep{gutenkunst2009inferring}.}
+        Estimates from three different methods are shown: 1) \grapes \cite{galtier2016adaptive}, 2) \polydfe \citep{tataru2020polydfe},
+        and 3) \dadi \citep{gutenkunst2009inferring}.}
         \label{fig:homsap-dfe.ooa}
     \end{figure}
 
     In Figures \ref{fig:homsap-dfe.constant} and \ref{fig:homsap-dfe.ooa} we show a comparison of estimates
     from three software packages for inferring the DFE from genetic data-- 
-    dadi \citep{gutenkunst2009inferring}, polyDFE \citep{tataru2020polydfe}, 
-    and GRAPES \citep{galtier2016adaptive}. 
+    \dadi \citep{gutenkunst2009inferring}, \polydfe \citep{tataru2020polydfe}, 
+    and \grapes \citep{galtier2016adaptive}. 
     Figure \ref{fig:homsap-dfe.constant} shows estimates from a single, constant size population of humans, 
     while Figure \ref{fig:homsap-dfe.ooa} shows estimates from a model of human out-of-Africa demography.
-    In a constant size population, all methods perform reasonably well, although dadi seems to
+    In a constant size population, all methods perform reasonably well, although \dadi seems to
     perform slightly worse than the other methods examined, at least for the small number of replicates we simulated here.
-    Notably only polyDFE overlapped the true mean selection coefficient, whereas 
+    Notably only \polydfe overlapped the true mean selection coefficient, whereas 
     the other methods slightly underestimated the strength of selection. 
-    For the shape parameter in constant size simulations GRAPES and polyDFE are roughly
-    equivalent in their performance whereas dadi seems to yield overestimates. 
+    For the shape parameter in constant size simulations \grapes and \polydfe are roughly
+    equivalent in their performance whereas \dadi seems to yield overestimates. 
     
     In the out-of-Africa model (fig \ref{fig:homsap-dfe.ooa}) the performance of the methods is more mixed. 
     In particular variation in accuracy of the parameters estimated in each
     sample population depends on the methods used, and each method seems to 
     have its own biases with respect to the way in which population history 
-    affects parameter estimates. For instance for dadi we see that estimates of 
-    the shape parameter are most accurate in the YRI sample, while for polyDFE
+    affects parameter estimates. For instance for \dadi we see that estimates of 
+    the shape parameter are most accurate in the YRI sample, while for \polydfe
     estimates are consistently least accurate in the YRI sample. 
     With respect to the strength of selection, as in constant size populations,
-    all methods are performing reasonably well, although dadi seems to
+    all methods are performing reasonably well, although \dadi seems to
     trail in terms of accuracy. 
 
 
@@ -506,8 +522,8 @@
         acting on exons parameterized by a mean selection coefficient, a shape parameter, and a relationship between selection and domiance. Estimates of the 
         parameters of the DFE are shown in the left ($\lvert E(s) \rvert $) and right hand panels (shape) respectively.
         This vaquita model has a single extant population, labelled pop 0, and parameter estimates from each
-        of the three different methods are shown: 1) GRAPES \cite{galtier2016adaptive}, 2) polyDFE \citep{tataru2020polydfe},
-        and 3) dadi \citep{gutenkunst2009inferring,kim2017inference}.
+        of the three different methods are shown: 1) \grapes \cite{galtier2016adaptive}, 2) \polydfe \citep{tataru2020polydfe},
+        and 3) \dadi \citep{gutenkunst2009inferring,kim2017inference}.
         C) Shown is the simulated distribution of $2 h s$, where $h$ is the dominance coefficient, along with the simulated distribution of $s$ and the median inferred DFEs. The distribution of $2 h s$ is multimodal because the simulated relationship between $h$ and $s$ is not continuous.
         % RNG: For C, need to extract inferred values from pipeline.
         }
@@ -548,8 +564,8 @@ Strongly deleterious alleles are often observed to be recessive in many species 
         The HapMap II genetic map \citep{international2007second} was used in each simulation. 
         Single beneficial mutations were introduced at each location with a selection coefficient of $s = 0.03$,
         and only sampled if they reached a terminal frequency of 0.95 or greater. 
-        Three methods for detecting sweeps were used: 1) sweepfinder2 \citep{degiorgio2016sweepfinder2} (top row), 
-        2) diploshic \citep{kern2018diplos} (middle row), and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity (bottom row).
+        Three methods for detecting sweeps were used: 1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row), 
+        2) \diploshic \citep{kern2018diplos} (middle row), and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity (bottom row).
         True positive rate is shown for these methods for samples from the CEU and YRI samples (left and right respectively). 
         Under each method we show as a heat map exon density along the chromosome, along with the local recombination rate in cM/Mb.
         Power is shown as the proportion of replicates in which a sweep was detected at each location. 
@@ -560,8 +576,8 @@ Strongly deleterious alleles are often observed to be recessive in many species 
     \end{figure}
     
     In Figure \ref{fig:chr1_power} we show the power to detect selective sweeps at 100 locations along human chromosome 1 from
-    the simulations described above. We show the results of three methods for detecting sweeps: 1) sweepfinder2 \citep{degiorgio2016sweepfinder2},
-    2) diploshic \citep{kern2018diplos}, and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity.
+    the simulations described above. We show the results of three methods for detecting sweeps: 1) \sweepfinder \citep{degiorgio2016sweepfinder2},
+    2) \diploshic \citep{kern2018diplos}, and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity.
     A few things are immediately apparent from this figure. First, the power to detect sweeps is generally higher in the YRI sample
     than in the CEU sample, which is consistent with the fact that the YRI sample has a larger effective population size and thus
     more variation to detect a sweep. Further the population size of YRI has been relatively constant over the last 100,000 years,
@@ -598,8 +614,8 @@ Strongly deleterious alleles are often observed to be recessive in many species 
     but one that is present across the entire range of recombinations rates observed in human chromosome 1. 
     We also note that the different methods for detecting sweeps that we have explored here respond differently to the effects of recombination rate.
     Unsurprisingly, the empirical cutoff of $\pi$ to detect sweeps is the less robust to the effects of recombination rate than the other two methods,
-    that are specifically designed to find selective sweeps. Whereas sweepfinder2 has a clear decline in power with increasing recombination rate,
-    diploshics behavior is more variable, with a slight increase in power at intermediate recombination rates in the CEU sample and a decline
+    that are specifically designed to find selective sweeps. Whereas \sweepfinder2 has a clear decline in power with increasing recombination rate,
+    \diploshic 's behavior is more variable, with a slight increase in power at intermediate recombination rates in the CEU sample and a decline
     in power at high recombination rates in the YRI sample.
 
     In Figure \ref{fig:power-exon} we show the relationship between power and local exon density for our sweep simulations.
@@ -607,9 +623,9 @@ Strongly deleterious alleles are often observed to be recessive in many species 
     is generally lower in the presence of purifying selection acting on exons. However while this is the case we see that 
     generally all methods have more power to detect sweeps in regions of lower exon density, which is consistent with the idea that
     background selection acting on nearby exons can reduce the signature of a sweep. However this is far from a simple pattern:
-    for instance sweepfinder2 seems to have minimum power in regions of intermediate exon density, while diploshic is roughly constant
+    for instance sweepfinder2 seems to have minimum power in regions of intermediate exon density, while \diploshic is roughly constant
     or perhaps has a slight increase in power at intermediate exon densities. Noise is the estimates of power with respect to exon density
-    are prohibitively high for the empirical cutoff of $\pi$ to detect sweeps, so we it's not clear what conclusions can be drawn.
+    are prohibitively high for the empirical cutoff of $\pi$ to detect sweeps, so it's not clear what conclusions can be drawn.
 
 \lipsum[20-25]
 
@@ -647,6 +663,61 @@ Strongly deleterious alleles are often observed to be recessive in many species 
 
 \section*{Conclusion}
     \label{conclusion}
+
+\section*{Methods}
+    \label{methods}
+
+    \subsection*{Simulations}
+    In this study we performed simulations of the human and vaquita porpoise genomes
+    using the \stdpopsim{} framework. As stated above, simulations included a model 
+    of selection acting on exonic regions, matched to the human and vaquita porpoise genomes.
+    Three replications of full genome simulations were performed for each species, with 
+    a sample size of 100 diploid individuals. Demographic models are as stated above, each
+    using the exon annotations from the human and vaquita porpoise genomes respectively.
+    For simulations with selection, a SLiM scaling factor of 1 (corresponding to no scaling)
+    was used, with a burn-in of 10 ticks. 
+
+    \subsection*{Demographic inference}
+    With simulations complete, demographic inference was performed using a collection of methods:
+    \msmc \citep{Schiffels2020}, \stairway \citep{liu2020stairway}, \gone \citep{santiago2020recent}, and \smcpp \citep{terhorst2017robust}.
+    Each of these methods was run using the same set of simulations in replicate.
+    In each case, the non-recombining portion
+    of the genome was masked to remove any bias from inference due to recombination rate
+    variation. Comparisons between inferences made with and without selection were 
+    of particular interest. For \msmc, we used a random sample of $N=6$ genomes with 20
+    iterations of the EM algorithm. For \gone, we set max\_snps = 500000,
+    the number of generations to 2000, and the number of bins = 400, all representing default settings.
+    
+
+    \subsection*{Distribution of fitness effects inference}
+    We used three software packages to infer the distribution of fitness effects (DFE) from genetic data:
+    \dadi \citep{gutenkunst2009inferring,kim2017inference}, \polydfe \citep{tataru2020polydfe}, and \grapes \citep{galtier2016adaptive}.
+    Each software package was run using the same set of simulations in replicate.   
+    For these analyses we used the exon annotations from the human and vaquita porpoise genomes respectively.
+    A key distinction between our analyses and those done by the empirical biologist
+    is that we have complete knowledge of which sites are under selection in the simulation,
+    thus our inferences is a best case scenario. In practice, empirical inference of the DFE is a much
+    harder problem as not all mutations assumed to be free of selection
+    may in reality be under selection. As above, all methods we run using default settings.
+
+    \subsection*{Selective sweeps detection}
+    We ran simulations of 5Mbp regions of chromosome 1 of the human genome with an without
+    purifying selection acting on exonic regions, and under a the three population
+    out-of-Africa model of human demography \citep{gutenkunst2009inferring}, 
+    along with the HapMap II genetic map \citep{international2007second}.
+    Single beneficial mutations were introduced at each location with a selection coefficient of $s = 0.03$,
+    and only sampled if they reached a terminal frequency of 0.95 or greater. 
+    We then benchmarked the performance of three methods for detecting sweeps: 1) \sweepfinder \citep{degiorgio2016sweepfinder2},
+    2) \diploshic \citep{kern2018diplos}, and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity.
+    \diploshic was trained on data simulated using \texttt{discoal} \citep{kern2016discoal}.
+    For training simulations, we simulated 20 haploid genomic regions of 1.21Mbp
+    with a constant population size of 10,000 individuals, a mutation rate of 1e-8, and a recombination rate of 1e-8.
+    For \texttt{discoal} simulations that included selective sweeps,
+    selection coefficients were drawn from a uniform distribution between 0.001 and 0.05.
+    The time of the sweep was chosen from a uniform distribution between 0 and 0.02 Ne generations in the past.
+    For soft sweeps, the frequency at which selection was introduced was drawn from a uniform distribution between 1e-4 and 0.1.
+    All \texttt{discoal} training simulations were done under a model of equilibrium population size, 
+    so we expected it to perform suboptimally given the variation in population size in the out-of-Africa model. 
 
 \section*{Data availability}\label{data_availability}
 
