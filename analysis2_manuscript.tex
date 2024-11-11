@@ -308,6 +308,7 @@
     but currently is limited to using SLiM simulation engine, which
     is perhaps the most flexible simulation engine for modeling selection currently available.
     
+
     As with other \stdpopsim models, when incorporating selection we aim to hew as closely as possible
     to realistic genomes, and provide public annotations of specices-specific functional
     elements that can be used along with a \texttt{DFE} object to
@@ -316,6 +317,19 @@
     From a users perspective, one can specify a species, a portion of the genome to simulate,
     a genetic map if available, a model of demography, and a model of selection that is
     composed of a set of annotations and a \texttt{DFE} object. 
+
+    % DRS: This figure could really use some Python API and comand line examples like in Figs 1B,C
+    % form the original stdpopsim paper
+    \begin{wrapfigure}[]{l}{0.4\textwidth}
+        \vspace{-0.0cm}
+        \includegraphics[width=\linewidth]{figures/schematics/catalog.pdf}
+        \caption{\label{fig:schematic}
+        A schematic of the \stdpopsim catalog for simulating genetic variation
+        in a population. The user specifies a species, a portion of the genome to simulate,
+        and optionally a genetic map, a model of demography, and a model of selection that 
+        itself is composed of a distribution of fitness effects (DFE) and a set of functional
+        annotations.}
+    \end{wrapfigure}
 
     The vast majority of published DFE estimates are based on a limited number of species,
     so \stdpopsim currently has implemented published DFEs from
@@ -329,7 +343,7 @@
     a published DFE included in the catalog. This flexibility allows for a wide range of
     models of selection to be simulated, and for the results of these simulations to be
     compared to empirical data or used as a null model for hypothesis testing.
-
+   
     % sweep interface
     In addition to the \texttt{DFE} class, we have also implemented a class (\texttt{stdpopsim.ext.selective\_sweep})
     that enables selective sweeps to be simulated in \stdpopsim.
@@ -341,20 +355,6 @@
     and demography to provide a rich model of the combined effects of multiple disparate evolutionary processes
     on genetic variation in a population.
     
-    % DRS: This figure could really use some Python API and comand line examples like in Figs 1B,C
-    % form the original stdpopsim paper
-    \begin{wrapfigure}[37]{l}{0.4\textwidth}
-        \vspace{-0.0cm}
-        \includegraphics[width=\linewidth]{figures/schematics/catalog.pdf}
-        \caption{\label{fig:schematic}
-        A schematic of the \stdpopsim catalog for simulating genetic variation
-        in a population. The user specifies a species, a portion of the genome to simulate,
-        and optionally a genetic map, a model of demography, and a model of selection that 
-        itself is composed of a distribution of fitness effects (DFE) and a set of functional
-        annotations.}
-    \end{wrapfigure}
-    \hfill
-
     % current numbers of DFEs / species / etc
     At this release the \stdpopsim catalog comprises 24 species (i.e. genome representations)
     for which we have implemented XX demographic models, have XX genetic maps, and XX DFEs.
@@ -513,7 +513,7 @@
     %add PhoSin DFE figure here
     \begin{figure}
         \centering
-        \includegraphics[width=\textwidth]{figures/PhoSin/Vaquita2Epoch_1R22/PhoSin_Vaquita2Epoch_1R22_Gamma_R22_Phocoena_sinus.mPhoSin1.pri.110_exons_DFE_plot.pdf}
+        \includegraphics[width=0.8\textwidth]{figures/PhoSin/Vaquita2Epoch_1R22/PhoSin_Vaquita2Epoch_1R22_Gamma_R22_Phocoena_sinus.mPhoSin1.pri.110_exons_DFE_plot.pdf}
 \includegraphics{figures/PhoSin/Vaquita2Epoch_1R22/hs_hist.pdf}
         \caption{
         \label{fig:vaquita-dfe}
@@ -575,6 +575,7 @@ Strongly deleterious alleles are often observed to be recessive in many species 
         \label{fig:chr1_power}
     \end{figure}
     
+    ** this section needs revision based on new figures that Murillo will add **
     In Figure \ref{fig:chr1_power} we show the power to detect selective sweeps at 100 locations along human chromosome 1 from
     the simulations described above. We show the results of three methods for detecting sweeps: 1) \sweepfinder \citep{degiorgio2016sweepfinder2},
     2) \diploshic \citep{kern2018diplos}, and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity.
@@ -627,42 +628,26 @@ Strongly deleterious alleles are often observed to be recessive in many species 
     or perhaps has a slight increase in power at intermediate exon densities. Noise is the estimates of power with respect to exon density
     are prohibitively high for the empirical cutoff of $\pi$ to detect sweeps, so it's not clear what conclusions can be drawn.
 
-\lipsum[20-25]
 
-% \section*{outline}
-%     \label{outline}
-%     \begin{enumerate}
-%         \item Single-population demographic inference methods
-%         \begin{enumerate}
-%             \item mscm2
-%             \item stairwaiplot
-%             \item GONE
-%             \item SMC++
-%         \end{enumerate}
-%         \item DFE inference methods
-%         \begin{enumerate}
-%             \item dadi
-%             \item polyDFE
-%             \item DFE-alpha
-%             \item GRAPES
-%         \end{enumerate} 
-%         \item sweeps
-%         \begin{enumerate}
-%             \item compare effect of BGS on sweep detection
-%             \item compare power in different pops
-%             \item compare methods
-%         \end{enumerate}
-%     \end{enumerate}
+\section*{Discussion}
+    \label{Discussion}
+    In this paper we have presented an important new additional to the \stdpopsim{} library
+    that allows for simulating genetic variation in the presence of selection.
+    We have demonstrated the utility of this new API by showing how it can be used to benchmark
+    the performance of different methods for demographic inference, the inference of the distribution
+    of fitness effects of mutations, and the detection of selective sweeps.
+    In general, this is an important step forward for the field of population genetics,
+    as it allows for a wide range of models of selection to be easily simulated and compared to
+    empirical data, with reproducibility, computational efficiency, and rigor.
 
-    
-
-
-
-
-
-
-\section*{Conclusion}
-    \label{conclusion}
+    We have shown how the new API can be used to benchmark the performance of different methods
+    although we acknowledge that the benchmarks shown here merely scratch the surface of what
+    can be done with the new API. We envision moving forward that many researchers will use
+    the new API to simulate data under a wide range of models of selection, and to develop
+    new methods for the analysis of genetic data in the presence of selection. 
+    Further the critical step of benchmarking methods for the analysis of genetic data
+    can now be done on common ground, using the same simulations and parameterizations of
+    models of selection in a way that was not possible before.
 
 \section*{Methods}
     \label{methods}
