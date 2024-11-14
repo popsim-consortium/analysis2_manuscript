@@ -347,10 +347,11 @@
         \vspace{-0.0cm}
         \includegraphics[width=\linewidth]{figures/schematics/catalog.pdf}
         \caption{\label{fig:schematic}
-        A schematic of the \stdpopsim catalog for simulating genetic variation
-        in a population. The user specifies a species, a portion of the genome to simulate,
-        and optionally a genetic map, a model of demography, and a model of selection that 
-        itself is composed of a distribution of fitness effects (DFE) and a set of functional
+        A schematic of the \stdpopsim catalog and the different components that
+        can be used in simulations. The user specifies a species, a portion of
+        the genome to simulate, and optionally a genetic map, a model of
+        demography, and a model of selection that itself is composed of a
+        distribution of fitness effects (DFE) and a set of functional
         annotations.}
     \end{wrapfigure}
     \hfill
@@ -559,18 +560,26 @@ Strongly deleterious alleles are often observed to be recessive in many species 
         \centering
         \includegraphics[width=0.8 \textwidth]{figures/sweeps/chr1_power.pdf}
         \caption{
-        Power to detect selective sweeps at 100 locations along human chromosome 1 under a three population out-of-Africa model \citep{gutenkunst2009inferring}  
-        with and without purifying selection acting on exons under the Gamma-distributed DFE described above. 
-        The HapMap II genetic map \citep{international2007second} was used in each simulation. 
-        Single beneficial mutations were introduced at each location with a selection coefficient of $s = 0.03$,
-        and only sampled if they reached a terminal frequency of 0.95 or greater. 
-        Three methods for detecting sweeps were used: 1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row), 
-        2) \diploshic \citep{kern2018diplos} (middle row), and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity (bottom row).
-        True positive rate is shown for these methods for samples from the CEU and YRI samples (left and right respectively). 
-        Under each method we show as a heat map exon density along the chromosome, along with the local recombination rate in cM/Mb.
-        Power is shown as the proportion of replicates in which a sweep was detected at each location. 
-        Each panel shows the results of simulations with purifying selection acting on exons (red; labelled BGS)
-        and without purifying selection acting on exons (blue; labelled Neutral).
+        Power to detect selective sweeps at 100 locations along human
+        chromosome 1 under a three population out-of-Africa model
+        \citep{gutenkunst2009inferring} when using null models with and without
+        purifying selection acting on exons under the Gamma-distributed DFE
+        described above.  The HapMap II genetic map
+        \citep{international2007second} was used in each simulation.  Single
+        beneficial mutations were introduced at each location with a selection
+        coefficient of $s = 0.03$, and only sampled if they reached a terminal
+        frequency of 0.95 or greater.  Three methods for detecting sweeps were
+        used: 1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row), 2)
+        \diploshic \citep{kern2018diplos} (middle row), and 3) an empirical
+        cutoff of $\pi$ to find regions of reduced diversity (bottom row).
+        True positive rate is shown for these methods for samples from the CEU
+        and YRI samples (left and right respectively).  Under each method we
+        show as a heat map exon density along the chromosome, along with the
+        local recombination rate in cM/Mb.  Power is shown as the proportion of
+        replicates in which a sweep was detected at each location.  To define
+        thresholds for calling a sweep, two different null models were used: a
+        neutral model (blue lines), and a model with purifying selection acting
+        on exons (red lines).
         }
         \label{fig:chr1_power}
     \end{figure}
@@ -596,13 +605,17 @@ Strongly deleterious alleles are often observed to be recessive in many species 
         \centering
         \includegraphics[width=0.8 \textwidth]{figures/sweeps/relationship_power_cM.pdf}
         \caption{
-        Power to detect selective sweeps at 100 locations along human chromosome 1 under a three population out-of-Africa model \citep{gutenkunst2009inferring}  
-        with and without purifying selection as a function of local recombination rate.
-        Simulations are as described in Figure \ref{fig:chr1_power}.
-        Each panel shows the results of simulations with purifying selection acting on exons (red; labelled BGS)
-        and without purifying selection acting on exons (blue; labelled Neutral).
-        True positive rate is shown for these methods for samples from the CEU and YRI samples (left and right respectively).
-        Points represent the power at each location and trend lines along with 95\% confidence intervals are shown fit to those points.
+        Power to detect selective sweeps at 100 locations along human
+        chromosome 1 under a three population out-of-Africa model
+        \citep{gutenkunst2009inferring}  when using null models with and
+        without purifying selection as a function of local recombination rate.
+        Simulations are as described in Figure \ref{fig:chr1_power}.  True
+        positive rate is shown for these methods for samples from the CEU and
+        YRI samples (left and right respectively).  To define thresholds for
+        calling a sweep, two different null models were used: a neutral model
+        (blue lines), and a model with purifying selection acting on exons (red
+        lines).  Points represent the power at each location and trend lines
+        along with 95\% confidence intervals are shown fit to those points.
         }
         \label{fig:power-recomb}
     \end{figure}
