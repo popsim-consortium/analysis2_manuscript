@@ -575,7 +575,6 @@ Strongly deleterious alleles are often observed to be recessive in many species 
         \label{fig:chr1_power}
     \end{figure}
     
-    ** this section needs revision based on new figures that Murillo will add **
     In Figure \ref{fig:chr1_power} we show the power to detect selective sweeps at 100 locations along human chromosome 1 from
     the simulations described above. We show the results of three methods for detecting sweeps: 1) \sweepfinder \citep{degiorgio2016sweepfinder2},
     2) \diploshic \citep{kern2018diplos}, and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity.
@@ -592,7 +591,24 @@ Strongly deleterious alleles are often observed to be recessive in many species 
     models with or without purifying selection. This is likely due to the effects of recombination rate heterogeniety as well
     as the density of functional elements along the chromosome.
 
-    %sweep power vs recombination rate
+    Using this set of simulations we can also compare the power of different methods to detect sweeps.
+    In general, the power of the methods varies with respect to the population history of the sample.
+    For instance \sweepfinder2 has marginally higher power to detect sweeps in the CEU sample than \diploshic,
+    likely as a results of the fact that we here trained \diploshic on simulations under a constant size population,
+    while the population size history of CEU is characterized by a strong recent bottleneck.
+    Conversely, \diploshic has higher power to detect sweeps in the YRI sample than \sweepfinder2,
+    likely because that population size history more closely matches the population size history used to train \diploshic.
+    We can further explore the performance of the methods by plotting the receiver operating characteristic (ROC) curves for the methods.
+    In Figure \ref{fig:roc-curves} we show the ROC curves for the three methods for detecting sweeps.
+    False positive rates were established using neutral simulations that contained no sweeps
+    but were conditioned on the same population history as the CEU and YRI samples.
+    These suggest that the $\pi$ cutoff is a suprisingly effective method for detecting sweeps,
+    in these genomic regions at least, but that it lags behind \diploshic and \sweepfinder2 in terms of specificity
+    generally. 
+    %While this is not exhaustive benchmarking, we aim to give a sense to the reader
+    %of how \stdpopsim can be used to benchmark the performance of different methods easily and efficiently.
+
+
     \begin{figure}
         \centering
         \includegraphics[width=0.8 \textwidth]{figures/sweeps/relationship_power_cM.pdf}
@@ -609,15 +625,15 @@ Strongly deleterious alleles are often observed to be recessive in many species 
     \end{figure}
 
     To further explore the effects of recombination rate and exon density on the power to detect sweeps, we show in Figure \ref{fig:power-recomb}
-    the relationship between power and local recombination rate for our sweep simulations. We see that power to detect sweeps is generally
-    a decreasing function of local recombination rate, which is consistent with sweeps having a larger genomic footprint in regions of low
-    recombination. We also see that the presence of purifying selection acting on exons has a relatively small effect on the power to detect sweeps,    
+    the relationship between power and local recombination rate for our sweep simulations. We see that power to detect sweeps is
+    a decreasing function of local recombination rate for \sweepfinder2 and $pi$ outliers,
+    which is consistent with sweeps having a larger genomic footprint in regions of low
+    recombination.
+    \diploshic on the other hand shows a slight increase in power with recombination rates.
+    We also see that the presence of purifying selection acting on exons has a relatively small effect on the power to detect sweeps,    
     but one that is present across the entire range of recombinations rates observed in human chromosome 1. 
-    We also note that the different methods for detecting sweeps that we have explored here respond differently to the effects of recombination rate.
     Unsurprisingly, the empirical cutoff of $\pi$ to detect sweeps is the less robust to the effects of recombination rate than the other two methods,
-    that are specifically designed to find selective sweeps. Whereas \sweepfinder2 has a clear decline in power with increasing recombination rate,
-    \diploshic 's behavior is more variable, with a slight increase in power at intermediate recombination rates in the CEU sample and a decline
-    in power at high recombination rates in the YRI sample.
+    that are specifically designed to find selective sweeps. 
 
     In Figure \ref{fig:power-exon} we show the relationship between power and local exon density for our sweep simulations.
     Here there is little relationship between power and exon density, which is somewhat surprising given that the power to detect sweeps
@@ -625,7 +641,7 @@ Strongly deleterious alleles are often observed to be recessive in many species 
     generally all methods have more power to detect sweeps in regions of lower exon density, which is consistent with the idea that
     background selection acting on nearby exons can reduce the signature of a sweep. However this is far from a simple pattern:
     for instance sweepfinder2 seems to have minimum power in regions of intermediate exon density, while \diploshic is roughly constant
-    or perhaps has a slight increase in power at intermediate exon densities. Noise is the estimates of power with respect to exon density
+    or perhaps has a slight increase in power at intermediate exon densities. Noise in the estimates of power with respect to exon density
     are prohibitively high for the empirical cutoff of $\pi$ to detect sweeps, so it's not clear what conclusions can be drawn.
 
 
@@ -787,7 +803,17 @@ PhoSin & Vaquita2Epoch 1R22 & exons & 0.024 & \bf{0.023} & 0.024 & \bf{0.18} & 0
 \end{table}
 
 
-
+% roc curves for sweeps
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8 \textwidth]{figures/sweeps/roc_neutral_null.pdf}
+    \caption{
+    \label{fig:roc-curves}
+    Receiver operating characteristic (ROC) curves for the three methods for detecting sweeps.
+    False positive rates were established using neutral simulations that contained no sweeps
+    but were conditioned on the same population history as the CEU and YRI samples.
+    }
+\end{figure}
 
 
 %sweep power vs exon density
