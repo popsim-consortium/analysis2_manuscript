@@ -91,6 +91,7 @@
  \author[4,*]{Graham Gower}
  \author[5*]{Nathaniel S. Pope}
  \author[5*]{Murillo F. Rodrigues}
+ \author[5*]{Silas Tittes}
 \author[6]{Georgia Tsambos}
 \author[34]{Linh N. Tran}
 \author[2]{Maria Izabel A. Cavassim}
@@ -113,7 +114,7 @@
 \author[5]{Chris C. R. Smith}
 % \author[25]{Jeffrey P. Spence}
 % \author[5]{Anastasia Teterina}
-\author[5]{Silas Tittes}
+
 \author[5]{Scott T. Small}
 % \author[26]{Per Unneberg}
 % \author[27]{Juan Manuel Vazquez}
@@ -183,6 +184,21 @@
 
 
 \section*{Abstract}
+    \label{abstract}
+    Natural selection is a fundamental evolutionary force that shapes patterns of genetic variation across species. 
+    However, simulating realistic models that incorporate both selection and complex demographic histories
+    has remained challenging, limiting our ability to benchmark statistical methods and explore theoretical predictions.
+    Here we present a major extension to the \stdpopsim{} framework that enables simulation of various modes
+    of natural selection, including background selection, selective sweeps, and arbitrary distributions of fitness effects (DFE).
+    This extension maintains \stdpopsim's core principles of reproducibility and standardization while adding support
+    for species-specific genomic annotations and published DFE estimates. 
+    We demonstrate the utility of this framework by benchmarking methods for demographic inference,
+    DFE estimation, and selective sweep detection across different species and scenarios. 
+    Our results highlight how selection can bias demographic inference, 
+    reveal the sensitivity of DFE inference methods to model assumptions, 
+    and show how genomic features like recombination rate and functional density influence power to detect selective sweeps.
+    This extension to \stdpopsim{} provides a powerful new resource for the population genetics community
+    to explore the interplay between selection and other evolutionary forces in a reproducible framework.
 
 \section*{Introduction}
     \label{introduction}
@@ -195,8 +211,7 @@
     and genetic drift \cite[e.g.,][]{gillespie1991causes}.
     For instance changes in population size can lead to fluctuations
     in genetic diversity across a recombining chromosome 
-    that can mimic the effects of selection \citep{simonsen1995properties, barton1998effect},
-    % DRS -- I'm not sure Barton reference is right for this?
+    that can mimic the effects of selection \citep{simonsen1995properties},
     and lead to spurious inferences about the strength and targets of genetic adaptation
     \cite{simonsen1995properties,akey2004population,nielsen2005genomic}.
     In turn selection can confound our ability to infer demographic 
@@ -207,7 +222,6 @@
     However this is a challenging task from a modeling perspective \citep{johri2022prospect}.
 
     % simulation
-    % DRS: lots more refs will be needed in this paragraph. added a few and am happy to help add more later if needed
     To meet the growing need for the interpretation,
     analysis, and exploration of realistic and complex evolutionary models
     the field of population genetics has increasingly turned to simulation.
@@ -238,7 +252,6 @@
     different studies.
 
     % stdpopsim
-    % DRS: lots more refs will be needed in this paragraph. added a few and am happy to help add more later if needed
     A lingering challenge with simulation in population genetics has been
     reproducibility and the ability to share and compare results among 
     researchers \citep[e.g.,][]{ragsdale2020lessons}.
@@ -357,7 +370,7 @@
     
     % current numbers of DFEs / species / etc
     At this release the \stdpopsim catalog comprises 24 species (i.e. genome representations)
-    for which we have implemented XX demographic models, have XX genetic maps, and XX DFEs.
+    for which we have implemented 28 demographic models, have 37 genetic maps, and 7 DFEs. %someone should double check the numbers
     Additions to the catalog are ongoing -- we point the reader to our previously published 
     report detailing this effort \citep{lauterbur2023expanding} and we welcome contributions from the
     community---we encourage those interested in contributing to visit https://popsim-consortium.github.io/stdpopsim-docs
@@ -378,12 +391,12 @@
     One of the most common applications of population genetic inference is to estimate
     the effective population size over time, $N_e(t)$, from genetic data. This can be done
     using a variety of methods, including the pairwise sequentially Markovian coalescent
-    (PSMC) \citep{li2011inference}, through use of the site frequency spectrum (SFS),
-    as well as through identity by decent information. 
+    (PSMC) \citep{li2011inference}, through use of the site frequency spectrum (SFS) \citep{liu2020stairway},
+    as well as through identity by decent information \citep{santiago2020recent}. 
     While that is so, it has been well described that selection, because of its effects on
     local and more global patterns of genetic variation, can drive estimates of $N_e(t)$
     further from true census population sizes simply because selection increases the 
-    rate of coalescence in the genome. 
+    rate of coalescence in the genome \citep[e.g.][]{schrider2016effects}. 
 
     Using \stdpopsim we can simulate genetic data under a model of selection and then 
     examine the performance of different methods for inferring $N_e(t)$ from these simulated 
@@ -396,7 +409,7 @@
     These simulations were then used to estimate $N_e(t)$ using four methods: 1) \msmc \citep{Schiffels2020}, 
     2)\stairway method \citep{liu2020stairway}, 3) \gone \citep{santiago2020recent}, and 4) \smcpp \citep{terhorst2017robust}.
     In this and what follows we have performed 3 replicate whole genome simulations, so uncertainty in estimates might
-    be roughly assessed, however we are mindful of wasted compute as thorough benchmarking
+    be roughly assessed, however we are mindful of wasted computational resources as thorough benchmarking
     isn't the main purpose of this manuscript.
     
     In Figure \ref{fig:1pop-human-demography} we show six panels, each of which shows the estimated $N_e(t)$
@@ -404,7 +417,8 @@
     from Ragsdale \textit{et al.} (2019)
     with samples taken from three modern geographic groups (CEU, CHB, and YRI from left to right).
     The top row shows the results of simulations without selection, while the bottom row shows the results
-    of simulations with a Gamma distributed DFE for the deleterious effects of mutations occurring exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$
+    of simulations with a Gamma distributed DFE for the deleterious effects of mutations occurring exons.
+    In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$
     in various colors for the four methods. Dotted lines on the bottom row are to visually reinforce that inference is done
     from a model with selection. We see that these methods generally perform reasonably well in the absence of selection, 
     although GONE seems to overestimate $N_e(t)$ in the more recent past for the CEU and CHB populations.
@@ -416,11 +430,14 @@
     Likewise \smcpp seems to be more robust to the presence of selection,
     but there is some added noise to the returned estimates. 
     \msmc seems to be the most affected by the presence of selection, 
-    estimates of $N_e(t)$ varying quite a bit from the true $N_e(t)$.
+    estimates of $N_e(t)$ varying quite a bit from the true $N_e(t)$,
+    although estimates from \msmc have quite a bit of added noise even in the absence of selection.
+
     % DRS: I don't agree with the interpretation in the previous two sentences (starting with "Likewise").
     % MSMC is already barfing a little bit even without selection, and it is not clear to me from these
     % plots that selection makes things any worse. Also, SMC++ is doing quite well without selection so maybe
     % the minor drop in accuracy is meaningful in relative terms.
+    % ADK: I edited the text-- what do you think Dan?
 
 
 
@@ -488,7 +505,11 @@
     In Figures \ref{fig:homsap-dfe.constant} and \ref{fig:homsap-dfe.ooa} we show a comparison of estimates
     from three software packages for inferring the DFE from genetic data-- 
     \dadi \citep{gutenkunst2009inferring}, \polydfe \citep{tataru2020polydfe}, 
-    and \grapes \citep{galtier2016adaptive}. 
+    and \grapes \citep{galtier2016adaptive}.
+    In each case we note that the DFE is estimated from segregating sites only,
+    without the use of substitution data, as a current limitation of \stdpopsim
+    currently is that we are not able to simulate an outgroup sequence to estimate
+    divergence. 
     Figure \ref{fig:homsap-dfe.constant} shows estimates from a single, constant size population of humans, 
     while Figure \ref{fig:homsap-dfe.ooa} shows estimates from a model of human out-of-Africa demography.
     In a constant size population, all methods perform reasonably well, although \dadi seems to
@@ -532,13 +553,18 @@
     In Figures \ref{fig:vaquita-dfe.constant} and \ref{fig:vaquita-dfe} we show a comparison of estimates
     from the same three software packages for inferring the DFE from genetic data, but for simulations of the
     vaquita porpoise genome. In the constant size model (fig \ref{fig:vaquita-dfe.constant}) we see that all methods
-    perform uniformly worse that in the human genome simulations, which consistent underestimation of the mean selection coefficient    
+    perform uniformly worse that in the human genome simulations, with consistent underestimation of the mean selection coefficient    
     and overestimation of the shape parameter. 
-A critical distinction is that the previous human simulations employed a DFE that assumed all selected mutations had additive effects (no dominance, $h = 1/2$), whereas the vaquita simulations use a DFE in which more deleterious mutations are more recessive ($h < 1/2$).
-For all three software packages, the inferred mean and shape of the distribution of selection coefficients is consistent with the mean and shape of the distribution of $2 h s$, the product of the dominance coefficient and the selection coefficient (Fig.~\ref{fig:vaquita-dfe}C).
-This is likely because deleterious alleles are typically at low frequency and thus heterozygous, where their selective effect is $h s$, and all these tools assume additivity  ($h = 1/2$).
-Strongly deleterious alleles are often observed to be recessive in many species \citep{}, so these results suggest caution in interpreting DFE inferences.
-%RNG: Could use Kirk's help with the best references here
+    A critical distinction is that the previous human simulations employed a DFE that assumed all selected mutations had additive effects
+    (no dominance, $h = 1/2$), whereas the vaquita simulations use a DFE in which more deleterious mutations are more recessive ($h < 1/2$).
+    For all three software packages, the inferred mean and shape of the distribution of selection coefficients 
+    is consistent with the mean and shape of the distribution of $2 h s$, the product of the dominance coefficient
+    and the selection coefficient (Fig.~\ref{fig:vaquita-dfe}C).
+    This is likely because deleterious alleles are typically at low frequency and thus heterozygous, 
+    where their selective effect is $h s$, and all these tools assume additivity  ($h = 1/2$).
+    Strongly deleterious alleles are often observed to be recessive in many species \citep{mukai1972mutation},
+    so these results suggest caution in interpreting DFE inferences.
+    %RNG: Could use Kirk's help with the best references here
 
 \section*{Detection of Selective Sweeps}
     \label{sweeps}
@@ -727,7 +753,9 @@ Strongly deleterious alleles are often observed to be recessive in many species 
 
 \section*{Funding}
     \label{funding}
-
+    Multiple funding sources supported this work.
+    MFR, ST, NP, and ADK were supported in part by NIH award R35GM148253.
+    %other funding sources?
 \printbibliography
 
 %%%%%%%% supplementary material
