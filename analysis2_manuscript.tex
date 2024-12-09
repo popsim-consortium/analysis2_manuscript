@@ -701,7 +701,7 @@
 
 \section*{Discussion}
     \label{Discussion}
-    In this paper we have presented an important new additional to the \stdpopsim{} library
+    In this paper, we have presented an important new addition to the \stdpopsim{} library
     that allows for simulating genetic variation in the presence of selection.
     We have demonstrated the utility of this new API by showing how it can be used to benchmark
     the performance of different methods for demographic inference, the inference of the distribution
@@ -710,9 +710,9 @@
     as it allows for a wide range of models of selection to be easily simulated and compared to
     empirical data, with reproducibility, computational efficiency, and rigor.
 
-    We have shown how the new API can be used to benchmark the performance of different methods
-    although the benchmarks shown here merely scratch the surface of what
-    can be done with the new API. We envision moving forward that many researchers will use
+    Although we have shown how the new API can be used to benchmark the performance of different methods,
+    the benchmarks shown here merely scratch the surface of what can be done with the new API.
+    We envision that, moving forward, many researchers will use
     the new API to simulate data under a wide range of models of selection, and to develop
     new methods for the analysis of genetic data in the presence of selection. 
     The additions to \stdpopsim described here further expand this tool's utility for both 
@@ -729,12 +729,12 @@
     \subsection*{Simulations}
     In this study we performed simulations of the human and vaquita porpoise genomes
     using the \stdpopsim{} framework. As stated above, simulations included a model 
-    of selection acting on exonic regions, matched to the human and vaquita porpoise genomes.
+    of (negtive) selection acting on exonic regions, matched to the human and vaquita porpoise genomes.
     Three replicates of whole-genome simulations were performed for each species, with 
     a sample size of 100 diploid individuals. Demographic models are as stated above, each
     using the exon annotations from the human and vaquita porpoise genomes respectively.
-    For simulations with selection, a SLiM scaling factor of 1 (corresponding to no scaling)
-    was used, with a burn-in of 10 ticks. 
+    For simulations with selection, we sampled 10 diploid individuals from each of two populations (YRI and CEU). 
+    To decrease runtimes, we used a SLiM scaling factor of 2 with a burn-in of 2N generations. 
 
     \subsection*{Demographic inference}
     We assessed the accuracy of demographic inferences from
@@ -760,23 +760,34 @@
     may in reality be under selection. As above, all methods were run using default settings.
 
     \subsection*{Selective sweeps detection}
-    We ran simulations of 5Mbp regions of chromosome 1 of the human genome with and without
-    purifying selection acting on exonic regions, and under a three population
-    out-of-Africa model of human demography \citep{gutenkunst2009inferring}, 
-    along with the HapMap II genetic map \citep{international2007second}.
-    Single beneficial mutations were introduced at each location with a selection coefficient of $s = 0.03$,
-    and only sampled if they reached a terminal frequency of 0.95 or greater. 
+    We ran simulations of human chromosome 1 using the three population out-of-Africa model
+    (identified as OutOfAfrica\_3G09 in the stdpopsim library; \cite{gutenkunst_inferring_2009})
+    and the genetic map estimated in \citet{frazer_second_2007} (HapMapII\_GRCh38).
+    For computational efficiency, we simulated a 5Mb region flanking 100 evenly distributed points along the chromosome 1.
+    We generated 1000 replicates of each of three classes of simulations:
+    (i) neutral (with the specified demography and genetic map),
+    (ii) background selection, in which we applied the DFE estimated in \citet{kim_inference_2017} (Gamma\_K17) to exon annotations (taken from Ensembl; ensembl\_havana\_104\_exons),
+    and (iii) sweep with background selection, in which we simulated the hard sweep as described with the addition of constraint in exonic regions (same as for \emph{ii}).
+    In the sweep simulations, we placed a single beneficial mutation in the center of the simulated region with a selection coefficient of $s = 0.03$, and only sampled if the beneficial mutation reached terminal frequency of 0.95 or greater.
+
     We then benchmarked the performance of three methods for detecting sweeps: 1) \sweepfinder \citep{degiorgio2016sweepfinder2},
-    2) \diploshic \citep{kern2018diplos}, and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity.
+    2) \diploshic \citep{kern2018diplos}, and 3) an empirical cutoff for nucleotide diversity ($\pi$) to find regions of reduced diversity.
     \diploshic was trained on data simulated using \texttt{discoal} \citep{kern2016discoal}.
+    Nucleotide diversity was computed directly from the underlying tree sequences using \tskit \citep{ralph_efficiently_2020} over 10 equally sized and non-overlapping subwindows.
+    The composite likelihood ratio (output by \sweepfinder) was computed at 21 uniformly distributed points along the simulated region.
+    To train the \diploshic classifier, 
     For training simulations, we simulated 20 haploid genomic regions of 1.21Mbp
-    with a constant population size of 10,000 individuals, a mutation rate of 1e-8, and a recombination rate of 1e-8.
+    with a constant population size of 10,000 individuals, a mutation rate of 2e-8, and a recombination rate of 2e-8.
     For \texttt{discoal} simulations that included selective sweeps,
-    selection coefficients were drawn from a uniform distribution between 0.001 and 0.05.
-    The time of the sweep was chosen from a uniform distribution between 0 and 0.02 Ne generations in the past.
+    selection coefficients were drawn from a uniform distribution between 0.001 and 0.10.
+    The time of the sweep was chosen from a uniform distribution between 0 and 0.01 Ne generations in the past.
     For soft sweeps, the frequency at which selection was introduced was drawn from a uniform distribution between 1e-4 and 0.1.
     All \texttt{discoal} training simulations were done under a model of equilibrium population size, 
-    so we expected it to perform suboptimally given the variation in population size in the out-of-Africa model. 
+    so we expected it to perform suboptimally given the variation in population size in the out-of-Africa model.
+
+    To call sweeps, we empirically determined the distribution of each statistic (nucleotide diversity, \sweepfinder's CLR, and \diploshic's probability of sweep) under a null model and defined the top $5\%$ quantile as a cutoff to call a sweep (though regions with extremely low recombination rate were excluded from the computation).
+    We considered two null models: neutral and background selection (as explained before).
+    Power (or true positive rate) to detect a sweep is the proportion of simulations with a sweep that were correctly classified as a sweep for each method and at each of the 100 locations along chromosome 1.
 
 \section*{Data availability}\label{data_availability}
 
