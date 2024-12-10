@@ -210,17 +210,17 @@
     on genetic variation are complex, and can be difficult to disentangle
     from other evolutionary processes such as mutation, recombination,
     and genetic drift \citep[e.g.,][]{gillespie1991causes}.
-    For instance changes in population size can lead to fluctuations
+    For instance, changes in population size can lead to fluctuations
     in genetic diversity across a recombining chromosome 
     that can mimic the effects of selection \citep{simonsen1995properties},
     and lead to spurious inferences about the strength and targets of genetic adaptation
     \citep{simonsen1995properties,akey2004population,nielsen2005genomic}.
-    In turn selection can confound our ability to infer demographic 
+    In turn, selection can confound our ability to infer demographic 
     history from allele frequencies \citep{ewing2016consequences,schrider2016effects} and
     estimates of inverse coalescent rate \citep{schrider2016effects, johri2021impact, cousins2024accurate}.
-    Thus it is imperative to joingly account for the effects of selection
+    Thus, it is imperative to jointly account for the effects of selection
     and demography when inferring evolutionary history from genetic data \citep{sheehan2016deep,johri2020toward}.
-    However this is a challenging task from a modeling perspective \citep{johri2022prospect}.
+    However, this is a challenging task from a modeling perspective \citep{johri2022prospect}. % MFR this is a bit unclear
 
     % simulation
     To meet the growing need for the interpretation,
@@ -276,10 +276,10 @@
     variation in the size and density of functional elements, and
     non-equilibrium demographic histories. Ideally, one should be able
     to model all of these features after estimates/annotations obtained
-    from a species of interest \citep[e.g.][]{schrider2020background}.
+    from a species of interest \citep[e.g.][]{schrider2020background,rodrigues2024shared}.
 
     % goals
-    In this manuscript we provide an overview of a major new addition
+    In this manuscript, we provide an overview of a major new addition
     to \stdpopsim---the inclusion of models of selection.
     We begin by describing the models of selection that we have implemented,
     as well as the parameter choices that are available to the user.
@@ -330,18 +330,6 @@
     a genetic map if available, a model of demography, and a model of selection that is
     composed of a set of annotations and a \texttt{DFE} object, all in an automated and user-friendly fashion. 
 
-    % DRS: This figure could really use some Python API and comand line examples like in Figs 1B,C
-    % form the original stdpopsim paper
-    \begin{wrapfigure}[]{l}{0.4\textwidth}
-        \vspace{-0.0cm}
-        \includegraphics[width=\linewidth]{figures/schematics/catalog.pdf}
-        \caption{\label{fig:schematic}
-        A schematic of the \stdpopsim catalog for simulating genetic variation
-        in a population. The user specifies a species, a portion of the genome to simulate,
-        and optionally a genetic map, a model of demography, and a model of selection that 
-        itself is composed of a distribution of fitness effects (DFE) and a set of functional
-        annotations.}
-    \end{wrapfigure}
 
     The vast majority of published DFE estimates are based on a limited number of species,
     so \stdpopsim currently has implemented published DFEs from
@@ -350,7 +338,7 @@
     While that is so, these DFEs can be applied to other species
     in the catalog. For instance, one could simulate a butterfly species with a gamma DFE originally
     estimated from humans, or a human population with a DFE estimated from \textit{Drosophila}.
-    Furthermore the user can specify a custom DFE, and provide their own annotations
+    Furthermore, the user can specify a custom DFE, and provide their own annotations
     of functional elements to simulate selection in a species for which we do not yet have 
     a published DFE included in the catalog. This flexibility allows for a wide range of
     models of selection to be simulated. %, and for the results of these simulations to be
@@ -372,6 +360,21 @@
     and demography to provide a rich model of the combined effects of multiple disparate evolutionary processes
     on genetic variation in a population.
     
+    % DRS: This figure could really use some Python API and comand line examples like in Figs 1B,C
+    % form the original stdpopsim paper
+    \begin{wrapfigure}[37]{l}{0.4\textwidth}
+        \vspace{-0.0cm}
+        \includegraphics[width=\linewidth]{figures/schematics/catalog.pdf}
+        \caption{\label{fig:schematic}
+        A schematic of the \stdpopsim catalog and the different components that
+        can be used in simulations. The user specifies a species, a portion of
+        the genome to simulate, and optionally a genetic map, a model of
+        demography, and a model of selection that itself is composed of a
+        distribution of fitness effects (DFE) and a set of functional
+        annotations.}
+    \end{wrapfigure}
+    \hfill
+
     % current numbers of DFEs / species / etc
     % DRS: are we giving this a version number?
     At this release the \stdpopsim catalog comprises 24 species (i.e. genome representations)
@@ -385,27 +388,27 @@
     
 \section*{Example Applications with Selection}
     \label{applications}
-    In this section we provide a series of examples of how the new models of selection
+    In this section, we present a series of examples of how the new models of selection
     in \stdpopsim can be used to benchmark different
     methods for population genetic inference.
     We focus on three main areas: demographic inference in the 
     single and multi-population settings, inference of the DFE,
-    and the detection of selective sweeps, particularly in the context of background selection.
+    and the detection of selective sweeps, particularly in the context of realistic recombination maps and background selection.
 
     \section*{Inference of $N_e(t)$ in the context of selection}
     One of the most common applications of population genetic inference is to estimate
     the effective population size over time, $N_e(t)$, from genetic data. This can be done
     using a variety of methods, including the pairwise sequentially Markovian coalescent
     (PSMC) \citep{li2011inference}, through use of the site frequency spectrum (SFS) \citep{liu2020stairway},
-    as well as through identity by decent information \citep{santiago2020recent}. 
+    as well as through identity by descent information \citep{santiago2020recent}. 
     While that is so, it has been well described that selection, because of its effects on
     patterns of genetic variation, can bias estimates of $N_e(t)$
     away from true census population sizes simply because selection increases the 
     rate of coalescence in the genome \citep[e.g.][]{schrider2016effects}. 
 
-    Using \stdpopsim we can easily simulate genetic data under a model of selection and then 
+    Using \stdpopsim, we can easily simulate genetic data under a model of selection and then 
     examine the performance of different methods for inferring $N_e(t)$ from these simulated 
-    data. In Figure \ref{fig:1pop-human-demography} we show the results of such a benchmark
+    data. In Figure \ref{fig:1pop-human-demography}, we show the results of such a benchmark
     where we have simulated genomes under a model of human out of Africa (OOA) demography
     with and without purifying selection on exons. For this simulation we have used
     a genetic map from the HapMap Project \citep{international2007second} along with a
@@ -415,11 +418,11 @@
     % some example code somewhere to prove our point? Could help emphasize the utility of this resource.
     These simulations were then used to estimate $N_e(t)$ using four methods: 1) \msmc \citep{Schiffels2020}, 
     2)\stairway method \citep{liu2020stairway}, 3) \gone \citep{santiago2020recent}, and 4) \smcpp \citep{terhorst2017robust}.
-    In this and what follows we have performed 3 replicate whole genome simulations, so uncertainty in estimates might
+    In this and what follows we performed 3 replicate whole genome simulations, so uncertainty in estimates might
     be roughly assessed, however we are mindful of wasted computational resources as thorough benchmarking
-    isn't the main purpose of this manuscript.
+    is not the main purpose of this manuscript.
     
-    In Figure \ref{fig:1pop-human-demography} we show six panels, each of which shows the estimated $N_e(t)$
+    In Figure \ref{fig:1pop-human-demography}, we show six panels, each of which shows the estimated $N_e(t)$
     from data simulated under the five-population model of human out-of-Africa demography
     from Ragsdale \textit{et al.} (2019)
     with samples taken from three modern geographic groups (CEU, CHB, and YRI from left to right).
@@ -465,15 +468,16 @@
     %DRS-fig: reminder to update the legend to just say ``exons'' instead of ensembl_havana_whatever...
 
     To highlight the ease of comparisons between different species and models enabled by \stdpopsim,
-    we have also performed a similar benchmark using the vaquita porpoise \textit{Phocoena sinus}.
-    In Figure \ref{fig:1pop-vaquita-demography} we show the results of $N_e(t)$ inference
-    where we have simulated genomes under a model of vaquita demography from \textcite{robinson2022critically}.
-    For these simulations we have used the genome structure and exon annotations from the vaquita genome assembly
+    we also performed a similar benchmark using the vaquita porpoise \textit{Phocoena sinus}.
+    In Figure \ref{fig:1pop-vaquita-demography}, we show the results of $N_e(t)$ inference
+    where we simulated genomes under a model of vaquita demography from \textcite{robinson2022critically}.
+    For these simulations, we used the genome structure and exon annotations from the vaquita genome assembly
     and a DFE from \textcite{robinson2022critically} that acts on exons, however no genetic map 
     is currently available, so recombination rates are assumed to be constant across the genome.
     The demographic model is a simple two-epoch model where population size has declined in the recent past. 
-    In this case we see that all methods perform well both in the absence and presence of selection,
+    In this case, we see that all methods perform well both in the absence and presence of selection,
     with a close match between the true $N_e(t)$ and the estimated $N_e(t)$ in all cases.
+    % MFR: Should we say somewhere that people use to expect from BGS? That is, that it can be seen as a reduction in local rates of coalescences and thus that we would expect these methods to be somewhat downwardly biased in the presence of BGS?
 
 
 \begin{figure}[t]
@@ -493,7 +497,7 @@
 \section*{Estimation of the Distribution of Fitness effects}
     \label{dfe}
     Another common application of population genetic inference is to estimate the distribution of fitness effects (DFE)
-    from genetic data. Here we show how the new models of selection in \stdpopsim can be used to benchmark and compare
+    from genetic data. Here, we show how the new models of selection in \stdpopsim can be used to benchmark and compare
     the performance of different methods for inferring the DFE. We performed simulations using the 
     human and vaquita porpoise models described above, with complex demographic histories and models of selection acting on exons.
 
@@ -517,22 +521,22 @@
     and \grapes \citep{galtier2016adaptive}.
     In each case we note that the DFE is estimated from segregating sites only,
     without the use of substitution data, as a current limitation of \stdpopsim
-    currently is that we are not able to simulate an outgroup sequence to estimate
+    is that we are not able to simulate an outgroup sequence to estimate
     divergence. 
     Figure \ref{fig:homsap-dfe.constant} shows estimates from a single, constant size population of humans, 
     while Figure \ref{fig:homsap-dfe.ooa} shows estimates from a model of human out-of-Africa demography.
     In a constant size population, all methods perform reasonably well, although \dadi seems to
     perform slightly worse than the other methods examined, at least for the small number of replicates we simulated here.
     Notably only \polydfe overlapped the true mean selection coefficient, whereas 
-    the other methods slightly underestimated the strength of selection. 
+    the other methods do not. 
     For the shape parameter in constant size simulations \grapes and \polydfe are roughly
     equivalent in their performance whereas \dadi seems to yield overestimates. 
     
     In the out-of-Africa model (fig \ref{fig:homsap-dfe.ooa}) the performance of the methods is more mixed. 
-    In particular variation in accuracy of the parameters estimated in each
+    In particular, variation in accuracy of the parameters estimated in each
     sample population depends on the methods used, and each method seems to 
     have its own biases with respect to the way in which population history 
-    affects parameter estimates. For instance for \dadi we see that estimates of 
+    affects parameter estimates. For instance, for \dadi we see that estimates of 
     the shape parameter are most accurate in the YRI sample, while for \polydfe
     estimates are least accurate in the YRI sample. 
     With respect to the strength of selection, as in constant size populations,
@@ -577,48 +581,52 @@
 
 \section*{Detection of Selective Sweeps}
     \label{sweeps}
-    We next highlight how the new models of selection in \stdpopsim can be used to benchmark and compare
-    the performance of different methods for detecting selective sweeps from genetic data. 
-    Here we have performed simulations of human chromosome 1 under the three population out-of-Africa model from \cite{gutenkunst2009inferring}
-    with purifying selection acting on exons under the gamma-distributed DFE described above, the HapMap II genetic map \citep{international2007second},    
-    but also include sweeps. In particular we introduced a beneficial mutation
-    at a given location (to be varied) in the genome at a given time, and with a moderately strong selection coefficient ($s = 0.03$; $2Ns \sim 600$).
-    For each sweep location we performed 200 replicate simulations, sampling from them only if the selected allele reached a frequency of
-    0.95 or greater. Rather than simulate the entire chromosome arm, replicate simulations were performed on 5cM regions of the chromosome
-    at each of 100 different locations. As recombination rate varies across the genome, the size of the region in base pairs simulated varies,
-    however the recombination distance, which is critical for the linked effects of a sweep, is held constant.
-  
+    We next highlight how the new models of selection in \stdpopsim can be used to benchmark and compare the performance of different methods for detecting selective sweeps from genetic data.
+    Here, we performed simulations of human chromosome 1 under the three population out-of-Africa model from \cite{gutenkunst2009inferring} with purifying selection acting on exons under the gamma-distributed DFE described above, the HapMap II genetic map \citep{international2007second}, but also include sweeps.
+    In particular, we introduced a beneficial mutation at a given location (to be varied) in the genome at a given time, and with a moderately strong selection coefficient ($s = 0.03$; $2Ns \sim 600$).
+    For each sweep location, we performed 1000 replicate simulations, sampling from them only if the selected allele reached a frequency of 0.95 or greater.
+    Rather than simulate the entire chromosome arm, replicate simulations were performed on 5cM regions of the chromosome at each of 100 different locations.
+    As recombination rate varies across the genome, the size of the region in base pairs simulated varies, however the recombination distance, which is critical for the linked effects of a sweep, is held constant.
+ 
 
     %sweeep power figure
     \begin{figure}
         \centering
         \includegraphics[width=0.8 \textwidth]{figures/sweeps/chr1_power.pdf}
         \caption{
-        Power to detect selective sweeps at 100 locations along human chromosome 1 under a three population out-of-Africa model \citep{gutenkunst2009inferring}  
-        with and without purifying selection acting on exons under the gamma-distributed DFE described above. 
-        The HapMap II genetic map \citep{international2007second} was used in each simulation. 
-        Single beneficial mutations were introduced at each location with a selection coefficient of $s = 0.03$,
-        and only sampled if they reached a terminal frequency of 0.95 or greater. 
-        Three methods for detecting sweeps were used: 1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row), 
-        2) \diploshic \citep{kern2018diplos} (middle row), and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity (bottom row).
-        True positive rate is shown for these methods for the CEU and YRI samples (left and right respectively). 
-        Under each method we show heatmaps of exon density and local recombination rate along the chromosome.
-        Power is shown as the proportion of replicates in which a sweep was detected at each location. 
-        Each panel shows the results of simulations with purifying selection acting on exons (red; labelled BGS)
-        and without purifying selection acting on exons (blue; labelled Neutral).
+        Power to detect selective sweeps at 100 locations along human
+        chromosome 1 under a three population out-of-Africa model
+        \citep{gutenkunst2009inferring} when using null models with and without
+        purifying selection acting on exons under the gamma-distributed DFE
+        described above.  The HapMap II genetic map
+        \citep{international2007second} was used in each simulation.  Single
+        beneficial mutations were introduced at each location with a selection
+        coefficient of $s = 0.03$, and only sampled if they reached a terminal
+        frequency of 0.95 or greater.  Three methods for detecting sweeps were
+        used: 1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row), 2)
+        \diploshic \citep{kern2018diplos} (middle row), and 3) an empirical
+        cutoff of $\pi$ to find regions of reduced diversity (bottom row).
+        True positive rate is shown for these methods for the CEU and YRI
+        samples (left and right respectively).  Under each method we show
+        heatmaps of exon density and local recombination rate along the
+        chromosome.  Power is shown as the proportion of replicates in which a
+        sweep was detected at each location.  To define
+        thresholds for calling a sweep, two different null models were used: a
+        neutral model (blue lines), and a model with purifying selection acting
+        on exons (red lines).
         }
         \label{fig:chr1_power}
     \end{figure}
     
-    In Figure \ref{fig:chr1_power} we show the power to detect selective sweeps at 100 locations along human chromosome 1 from
-    the simulations described above. We show the results of three methods for detecting sweeps: 1) \sweepfinder \citep{degiorgio2016sweepfinder2},
+    In Figure \ref{fig:chr1_power}, we show the power to detect selective sweeps at 100 locations along human chromosome 1 from
+    the simulations described above. We tested three methods for detecting sweeps: 1) \sweepfinder \citep{degiorgio2016sweepfinder2},
     2) \diploshic \citep{kern2018diplos}, and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity.
     A few things are immediately apparent from this figure. First, the power to detect sweeps is generally higher in the YRI sample
     than in the CEU sample, which is consistent with the fact that the YRI sample has a larger effective population size and thus both stronger selection and
-    more variation to detect a sweep. Further the population size of YRI has been relatively constant over the last 100,000 years,
+    more variation to detect a sweep. Further, the population size of YRI has been relatively constant over the last 100,000 years,
     thus the out-of-Africa bottleneck has does not mute the signal of a sweep as much as in the CEU sample. This is consistent with
     what we know about the effects of demography on the power to detect sweeps \citep[e.g.,][]{simonsen1995properties}.
-    Second, the power to detect sweeps is slightly lower in the presence of purifying selection acting on exons (consistent with \cite{schrider2020background}) but the effect is not
+    Second, the power to detect sweeps is slightly lower when we use a null model with purifying selection acting on exons (consistent with \cite{schrider2020background}) but the effect is not
     as strong as one might expect. This is likely because the strength of selection acting on exons is relatively weak, and the
     sweep detection methods we have used are relatively robust to the effects of background selection. 
     Finally and most importantly, the power to detect sweeps varies considerably among regions of the genome. 
@@ -626,15 +634,17 @@
     models with or without purifying selection. This is likely due to the effects of recombination rate heterogeniety as well
     as the density of functional elements along the chromosome.
 
-    Using this set of simulations we can also compare the power of different methods to detect sweeps.
+    Using this set of simulations, we can also compare the power of different methods to detect sweeps.
     In general, the power of the methods varies with respect to the population history of the sample.
     For instance \sweepfinder2 has marginally higher power to detect sweeps in the CEU sample than \diploshic,
     likely as a results of the fact that we here trained \diploshic on simulations under a constant size population,
     while the population size history of CEU is characterized by a strong recent bottleneck.
     Conversely, \diploshic has higher power to detect sweeps in the YRI sample than \sweepfinder2,
     likely because that population size history more closely matches the population size history used to train \diploshic.
+    \sweepfinder2 power remains more constant along the chromosome, while the $\pi$ cutoff method varies wildly. 
+
     We can further explore the performance of the methods by plotting the receiver operating characteristic (ROC) curves for the methods.
-    In Figure \ref{fig:roc-curves} we show the ROC curves for the three methods for detecting sweeps.
+    In Figure \ref{fig:roc-curves}, we show the ROC curves for the three methods for detecting sweeps.
     False positive rates were established using neutral simulations that contained no sweeps
     but were conditioned on the same population history as the CEU and YRI samples.
     These suggest that the $\pi$ cutoff is a suprisingly effective method for detecting sweeps,
@@ -645,48 +655,53 @@
     % DRS: or something like that. I know we didn't test that, but it must be the case.
     %While this is not exhaustive benchmarking, we aim to give a sense to the reader
     %of how \stdpopsim can be used to benchmark the performance of different methods easily and efficiently.
+    These ROC curves, however, hide the previously seen phenomenon of high variation in power to detect sweeps along a realistic looking chromosome.
+    That is, although in aggregate the $\pi$ cutoff may seem effective, it's power is highly heterogeneous across the chromosome.
 
 
     \begin{figure}
         \centering
         \includegraphics[width=0.8 \textwidth]{figures/sweeps/relationship_power_cM.pdf}
         \caption{
-        Power to detect selective sweeps at 100 locations along human chromosome 1 under a three population out-of-Africa model \citep{gutenkunst2009inferring}  
-        with and without purifying selection as a function of local recombination rate.
-        Simulations are as described in Figure \ref{fig:chr1_power}.
-        Each panel shows the results of simulations with purifying selection acting on exons (red; labelled BGS)
-        and without purifying selection acting on exons (blue; labelled Neutral).
-        True positive rate is shown for these methods for samples from the CEU and YRI samples (left and right respectively).
-        Points represent the power at each location and trend lines along with 95\% confidence intervals are shown fit to those points.
+        Power to detect selective sweeps at 100 locations along human
+        chromosome 1 under a three population out-of-Africa model
+        \citep{gutenkunst2009inferring}  when using null models with and
+        without purifying selection as a function of local recombination rate.
+        Simulations are as described in Figure \ref{fig:chr1_power}.  True
+        positive rate is shown for these methods for samples from the CEU and
+        YRI samples (left and right respectively).  To define thresholds for
+        calling a sweep, two different null models were used: a neutral model
+        (blue lines), and a model with purifying selection acting on exons (red
+        lines).  Points represent the power at each location and trend lines
+        along with 95\% confidence intervals are shown fit to those points.
         }
         \label{fig:power-recomb}
     \end{figure}
 
-    To further explore the effects of recombination rate and exon density on the power to detect sweeps, we show in Figure \ref{fig:power-recomb}
-    the relationship between power and local recombination rate for our sweep simulations. We see that power to detect sweeps is
+    To further dissect the reasons for high variance (along the chromosome) in power to detect sweeps,
+    we show in Figure \ref{fig:power-recomb} the relationship between power and local recombination rate for our sweep simulations.
+    We see that power to detect sweeps is
     a decreasing function of local recombination rate for \sweepfinder2 and $pi$ outliers,
     which is consistent with sweeps having a larger genomic footprint in regions of low
     recombination.
-    \diploshic on the other hand shows a slight increase in power with recombination rates.
+    \diploshic on the other hand shows a slight increase in power with recombination rates,
+    probably because it is designed to distinguish regions where a sweep happend from regions linked to a sweep.
     We also see that the presence of purifying selection acting on exons has a relatively small effect on the power to detect sweeps,    
     but one that is present across the entire range of recombinations rates observed in human chromosome 1. 
     Unsurprisingly, the empirical cutoff of $\pi$ to detect sweeps is the less robust to the effects of recombination rate than the other two methods,
     which are specifically designed to find selective sweeps. 
 
-    In Figure \ref{fig:power-exon} we show the relationship between power and local exon density for our sweep simulations.
-    Here there is little relationship between power and exon density, which is somewhat surprising given that the power to detect sweeps
-    is generally lower in the presence of purifying selection acting on exons. However while this is the case we see that 
-    generally all methods have more power to detect sweeps in regions of lower exon density, which is consistent with the idea that
-    background selection acting on nearby exons can reduce the signature of a sweep. However this is far from a simple pattern:
-    for instance sweepfinder2 seems to have minimum power in regions of intermediate exon density, while \diploshic is roughly constant
-    or perhaps has a slight increase in power at intermediate exon densities. Noise in the estimates of power with respect to exon density
-    are prohibitively high for the empirical cutoff of $\pi$ to detect sweeps, so it's not clear what conclusions can be drawn.
+    In Figure \ref{fig:power-exon}, we show the relationship between power and local exon density for our sweep simulations.
+    There is little relationship between power (across all methods) and exon density,
+    which is somewhat surprising given that background selection should somewhat interfere with the sweep signature.
+    It is unclear why that is so, but the effects of realistic background selection may not be as similar to sweeps as previously thought \citep{schrider2020background}.
     % DRS: the exon-density results look pretty freakin flat to me. I think we could just curtail the description in this paragraph and
     % DRS: say that there are no obvious patterns that stand out from the noise?
+    % MFR: I changed this a bit: I agree with Dan that there is no clear pattern.
 
 \section*{Discussion}
     \label{Discussion}
-    In this paper we have presented an important new additional to the \stdpopsim{} library
+    In this paper, we have presented an important new addition to the \stdpopsim{} library
     that allows for simulating genetic variation in the presence of selection.
     We have demonstrated the utility of this new API by showing how it can be used to benchmark
     the performance of different methods for demographic inference, the inference of the distribution
@@ -695,9 +710,9 @@
     as it allows for a wide range of models of selection to be easily simulated and compared to
     empirical data, with reproducibility, computational efficiency, and rigor.
 
-    We have shown how the new API can be used to benchmark the performance of different methods
-    although the benchmarks shown here merely scratch the surface of what
-    can be done with the new API. We envision moving forward that many researchers will use
+    Although we have shown how the new API can be used to benchmark the performance of different methods,
+    the benchmarks shown here merely scratch the surface of what can be done with the new API.
+    We envision that, moving forward, many researchers will use
     the new API to simulate data under a wide range of models of selection, and to develop
     new methods for the analysis of genetic data in the presence of selection. 
     The additions to \stdpopsim described here further expand this tool's utility for both 
@@ -714,12 +729,12 @@
     \subsection*{Simulations}
     In this study we performed simulations of the human and vaquita porpoise genomes
     using the \stdpopsim{} framework. As stated above, simulations included a model 
-    of selection acting on exonic regions, matched to the human and vaquita porpoise genomes.
+    of (negative) selection acting on exonic regions, matched to the human and vaquita porpoise genomes.
     Three replicates of whole-genome simulations were performed for each species, with 
     a sample size of 100 diploid individuals. Demographic models are as stated above, each
     using the exon annotations from the human and vaquita porpoise genomes respectively.
-    For simulations with selection, a SLiM scaling factor of 1 (corresponding to no scaling)
-    was used, with a burn-in of 10 ticks. 
+    For simulations with selection, we sampled 10 diploid individuals from each of two populations (YRI and CEU). 
+    To decrease runtimes, we used a SLiM scaling factor of 2 with a burn-in of 2N generations. 
 
     \subsection*{Demographic inference}
     We assessed the accuracy of demographic inferences from
@@ -745,23 +760,34 @@
     may in reality be under selection. As above, all methods were run using default settings.
 
     \subsection*{Selective sweeps detection}
-    We ran simulations of 5Mbp regions of chromosome 1 of the human genome with and without
-    purifying selection acting on exonic regions, and under a three population
-    out-of-Africa model of human demography \citep{gutenkunst2009inferring}, 
-    along with the HapMap II genetic map \citep{international2007second}.
-    Single beneficial mutations were introduced at each location with a selection coefficient of $s = 0.03$,
-    and only sampled if they reached a terminal frequency of 0.95 or greater. 
+    We ran simulations of human chromosome 1 using the three population out-of-Africa model
+    (identified as OutOfAfrica\_3G09 in the stdpopsim library; \cite{gutenkunst_inferring_2009})
+    and the genetic map estimated in \citet{frazer_second_2007} (HapMapII\_GRCh38).
+    For computational efficiency, we simulated a 5Mb region flanking 100 evenly distributed points along the chromosome 1.
+    We generated 1000 replicates of each of three classes of simulations:
+    (i) neutral (with the specified demography and genetic map),
+    (ii) background selection, in which we applied the DFE estimated in \citet{kim_inference_2017} (Gamma\_K17) to exon annotations (taken from Ensembl; ensembl\_havana\_104\_exons),
+    and (iii) sweep with background selection, in which we simulated the hard sweep as described with the addition of constraint in exonic regions (same as for \emph{ii}).
+    In the sweep simulations, we placed a single beneficial mutation in the center of the simulated region with a selection coefficient of $s = 0.03$, and only sampled if the beneficial mutation reached terminal frequency of 0.95 or greater.
+
     We then benchmarked the performance of three methods for detecting sweeps: 1) \sweepfinder \citep{degiorgio2016sweepfinder2},
-    2) \diploshic \citep{kern2018diplos}, and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity.
+    2) \diploshic \citep{kern2018diplos}, and 3) an empirical cutoff for nucleotide diversity ($\pi$) to find regions of reduced diversity.
     \diploshic was trained on data simulated using \texttt{discoal} \citep{kern2016discoal}.
+    Nucleotide diversity was computed directly from the underlying tree sequences using \tskit \citep{ralph_efficiently_2020} over 10 equally sized and non-overlapping subwindows.
+    The composite likelihood ratio (output by \sweepfinder) was computed at 21 uniformly distributed points along the simulated region.
+    To train the \diploshic classifier, 
     For training simulations, we simulated 20 haploid genomic regions of 1.21Mbp
-    with a constant population size of 10,000 individuals, a mutation rate of 1e-8, and a recombination rate of 1e-8.
+    with a constant population size of 10,000 individuals, a mutation rate of 2e-8, and a recombination rate of 2e-8.
     For \texttt{discoal} simulations that included selective sweeps,
-    selection coefficients were drawn from a uniform distribution between 0.001 and 0.05.
-    The time of the sweep was chosen from a uniform distribution between 0 and 0.02 Ne generations in the past.
+    selection coefficients were drawn from a uniform distribution between 0.001 and 0.10.
+    The time of the sweep was chosen from a uniform distribution between 0 and 0.01 Ne generations in the past.
     For soft sweeps, the frequency at which selection was introduced was drawn from a uniform distribution between 1e-4 and 0.1.
     All \texttt{discoal} training simulations were done under a model of equilibrium population size, 
-    so we expected it to perform suboptimally given the variation in population size in the out-of-Africa model. 
+    so we expected it to perform suboptimally given the variation in population size in the out-of-Africa model.
+
+    To call sweeps, we empirically determined the distribution of each statistic (nucleotide diversity, \sweepfinder's CLR, and \diploshic's probability of sweep) under a null model and defined the top $5\%$ quantile as a cutoff to call a sweep (though regions with extremely low recombination rate were excluded from the computation).
+    We considered two null models: neutral and background selection (as explained before).
+    Power (or true positive rate) to detect a sweep is the proportion of simulations with a sweep that were correctly classified as a sweep for each method and at each of the 100 locations along chromosome 1.
 
 \section*{Data availability}\label{data_availability}
 
