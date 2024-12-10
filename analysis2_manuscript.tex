@@ -429,30 +429,24 @@
     from Ragsdale \textit{et al.} (2019)
     with samples taken from three modern geographic groups (CEU, CHB, and YRI from left to right).
     The top row shows the results of $N_e(t)$ estimates made from simulations without selection, while the bottom row shows the results
-    from simulations with deleterious mutatinos occurring in exons.
+    from simulations with deleterious mutations occurring in exons.
     In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$
-    in various colors for the four methods. Dotted lines on the bottom row are to visually reinforce that inference is done
-    from a model with selection. We see that these methods generally perform reasonably well in the absence of selection, 
-    although GONE seems to overestimate $N_e(t)$ in the more recent past for the CEU and CHB populations.
+    in various colors for the four methods. Dotted lines on the top row are to visually reinforce that inference is done
+    from a model without selection. We see that these methods generally perform reasonably well in the absence of selection, 
+    although GONE seems to overestimate $N_e(t)$ for the CHB sample and to a lesser extent in the CEU sample. #ADK: is GONE time scaled incorrectly? i.e. gens not years?
     Presumably this could be due to patterns of linkage disequilibrium that result from the combination
     of bottleneck and growth in these populations.
     In the presence of selection, different methods behave differently. 
-    For instance stairwaiplot which uses the SFS to infer $N_e(t)$ seems to slightly underestimate $N_e(t)$
-    but is reasonably close to the true $N_e(t)$ in the absence of selection.
-    Likewise \smcpp seems to be more robust to the presence of selection,
-    but there is some added noise to the returned estimates. 
+    For instance stairwayplot, which uses the SFS to infer $N_e(t)$, 
+    is reasonably close to the true $N_e(t)$ both with and without selection,
+    although it seems to infer significant population size changes that are not part of the true history.
+    Likewise \smcpp seems to be robust to the presence of selection,
+    but the timing of population size changes is slightly inaccurate. 
     \msmc seems to be the most affected by the presence of selection, 
-    estimates of $N_e(t)$ varying quite a bit from the true $N_e(t)$,
+    estimates of $N_e(t)$ varying quite a bit from the true $N_e(t)$ particularly in the very recent past,
     although estimates from \msmc have quite a bit of added noise even in the absence of selection.
 
-    % DRS: I don't agree with the interpretation in the previous two sentences (starting with "Likewise").
-    % MSMC is already barfing a little bit even without selection, and it is not clear to me from these
-    % plots that selection makes things any worse. Also, SMC++ is doing quite well without selection so maybe
-    % the minor drop in accuracy is meaningful in relative terms.
-    % ADK: I edited the text-- what do you think Dan?
-    % DRS: I am still finding this description pretty inaccurate. Happy to discuss over zoom if you think
-    % that might be faster.
-
+    % TODO: legend here needs to be changed. The dotted line indicates no selection, the solid selection
 
 
     \begin{figure}[t]
@@ -650,14 +644,10 @@
     False positive rates were established using neutral simulations that contained no sweeps
     but were conditioned on the same population history as the CEU and YRI samples.
     These suggest that the $\pi$ cutoff is a suprisingly effective method for detecting sweeps,
-    in these genomic regions at least, but that it lags behind \diploshic and \sweepfinder2 in terms of specificity
-    generally.
-    % DRS: the ROC curve doesn't tell us which methods have better/worse specificity, just how their sensitivities compare at a given specificity
-    % DRS: but we could say something about how pi might be "less robust to heterogeneity in mapping/genotyping quality across the genome than the other methods"
-    % DRS: or something like that. I know we didn't test that, but it must be the case.
+    in these genomic regions at least, but that it lags behind \diploshic and \sweepfinder2 in terms of accuracy in the YRI sample.
     %While this is not exhaustive benchmarking, we aim to give a sense to the reader
     %of how \stdpopsim can be used to benchmark the performance of different methods easily and efficiently.
-    These ROC curves, however, hide the previously seen phenomenon of high variation in power to detect sweeps along a realistic looking chromosome.
+    These ROC curves, however, hide the phenomenon of high variation in power (see Figure \ref{fig:chr1_power}) to detect sweeps along a realistic looking chromosome.
     That is, although in aggregate the $\pi$ cutoff may seem effective, it's power is highly heterogeneous across the chromosome.
 
 
@@ -697,9 +687,6 @@
     There is little relationship between power (across all methods) and exon density,
     which is somewhat surprising given that background selection should somewhat interfere with the sweep signature.
     It is unclear why that is so, but the effects of realistic background selection may not be as similar to sweeps as previously thought \citep{schrider2020background}.
-    % DRS: the exon-density results look pretty freakin flat to me. I think we could just curtail the description in this paragraph and
-    % DRS: say that there are no obvious patterns that stand out from the noise?
-    % MFR: I changed this a bit: I agree with Dan that there is no clear pattern.
 
 \section*{Discussion}
     \label{Discussion}
