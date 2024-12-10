@@ -63,6 +63,8 @@
 \newcommand{\labelname}[1]{\def\@currentlabelname{#1}}
 \makeatother
 
+\newcommand{\tskit}{\texttt{tskit}\xspace}
+
 % add commands for msmc2, stairway plot, gone, and smc++
 \newcommand{\msmc}{\texttt{msmc2}\xspace}
 \newcommand{\stairway}{\texttt{stairwayplot}\xspace}
@@ -761,19 +763,19 @@
 
     \subsection*{Selective sweeps detection}
     We ran simulations of human chromosome 1 using the three population out-of-Africa model
-    (identified as OutOfAfrica\_3G09 in the stdpopsim library; \cite{gutenkunst_inferring_2009})
-    and the genetic map estimated in \citet{frazer_second_2007} (HapMapII\_GRCh38).
+    (identified as OutOfAfrica\_3G09 in the stdpopsim library; \cite{gutenkunst2009inferring})
+    and the genetic map estimated in \citet{international2007second} (HapMapII\_GRCh38).
     For computational efficiency, we simulated a 5Mb region flanking 100 evenly distributed points along the chromosome 1.
     We generated 1000 replicates of each of three classes of simulations:
     (i) neutral (with the specified demography and genetic map),
-    (ii) background selection, in which we applied the DFE estimated in \citet{kim_inference_2017} (Gamma\_K17) to exon annotations (taken from Ensembl; ensembl\_havana\_104\_exons),
+    (ii) background selection, in which we applied the DFE estimated in \citet{kim2017inference} (Gamma\_K17) to exon annotations (taken from Ensembl; ensembl\_havana\_104\_exons),
     and (iii) sweep with background selection, in which we simulated the hard sweep as described with the addition of constraint in exonic regions (same as for \emph{ii}).
     In the sweep simulations, we placed a single beneficial mutation in the center of the simulated region with a selection coefficient of $s = 0.03$, and only sampled if the beneficial mutation reached terminal frequency of 0.95 or greater.
 
     We then benchmarked the performance of three methods for detecting sweeps: 1) \sweepfinder \citep{degiorgio2016sweepfinder2},
     2) \diploshic \citep{kern2018diplos}, and 3) an empirical cutoff for nucleotide diversity ($\pi$) to find regions of reduced diversity.
     \diploshic was trained on data simulated using \texttt{discoal} \citep{kern2016discoal}.
-    Nucleotide diversity was computed directly from the underlying tree sequences using \tskit \citep{ralph_efficiently_2020} over 10 equally sized and non-overlapping subwindows.
+    Nucleotide diversity was computed directly from the underlying tree sequences using \tskit \citep{ralph2020efficiently} over 10 equally sized and non-overlapping subwindows.
     The composite likelihood ratio (output by \sweepfinder) was computed at 21 uniformly distributed points along the simulated region.
     To train the \diploshic classifier, 
     For training simulations, we simulated 20 haploid genomic regions of 1.21Mbp
