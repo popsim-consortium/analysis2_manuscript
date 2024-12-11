@@ -454,6 +454,19 @@
     the performance of different methods for inferring the DFE from genetic data. Here we have performed simulations using the 
     human and vaquita porpoise models described above, with complex demographic histories and models of selection acting on exons.
     To remind the reader, the model of selection in each case is a Gamma distributed DFE for deleterious mutations.
+    
+    \footnote{
+    A challenge in comparing inferences among DFE inference tools is differing factors of two in definitions.
+    The simulator SLiM defines the selection coefficient $s$ such that a homozygote has fitness $1+s$.
+    dadi and PolyDFE (https://academic.oup.com/genetics/article/207/3/1103/5930676) define the selection coefficient such that a homozygote has fitness $1+ 2s$.
+    GRAPES  is like SLiM.
+    
+    Even more confusingly, dadi infers the distribution of the population-scaled selection coefficient $2 N_e s$ (fitdadi paper).
+    PolyDFE infers the distribution of $4 Ne s$ (https://academic.oup.com/genetics/article/207/3/1103/5930676).
+    And GRAPES infers the distribution of $4 Ne s$ (https://academic.oup.com/genetics/article/216/2/559/6066183).}
+           		
+Add citation to fastDFE as the successor to polyDFE: https://academic.oup.com/mbe/article/41/5/msae070/7641109 
+	
 
     \begin{figure}[htbp]
         \centering
