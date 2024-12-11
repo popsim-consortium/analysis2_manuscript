@@ -486,8 +486,8 @@
     \label{fig:1pop-vaquita-demography}
     Performance of methods to infer $N_e(t)$ from simulations of the vaquita porpoise genome under a single population
     model of declining population size \citep{robinson2022critically} with and without background selection on exons. 
-    The top panel shows estimates of $N_e(t)$ from simulations
-    without selection, while the bottom panel shows estimates of $N_e(t)$ from simulations with a gamma-distributed   
+    The left panel shows estimates of $N_e(t)$ from simulations
+    without selection, while the right panel shows estimates of $N_e(t)$ from simulations with a gamma-distributed   
     DFE acting on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$ from four methods:    
     \msmc \citep{Schiffels2020}, \stairway \citep{liu2020stairway}, \gone \citep{santiago2020recent}, and \smcpp \citep{terhorst2017robust}.  
     }
@@ -840,7 +840,7 @@
     \caption{
     \label{fig:homsap-dfe.constant.all_sites}
     Performance of methods to infer the distribution of fitness effects (DFE) from genetic data
-    where all sites along the simulated chromosome can experience selected and neutral mutation
+    under constant population size  where all sites along the simulated chromosome can experience selected and neutral mutation
     as opposed to exonic regions only.
     }
     %DRS-fig: human? vaquita? need more info in this figure legend, and also get rid of the pop 0 thing again
@@ -857,14 +857,14 @@ for each species.}
 \toprule
 species ID & demography & annotation & \makecell{MAE \\ $E|s|$ \\ dadi} & \makecell{MAE \\ $E|s|$ \\ grapes} & \makecell{MAE \\ $E|s|$ \\ polyDFE} & \makecell{MAE \\ shape \\ dadi} & \makecell{MAE \\ shape \\ grapes} & \makecell{MAE \\ shape \\ polyDFE} \\
 \midrule
-HomSap & Constant & all sites & 0.0027 & 0.0049 & \bf{0.0018} & \bf{0.00071} & 0.029 & 0.014 \\
-HomSap & Constant & exons & 0.0012 & \bf{0.00081} & 0.0023 & 0.030 & 0.0086 & \bf{0.0068} \\
-HomSap & OOA 5R19 & all sites & 0.012 & 0.0079 & \bf{0.0074} & \bf{0.027} & 0.055 & 0.035 \\
-HomSap & OOA 5R19 & exons & 0.014 & \bf{0.0049} & 0.0072 & 0.031 & 0.051 & \bf{0.024} \\
-PhoSin & Constant & all sites & 0.024 & \bf{0.024} & 0.024 & 0.21 & 0.24 & \bf{0.19} \\
-PhoSin & Constant & exons & 0.024 & \bf{0.024} & 0.024 & \bf{0.23} & 0.25 & 0.23 \\
-PhoSin & Vaquita2Epoch 1R22 & all sites & 0.024 & \bf{0.023} & 0.024 & 0.20 & 0.23 & \bf{0.18} \\
-PhoSin & Vaquita2Epoch 1R22 & exons & 0.024 & \bf{0.023} & 0.024 & \bf{0.18} & 0.23 & 0.21 \\
+HomSap & Constant & all sites & 0.0027 & 0.0111 & \bf{0.0018} & \bf{0.00071} & 0.029 & 0.014 \\
+HomSap & Constant & exons & \bf{0.0012} & 0.0101 & 0.0023 & 0.030 & 0.0086 & \bf{0.0068} \\
+HomSap & OOA 5R19 & all sites & 0.012 & 0.012 & \bf{0.0074} & \bf{0.027} & 0.055 & 0.035 \\
+HomSap & OOA 5R19 & exons & 0.014 & 0.0111 & \bf{0.0072} & 0.031 & 0.051 & \bf{0.024} \\
+PhoSin & Constant & all sites & \bf{0.024} & 0.025 & 0.024 & 0.21 & 0.24 & \bf{0.19} \\
+PhoSin & Constant & exons & 0.024 & 0.025 & 0.024 & \bf{0.23} & 0.25 & 0.23 \\
+PhoSin & Vaquita2Epoch 1R22 & all sites & \bf{0.024} & 0.025 & 0.024 & 0.20 & 0.23 & \bf{0.18} \\
+PhoSin & Vaquita2Epoch 1R22 & exons & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0.21 \\
 \bottomrule
 \end{tabular}
 \label{tab:dfe_table}
