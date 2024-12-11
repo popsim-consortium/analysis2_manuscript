@@ -323,6 +323,21 @@
     is perhaps the most flexible simulation engine for modeling selection currently available.
     
 
+    \begin{wrapfigure}{l}{0.5\textwidth}
+        \vspace{-0.0cm}
+        \includegraphics[width=\linewidth]{figures/schematics/catalog.pdf}
+        \caption{\label{fig:schematic}
+        \textbf{(A)} A schematic of the \stdpopsim catalog and the different components that
+        can be used in simulations. 
+        \textbf{(B)} The python API and \textbf{(C)} the command line interface.
+        The user specifies a species, a portion of
+        the genome to simulate, and optionally a genetic map, a model of
+        demography, and a model of selection that itself is composed of a
+        distribution of fitness effects (DFE) and a set of functional
+        annotations.}
+    \end{wrapfigure}
+    \hfill
+    
     As with other \stdpopsim models, when incorporating selection we aim to hew as closely as possible
     to realistic genomes, and provide public annotations of specices' functional genomic
     elements that can be used along with a \texttt{DFE} object to
@@ -362,20 +377,6 @@
     and demography to provide a rich model of the combined effects of multiple disparate evolutionary processes
     on genetic variation in a population.
     
-    % DRS: This figure could really use some Python API and comand line examples like in Figs 1B,C
-    % form the original stdpopsim paper
-    \begin{wrapfigure}[37]{l}{0.4\textwidth}
-        \vspace{-0.0cm}
-        \includegraphics[width=\linewidth]{figures/schematics/catalog.pdf}
-        \caption{\label{fig:schematic}
-        A schematic of the \stdpopsim catalog and the different components that
-        can be used in simulations. The user specifies a species, a portion of
-        the genome to simulate, and optionally a genetic map, a model of
-        demography, and a model of selection that itself is composed of a
-        distribution of fitness effects (DFE) and a set of functional
-        annotations.}
-    \end{wrapfigure}
-    \hfill
 
     % current numbers of DFEs / species / etc
     % DRS: are we giving this a version number?
@@ -412,7 +413,8 @@
     examine the performance of different methods for inferring $N_e(t)$ from these simulated 
     data. In Figure \ref{fig:1pop-human-demography}, we show the results of such a benchmark
     where we have simulated genomes under a model of human out of Africa (OOA) demography
-    with and without purifying selection on exons. For this simulation we have used
+    with and without purifying selection acting on exons.
+    For this simulation we have used
     a genetic map from the HapMap Project \citep{international2007second} along with a
     DFE for deleterious alleles (estimated by \cite{huber2017determining})
     that acts on exonic positions defined from the HAVANA group release 104 for the human genome.
@@ -428,12 +430,13 @@
     from data simulated under the five-population model of human out-of-Africa demography
     from Ragsdale \textit{et al.} (2019)
     with samples taken from three modern geographic groups (CEU, CHB, and YRI from left to right).
-    The top row shows the results of $N_e(t)$ estimates made from simulations without selection, while the bottom row shows the results
+    The left column shows the results of $N_e(t)$ estimates made from simulations without selection, 
+    while the right column shows the results
     from simulations with deleterious mutations occurring in exons.
     In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$
     in various colors for the four methods. Dotted lines on the top row are to visually reinforce that inference is done
     from a model without selection. We see that these methods generally perform reasonably well in the absence of selection, 
-    although GONE seems to overestimate $N_e(t)$ for the CHB sample and to a lesser extent in the CEU sample. #ADK: is GONE time scaled incorrectly? i.e. gens not years?
+    although GONE seems to overestimate $N_e(t)$ for the CHB sample and to a lesser extent in the CEU sample.
     Presumably this could be due to patterns of linkage disequilibrium that result from the combination
     of bottleneck and growth in these populations.
     In the presence of selection, different methods behave differently. 
@@ -455,8 +458,8 @@
         \caption{
         \label{fig:1pop-human-demography}
         Performance of methods to infer $N_e(t)$ from a human out-of-Africa model \citep{ragsdale2019models}
-        with and without purifying selection on exons. The top row shows estimates of $N_e(t)$ from simulations
-        without selection, while the bottom row shows estimates of $N_e(t)$ from simulations with a gamma-distributed   
+        with and without purifying selection on exons. The left column shows estimates of $N_e(t)$ from simulations
+        without selection, while the right column shows estimates of $N_e(t)$ from simulations with a gamma-distributed   
         DFE acting on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$ from four methods:    
         \msmc \citep{Schiffels2020}, \stairway \citep{liu2020stairway}, \gone \citep{santiago2020recent}, and \smcpp \citep{terhorst2017robust}.  
         }
@@ -632,19 +635,19 @@
 
     Using this set of simulations, we can also compare the power of different methods to detect sweeps.
     In general, the power of the methods varies with respect to the population history of the sample.
-    For instance \sweepfinder2 has marginally higher power to detect sweeps in the CEU sample than \diploshic,
+    For instance \sweepfinder has marginally higher power to detect sweeps in the CEU sample than \diploshic,
     likely as a results of the fact that we here trained \diploshic on simulations under a constant size population,
     while the population size history of CEU is characterized by a strong recent bottleneck.
-    Conversely, \diploshic has higher power to detect sweeps in the YRI sample than \sweepfinder2,
+    Conversely, \diploshic has higher power to detect sweeps in the YRI sample than \sweepfinder,
     likely because that population size history more closely matches the population size history used to train \diploshic.
-    \sweepfinder2 power remains more constant along the chromosome, while the $\pi$ cutoff method varies wildly. 
+    \sweepfinder power remains more constant along the chromosome, while the $\pi$ cutoff method varies wildly. 
 
     We can further explore the performance of the methods by plotting the receiver operating characteristic (ROC) curves for the methods.
     In Figure \ref{fig:roc-curves}, we show the ROC curves for the three methods for detecting sweeps.
     False positive rates were established using neutral simulations that contained no sweeps
     but were conditioned on the same population history as the CEU and YRI samples.
     These suggest that the $\pi$ cutoff is a suprisingly effective method for detecting sweeps,
-    in these genomic regions at least, but that it lags behind \diploshic and \sweepfinder2 in terms of accuracy in the YRI sample.
+    in these genomic regions at least, but that it lags behind \diploshic and \sweepfinder in terms of accuracy in the YRI sample.
     %While this is not exhaustive benchmarking, we aim to give a sense to the reader
     %of how \stdpopsim can be used to benchmark the performance of different methods easily and efficiently.
     These ROC curves, however, hide the phenomenon of high variation in power (see Figure \ref{fig:chr1_power}) to detect sweeps along a realistic looking chromosome.
@@ -673,7 +676,7 @@
     To further dissect the reasons for high variance (along the chromosome) in power to detect sweeps,
     we show in Figure \ref{fig:power-recomb} the relationship between power and local recombination rate for our sweep simulations.
     We see that power to detect sweeps is
-    a decreasing function of local recombination rate for \sweepfinder2 and $pi$ outliers,
+    a decreasing function of local recombination rate for \sweepfinder and $pi$ outliers,
     which is consistent with sweeps having a larger genomic footprint in regions of low
     recombination.
     \diploshic on the other hand shows a slight increase in power with recombination rates,
