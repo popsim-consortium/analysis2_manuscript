@@ -466,7 +466,6 @@
         without selection, while the right column shows estimates of $N_e(t)$ from simulations with a gamma-distributed   
         DFE acting on exons. In each panel we show the true $N_e(t)$ in black, and the estimated $N_e(t)$ from four methods:    
         \msmc \citep{Schiffels2020}, \stairway \citep{liu2020stairway}, \gone \citep{santiago2020recent}, and \smcpp \citep{terhorst2017robust}.  
-        \rngcomment{Why do some methods have confidence intervals (like stairwayplot) and others don't (like msmc)?}
         }
     \end{figure}
     %DRS-fig: reminder to update the legend to just say ``exons'' instead of ensembl_havana_whatever...
@@ -526,7 +525,6 @@
         sample are shown in different colors.
         Estimates from three different methods are shown: 1) \grapes \cite{galtier2016adaptive}, 2) \polydfe \citep{tataru2020polydfe},
         and 3) \dadicli \citep{Huang2023}.
-            \rngcomment{Update figure legend. dadi=> dadi-cli.}
 }
         \label{fig:homsap-dfe.ooa}
     \end{figure}
@@ -547,7 +545,6 @@
     the other methods do not. 
     For the shape parameter in constant size simulations \grapes and \polydfe are roughly
     equivalent in their performance whereas \dadicli seems to yield overestimates. 
-    \rngcomment{Has Fig.~\ref{fig:homsap-dfe.constant} been updated for the new GRAPES scaling?}
     
     In the out-of-Africa model (Fig.~\ref{fig:homsap-dfe.ooa}) the performance of the methods is more mixed. 
     In particular, variation in accuracy of the parameters estimated in each
@@ -575,7 +572,6 @@
         of the three different methods are shown: 1) \grapes \cite{galtier2016adaptive}, 2) \polydfe \citep{tataru2020polydfe},
         and 3) \dadicli \citep{Huang2023,kim2017inference}.
         C) Shown is the simulated distribution of $2 h s$, where $h$ is the dominance coefficient, along with the simulated distribution of $s$ and the median inferred DFEs. The distribution of $2 h s$ is multimodal because the simulated relationship between $h$ and $s$ is not continuous.
-            \rngcomment{Update figure legend. dadi=> dadi-cli.}
         }
     \end{figure}
     
@@ -829,7 +825,6 @@
     as a black line, and the estimates as boxplots from replicate simulations. The human model has three extant populations (CEU, CHB, and YRI).
     %DRS-fig: only one population is shown here, but 3 referenced in the legend. Wrong legend or wrong fig?
     %DRS-fig: If it is the right fig, get rid of the pop0 legend inset
-    \rngcomment{Update figure legend. dadi=> dadi-cli.}
     Each row of the figure shows estimates from a different method: 1) GRAPES \citep{galtier2016adaptive}, 2) polyDFE \citep{tataru2020polydfe}, and 3) \dadicli \citep{Huang2023}.
     }
     \label{fig:homsap-dfe.constant}    
@@ -847,7 +842,6 @@
     This vaquita model has a single extant population, and parameter estimates from each
     of the three different methods are shown: 1) GRAPES \citep{galtier2016adaptive}, 2) polyDFE \citep{tataru2020polydfe},
     and 3) \dadicli \citep{Huang2023}.}
-    \rngcomment{Update figure legend. dadi=> dadi-cli.}
     %DRS-fig: remove the pop 0 legend again
 \end{figure}
 % DRS-fig: ditch the unnecessary legends from panels A and B. Also, are we deciding which version of panel C to include here? I guess I prefer
@@ -875,7 +869,7 @@ Bold rows show the lowest mean absolute error (MAE) for the two DFE parameters
 for each species.}
 \begin{tabular}{lllrrrrrr}
 \toprule
-species ID & demography & annotation & \makecell{MAE \\ $E|s|$ \\ dadi} & \makecell{MAE \\ $E|s|$ \\ grapes} & \makecell{MAE \\ $E|s|$ \\ polyDFE} & \makecell{MAE \\ shape \\ dadi} & \makecell{MAE \\ shape \\ grapes} & \makecell{MAE \\ shape \\ polyDFE} \\
+species ID & demography & annotation & \makecell{MAE \\ $E|s|$ \\ dadi-cli} & \makecell{MAE \\ $E|s|$ \\ grapes} & \makecell{MAE \\ $E|s|$ \\ polyDFE} & \makecell{MAE \\ shape \\ dadi-cli} & \makecell{MAE \\ shape \\ grapes} & \makecell{MAE \\ shape \\ polyDFE} \\
 \midrule
 HomSap & Constant & all sites & 0.0027 & 0.0111 & \bf{0.0018} & \bf{0.00071} & 0.029 & 0.014 \\
 HomSap & Constant & exons & \bf{0.0012} & 0.0101 & 0.0023 & 0.030 & 0.0086 & \bf{0.0068} \\
