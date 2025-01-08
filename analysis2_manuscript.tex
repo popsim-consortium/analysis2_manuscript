@@ -558,7 +558,7 @@
     With respect to the strength of selection, as in constant size populations,
     all methods are performing reasonably well, although \polydfe seems to
     lead in terms of accuracy.
-\kelcomment{I'm a little surprised by the non-great performance of Dadi-cli in here....I know that folks have spent a long time working on this analysis and debugging it, so I don't want be negative or delay things.
+\kelcomment{I'm a little surprised by the non-great performance of Dadi-cli in here....I know that folks have spent a long time working on this analysis and debugging it, so I don't want be negative or delay things. That said, I think it would be good to plot the empirical (in the case simulated) SFS along with the SFSs from the MLE models. I would also do this for the demogrpahic models as well as the DFE models}
 
     %add PhoSin DFE figure here
     \begin{figure}
@@ -579,17 +579,16 @@
     
     In Figures \ref{fig:vaquita-dfe.constant} and \ref{fig:vaquita-dfe} we show a comparison of estimates
     from the same three DFE-inference packages on simulations of the
-    vaquita porpoise genome. In both situations, we see that all methods
+    vaquita porpoise genome. Importantly, these simulations use the vaquita demogrpahic model shown in Fig. X and a DFE that includes recessive deleterious mutations, as suggested in Robinsion et al. (2022). All methods
     perform uniformly worse that in the human genome simulations, with consistent underestimation of the mean selection coefficient    
-    and overestimation of the shape parameter. 
-    A critical distinction is that the previous human simulations employed a DFE that assumed all selected mutations had additive effects
-    (no dominance, $h = 1/2$), whereas the vaquita simulations use a DFE in which more deleterious mutations are more recessive ($h < 1/2$).
-    For all three software packages, the inferred mean and shape of the distribution of selection coefficients 
+    and overestimation of the shape parameter. This is not surprising as a mis-specified model is being fit to the data. All DFE inference methods used here assume an addive model (no dominance, $h = 1/2$) while the simulated data from the vaquita  was generated from a DFE in which more deleterious mutations are more recessive ($h < 1/2$)
+   
+    Reassuringly, for all three software packages, the inferred mean and shape of the distribution of selection coefficients 
     is consistent with the mean and shape of the distribution of $2 h s$, the product of the dominance coefficient
     and the selection coefficient (Fig.~\ref{fig:vaquita-dfe}C).
     This is likely because deleterious alleles are typically at low frequency and thus heterozygous, 
     where their selective effect is $h s$, and all these tools assume additivity  ($h = 1/2$).
-    Strongly deleterious alleles are often observed to be recessive in many species \citep{mukai1972mutation},
+   \kelcomment{I think we should move this next sentence to the Discussion and expand on it a bit} Strongly deleterious alleles are often observed to be recessive in many species \citep{mukai1972mutation},
     so these results suggest caution in interpreting DFE inferences.
 
 \section*{Detection of Selective Sweeps}
@@ -741,7 +740,7 @@
     a sample size of 100 diploid individuals. Demographic models are as stated above, each
     using the exon annotations from the human and vaquita porpoise genomes respectively.
     For simulations with selection, we sampled 10 diploid individuals from each of two populations (YRI and CEU). 
-    To decrease runtimes, we used a SLiM scaling factor of 2 with a burn-in of 2N generations. 
+    To decrease runtimes, we used a SLiM scaling factor of 2 with a burn-in of 2N generations. \kelcomment{I'm confused about the 100 diploid individuals samples vs. the 10 diploid individuals sampled. Did some analyses use 100 and others use 10? That's fine, but maybe we can specify that more clearly...}
 
     \subsection*{Demographic inference}
     We assessed the accuracy of demographic inferences from
@@ -765,6 +764,7 @@
     thus our inferences is a best case scenario. Empirical inference of the DFE is a much
     harder problem as some mutations assumed to be free of selection
     may in reality be under selection. As above, all methods were run using default settings.
+    \kelcomment{I think we need a lot more detail here...how big was the coding sequence length? How was demogrpahic inference done for the different models via the different programs? How was the unscaling of E[s] done?, etc}
 
     \subsection*{Selective sweeps detection}
     We ran simulations of human chromosome 1 using the three population out-of-Africa model
