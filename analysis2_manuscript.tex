@@ -587,8 +587,7 @@
     and the selection coefficient (Fig.~\ref{fig:vaquita-dfe}C).
     This is likely because deleterious alleles are typically at low frequency and thus heterozygous, 
     where their selective effect is $h s$, and all these tools assume additivity  ($h = 1/2$).
-   \kelcomment{I think we should move this next sentence to the Discussion and expand on it a bit} Strongly deleterious alleles are often observed to be recessive in many species \citep{mukai1972mutation},
-    so these results suggest caution in interpreting DFE inferences.
+   \kelcomment{I think we should move this next sentence to the Discussion and expand on it a bit....update on 1/10--I moved this to the Discussion and fleshed it out} 
 
 \section*{Detection of Selective Sweeps}
     \label{sweeps}
@@ -714,6 +713,10 @@
     In general, this is an important step forward for the field of population genetics,
     as it allows for a wide range of models of selection to be easily simulated and compared to
     empirical data, with reproducibility, computational efficiency, and rigor.
+
+    One important finding we made using the new stdpopsim selection API is that inference of the DFE is sensitive to the dominance of deleterious mutations. All three of the inference methods of the DFE applied here assume that deleterious mutations act in an additive fashion (h=0.5) by default. However, the simulated DFE for the vaquita genome included highly recessive mutations. Specifically, these simulations used a DFE where mutations with $s>0.01$ are quite recessive, with $h<=0.01$ and where mutations with $0.001<s<0.01$ have $h=0.1$. We found that the three DFE inference methods underestimated $E[s]$ and overestimated the shape parameter (Fig 4). This performance is not surprising as decreasing h for a given distribution of s will lead to a decrease in hs, or an apparent decrease in the amount of selection. Fitting a mis-specified DFE that assumes $h=0.5$ will then lead to underestimates of $E[s]$. Indeed, the distribution of $hs$ is much more accurately estimated (Fig 4b). Overall, these results are consistent with prior work showing that it is challenging to separately infer the DFE of $s$ along with $h$ (cite PMID: 24830675; PMID: 39302992; PMID: 34951958 ) and that a large proportion (>5%) of recessive deleterious mutations can confound inferences of $s$ (PMID: 37074880). 
+Given the plethora of evidence for recessive deleterious mutations (cite PMID: 4630587, PMID: 39114967 , PMID: 30013096 , PMID: 21098719 ), these results suggest the need for care in DFE inference. Kyriazis & Lohmueller (PMID: 39302992 ) inferred the DFE of $s$ for nonsynonymous mutations in humans when considering different values of $h$. Intriguingly, additive models show a satisfactory fit to the SFS of nonsynonymous variants in humans (Kyriazis et al) and more complex models of dominance do not substantially improve the fit. Nevertheless, models including recessive deleterious mutations, like those simulated here for the vaquita genome, show a similar fit to the SFS and may be more biologically realistic than fully additive models, given the evidence for the presence of recessive deleterious mutations. More broadly, new computational approaches are needed to precisely quantify the DFE and the covariance of $h$ and $s$.
+
 
     Although we have shown how the new API can be used to benchmark the performance of different methods,
     the benchmarks shown here merely scratch the surface of what can be done with the new API.
