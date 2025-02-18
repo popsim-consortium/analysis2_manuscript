@@ -604,6 +604,7 @@
     \end{figure}
 
  
+
     \igcomment{I start with the OOA model and then cite the constant-size model as supplementary.}
     We start by examining DFE inference from human genomes simulated under an out-of-Africa demographic model
     with selection acting on exons (see \textbf{Methods}).
@@ -638,25 +639,6 @@
 \igcomment{I think that this is better conveyed now in the added histograms for $s$ in panel C}
 
     
-
-
-    %add PhoSin DFE figure here
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.8\textwidth]{figures/PhoSin/Vaquita2Epoch_1R22/PhoSin_Vaquita2Epoch_1R22_Gamma_R22_Phocoena_sinus.mPhoSin1.pri.110_exons_DFE_plot.pdf}
-        \caption{
-        \label{fig:vaquita-dfe}
-        Inferred versus simulated DFEs from simulated vaquita genomes.
-        Simulations were performed using a two-epoch model of vaquita porpoise demography with a gamma-distributed DFE
-        acting on exons with a relationship between the selection coefficient ($s$) and dominance coefficient ($h$). 
-        Distributions are compared via their mean absolute value ($\lvert E(s) \rvert $; panel A) and shape parameter (panel B).
-        The DFE is inferred by analyzing all simulated genomes jointly by one of three different methods:
-        \grapes, \polydfe, and \dadicli.
-        Panel C shows the simulated distribution of $2 h s$,
-        along with the simulated distribution of $s$ and the median inferred DFEs. \igcomment{What is median inferred DFE?}
-        The distribution of $2 h s$ is multimodal because of the simulated relationship between $h$ and $s$ (see text).
-        }
-    \end{figure}
     
     %IG: describe experiment and cite figure later
     %In Figures \ref{fig:vaquita-dfe.constant} and \ref{fig:vaquita-dfe} we show a comparison of estimates
@@ -677,119 +659,165 @@
     where their selective effect is $h s$, and all these tools assume additivity  ($h = 1/2$).
    \kelcomment{I moved the last sentence from here to the Discussion and fleshed it out} 
 
+    %add PhoSin DFE figure here
+    \begin{figure}[t!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/PhoSin/Vaquita2Epoch_1R22/PhoSin_Vaquita2Epoch_1R22_Gamma_R22_Phocoena_sinus.mPhoSin1.pri.110_exons_DFE_plot.pdf}
+        \caption{
+        \label{fig:vaquita-dfe}
+        Inferred versus simulated DFEs from simulated vaquita genomes.
+        Simulations were performed using a two-epoch model of vaquita porpoise demography with a gamma-distributed DFE
+        acting on exons with a relationship between the selection coefficient ($s$) and dominance coefficient ($h$). 
+        Distributions are compared via their mean absolute value ($\lvert E(s) \rvert $; panel A) and shape parameter (panel B).
+        The DFE is inferred by analyzing all simulated genomes jointly by one of three different methods:
+        \grapes, \polydfe, and \dadicli.
+        Panel C shows the simulated distribution of $2 h s$,
+        along with the simulated distribution of $s$ and the median inferred DFEs. \igcomment{What is median inferred DFE?}
+        The distribution of $2 h s$ is multimodal because of the simulated relationship between $h$ and $s$ (see text).
+        }
+    \end{figure}
+
 \section*{Detection of Selective Sweeps}
     \label{sweeps}
-    We next highlight how the new models of selection in \stdpopsim can be used to benchmark and compare the performance of different methods for detecting selective sweeps from genetic data.
-    Here, we performed simulations of human chromosome 1 under the three population out-of-Africa model from \cite{gutenkunst2009inferring} with purifying selection acting on exons under the gamma-distributed DFE described above, the HapMap II genetic map \citep{international2007second}, but also include sweeps.
-    In particular, we introduced a beneficial mutation at a given location (that was varied) in the genome at a given time, and with a moderately strong selection coefficient ($s = 0.03$; $2Ns \sim 600$).
-    For each sweep location, we performed 1000 replicate simulations, sampling from them only if the selected allele reached a frequency of 0.95 or greater.
-    Rather than simulate the entire chromosome arm, replicate simulations were performed on 5cM regions of the chromosome at each of 100 different locations.
-    As recombination rate varies across the genome, the size of the region in base pairs simulated varied, however the recombination distance, which is critical for the linked effects of a sweep, was held constant.
- 
-
-    %sweeep power figure
-    \begin{figure}
+    We next highlight how \stdpopsim can be used to benchmark and compare
+    the performance of different methods for detecting selective sweeps from genetic data.
+    Because simulation of selective sweeps is very time consuming and evaluation of statistical power requires
+    many replicate simulations, we focused on human chromosome 1 and generated replicate simulations on 5cM segments
+    of the chromosome in 100 different locations. % (see \textbf{Methods}).
+    Selective sweeps were simulated by introducing a beneficial mutation in the center of the 5cM segment
+    with a moderately strong selection coefficient ($s = 0.03$; $2Ns \sim 600$; see \textbf{Methods}).
+    Each segment was simulated 1000 times, while keeping only replicates in which the selected allele reached a frequency of 0.95 or greater.
+    These sweeps were modeled in the context of the three population out-of-Africa model from \cite{gutenkunst2009inferring}
+    and background selection from deleterious mutations in exons.
+    Sweep-detection methods typically base their inference on checking whether a test statistic
+    exceeds a certain threshold, which is determined according to some empirical null distribution.
+    In our simulations, we considered two different null distributions:
+    one based on neutral simulations, and another based on simulations with background selection
+    from deleterious mutations in exons (see \textbf{Methods}).
+  
+     %sweeep power figure
+    \begin{figure}[t!]
         \centering
         \includegraphics[width=0.8 \textwidth]{figures/sweeps/chr1_power.pdf}
         \caption{
         Power to detect selective sweeps at 100 locations along human
-        chromosome 1 under a three population out-of-Africa model
-        \citep{gutenkunst2009inferring} when using null models with and without
-        purifying selection acting on exons under the gamma-distributed DFE
-        described above.  The HapMap II genetic map
-        \citep{international2007second} was used in each simulation.  Single
-        beneficial mutations were introduced at each location with a selection
-        coefficient of $s = 0.03$, and only sampled if they reached a terminal
-        frequency of 0.95 or greater.  Three methods for detecting sweeps were
-        used: 1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row), 2)
-        \diploshic \citep{kern2018diplos} (middle row), and 3) an empirical
-        cutoff of $\pi$ to find regions of reduced diversity (bottom row).
+        chromosome 1. Genomic segments were simulated with sweeps under a three population out-of-Africa model
+        \citep{gutenkunst2009inferring} and with background selection from deleterious mutations in exons.
+        %IG: seems like methods-level detail
+        %Single beneficial mutations were introduced at each location with a selection
+        % coefficient of $s = 0.03$, and only sampled if they reached a terminal
+        % frequency of 0.95 or greater.
+        Three methods for detecting sweeps were applied to simulated data:
+        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row),
+        2) \diploshic \citep{kern2018diplos} (middle row),
+        and 3) reduced diversity ($\pi$) (bottom row).
         Power (true positive rate) is shown for these methods for the CEU and YRI
-        samples (left and right respectively).  Under each method we show
-        heatmaps of exon density and local recombination rate along the
-        chromosome.  Power is shown as the proportion of replicates in which a
-        sweep was detected at each location.  To define
-        thresholds for calling a sweep, two different null models were used: a
-        neutral model (blue lines), and a model with purifying selection acting
-        on exons (red lines).
+        samples (left and right respectively).
+        The thresholds of the test statistics were set to control for
+        $5\%$ false positive rate under a neutral null model (blue)
+        and a null model with background selection from deleterious mutations in exons (red).
+        Also shown are heatmaps of exon density and local recombination rate along the
+        chromosome (bottom).
+        \igcomment{In fig, replace CLR with \sweepfinder; also in figs 6 S5 S6}
         }
         \label{fig:chr1_power}
     \end{figure}
-    
-    In Figure \ref{fig:chr1_power}, we show the power to detect selective sweeps at 100 locations along human chromosome 1 from
-    the simulations described above. We tested three methods for detecting sweeps: 1) \sweepfinder \citep{degiorgio2016sweepfinder2},
-    2) \diploshic \citep{kern2018diplos}, and 3) an empirical cutoff of $\pi$ to find regions of reduced diversity.
-    A few things are immediately apparent from this figure. First, the power to detect sweeps is generally higher in the YRI sample
-    than in the CEU sample, which is consistent with the fact that the YRI sample has a larger effective population size and thus both stronger selection and
-    more variation to detect a sweep. Further, the population size of YRI has been relatively constant over the last 100,000 years,
-    thus the out-of-Africa bottleneck has does not mute the signal of a sweep as much as in the CEU sample. This is consistent with
-    what is known about the effects of demography on the power to detect sweeps \citep[e.g.,][]{simonsen1995properties}.
-    Second, the power to detect sweeps is slightly lower when we use a null model with purifying selection acting on exons (consistent with \cite{schrider2020background}) but the effect is not
-    as strong as one might expect. 
-    \rngcomment{I'm confused by the terminology ``null model'' throughout this section. Are we always testing on simulated data that includes background selection, and ``null model'' refers to how the methods are tuned? Or are we comparing power on data simulated with and without background selection?} This is likely because the strength of selection acting on exons is relatively weak, and the
+   
+    We evaluated the statistical power to detect selective sweeps for three methods:
+    1) \sweepfinder \citep{degiorgio2016sweepfinder2},
+    2) \diploshic \citep{kern2018diplos},
+    and 3) reduced diversity ($\pi$).
+    For each method, we determined a threshold for its test-statistic 
+    using each of the two null models separately (neutral and BGS) and controlling 
+    for $5\%$ false positive rate.
+    We then applied each method to data simulated with sweeps for two sampled populations (YRI and CEU)
+    in each of the 100 locations along human chromosome 1 (Figure \ref{fig:chr1_power}).
+     First, we notice that power to detect sweeps is slightly lower when the test statistic threshold
+    is determined using simulated data with background selection (BGS null model).
+    This observation is consistent with what was previously shown by \cite{schrider2020background},
+    but the effect is relatively minor.
+    This is likely because the strength of selection acting on exons is relatively weak, and the
     sweep detection methods we have used are relatively robust to the effects of background selection. 
-    Finally and most importantly, the power to detect sweeps varies considerably among regions of the genome. 
-    Indeed variation in power along the chromosome is much greater than the variation in power between the CEU and YRI samples or between
-    models with or without purifying selection. This is likely due to the effects of recombination rate heterogeniety as well
-    as the density of functional elements along the chromosome.
+    Second, the power to detect sweeps is generally higher in the YRI sample
+    than in the CEU sample, which is consistent with the fact that YRI has a larger ancestral effective population size and
+    thus both stronger selection and more variation to detect a sweep \citep[e.g.,][]{simonsen1995properties}.
+    Further, the CEU population experienced the out-of-Africa bottleneck
+    that may mute the signal of a sweep.  
+    Finally and most importantly, the power to detect sweeps varies considerably along the chromosome,
+    and this variation is much greater than the variation in power between CEU and YRI or between
+    null models. This is likely due to the effects of recombination rate heterogeniety as well
+    as the density of functional elements along the chromosome  (Figure \ref{fig:chr1_power}; bottom).
 
-    Using this set of simulations, we can also compare the power of different methods to detect sweeps.
-    In general, the power of the methods varies with respect to the population history of the sample.
-    For instance \sweepfinder has marginally higher power to detect sweeps in the CEU sample than \diploshic,
-    likely as a results of the fact that we here trained \diploshic on simulations under a constant size population,
-    while the population size history of CEU is characterized by a strong recent bottleneck.
-    Conversely, \diploshic has higher power to detect sweeps in the YRI sample than \sweepfinder,
-    likely because that population size history more closely matches the population size history used to train \diploshic.
-    \sweepfinder power remains more constant along the chromosome, while the $\pi$ cutoff method varies wildly. 
-
-    We further explored the performance of the methods by plotting their receiver operating characteristic (ROC) curves.
-    In Figure \ref{fig:roc-curves}, we show the ROC curves for the three methods for detecting sweeps.
-    False positive rates were established using neutral simulations that contained no sweeps
-    but were conditioned on the same population history as the CEU and YRI samples. \rngcomment{Did these simulations contain background selection?}
-    These suggest that the $\pi$ cutoff is a surprisingly effective method for detecting sweeps,
-    in these genomic regions at least, but that it lags behind \diploshic and \sweepfinder in terms of accuracy in the YRI sample.
-    %While this is not exhaustive benchmarking, we aim to give a sense to the reader
-    %of how \stdpopsim can be used to benchmark the performance of different methods easily and efficiently.
-    These ROC curves, however, hide the phenomenon of high variation in power (see Figure \ref{fig:chr1_power}) to detect sweeps along a realistic looking chromosome.
-    That is, although in aggregate the $\pi$ cutoff may seem effective, its power is highly heterogeneous across the chromosome.
+    We compared the overall performance of the three sweep-detection methods using
+    receiver operating characteristic (ROC) curves (Figure \ref{fig:roc-curves}).
+    Different methods perform better for each of the sampled populations,
+    with \sweepfinder performing betteer than the other two on the CEU sample,
+    and \diploshic performing better on the YRI sample.
+    This is likely a results of the fact that we trained \diploshic on simulations under a constant size population,
+    which more closely matches the demographic history of YRI, than that of CEU, which 
+    is characterized by a strong recent bottleneck followed by population expansion.
+    Interestingly, the simple method that uses reduced diversity ($\pi$) as an indicator
+    for a selective sweep performs reasonably well overall (especially on the CEU sample).
+    However, its accuracy is much more variable along the chromosome compared to the other two method (see Figure \ref{fig:chr1_power}),
+    and for quite a few locations along the chromosome it has power below $50\%$
+    when applied to both sample sets.
+    In that sense, \sweepfinder appears to have the least variation in power along the chromosome or across populations.
 
 
-    \begin{figure}
+
+
+    \begin{figure}[b!]
         \centering
         \includegraphics[width=0.8 \textwidth]{figures/sweeps/relationship_power_cM.pdf}
         \caption{
-        Power to detect selective sweeps at 100 locations along human
-        chromosome 1 under a three population out-of-Africa model
-        \citep{gutenkunst2009inferring}  when using null models with and
-        without purifying selection as a function of local recombination rate.
-        Simulations are as described in Figure \ref{fig:chr1_power}.  True
-        positive rate is shown for these methods for samples from the CEU and
-        YRI samples (left and right respectively).  To define thresholds for
-        calling a sweep, two different null models were used: a neutral model
-        (blue lines), and a model with purifying selection acting on exons (red
-        lines).  Points represent the power at each location and trend lines
-        along with 95\% confidence intervals are shown fit to those points.
+        Power to detect selective sweeps 
+        %IG: shortened the title line
+        %at 100 locations along human
+        %chromosome 1 under a three population out-of-Africa model
+        %\citep{gutenkunst2009inferring}  when using null models with and
+        %without purifying selection
+        as a function of local recombination rate.
+        This figure shows the same power estimates shown in Figure \ref{fig:chr1_power},
+        but with the 100 genomic segments sorted according to their
+        average recombination rates instead of position along chromosome 1.
+        \igcomment{Specify how the curves were computed}
+        %IG: copoed from the caption of fig 5
+	Genomic segments were simulated with sweeps under a three population out-of-Africa model
+        \citep{gutenkunst2009inferring} and with background selection from deleterious mutations in exons.
+        Three methods for detecting sweeps were applied to simulated data:
+        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row),
+        2) \diploshic \citep{kern2018diplos} (middle row),
+        and 3) reduced diversity ($\pi$) (bottom row).
+        Power (true positive rate) is shown for these methods for the CEU and YRI
+        samples (left and right respectively).
+        The thresholds of the test statistics were set to control for
+        $5\%$ false positive rate under a neutral null model (blue)
+        and a null model with background selection from deleterious mutations in exons (red).
         }
         \label{fig:power-recomb}
     \end{figure}
 
     To further dissect the reasons for high variance (along the chromosome) in power to detect sweeps,
-    we show in Figure \ref{fig:power-recomb} the relationship between power and local recombination rate for our sweep simulations.
+    we examined the relationship between power and local recombination rate for our sweep simulations ( Figure \ref{fig:power-recomb}).
     We see that power to detect sweeps is
-    a decreasing function of local recombination rate for \sweepfinder and $\pi$ outliers,
+    a decreasing function of local recombination rate for \sweepfinder and reduced diversity,
     which is consistent with sweeps having a larger genomic footprint in regions of low
     recombination.
     \diploshic on the other hand shows a slight increase in power with recombination rates,
     probably because it is designed to distinguish regions where a sweep happened from regions linked to a sweep.
-    We also see that the presence of purifying selection acting on exons has a relatively small effect on the power to detect sweeps,    
-    but one that is present across the entire range of recombinations rates observed in human chromosome 1. 
-    Unsurprisingly, the empirical cutoff of $\pi$ to detect sweeps is the less robust to the effects of recombination rate than the other two methods,
-    which are specifically designed to find selective sweeps. 
-
-    In Figure \ref{fig:power-exon}, we show the relationship between power and local exon density for our sweep simulations.
-    There is little relationship between power (across all methods) and exon density,
-    which is somewhat surprising given that background selection should somewhat interfere with the sweep signature.
-    It is unclear why that is so, but the effects of realistic background selection may not be as similar to sweeps as previously thought \citep{schrider2020background}.
+    These results confirm that reduced genetic diversity performs well as an indicator for selective sweeps only in regions with
+    low recombination rate.
+    The other two methods, which were specifically designed for sweep detection, are considerably more robust 
+    to the effects of recombination rate than the simple indicator of reduced genetic diversity.
+    These methods are particularly robust to recombination rate variation when applied to 
+    the YRI sample, especially when using a neutral null model to calibrate the test statistics.
+    The other null model, which assumes background selection from exons,
+    appears to consistently lead to reduced power for detecting sweeps regardless of the recombination rate.
+    Interestingly, we do not see a clear correlation between power to detect sweeps and
+    local exon density (Figure \ref{fig:power-exon}).
+    This is somewhat surprising given that background selection is expected to somewhat interfere with the sweep signature.
+    This might suggest that the effects of realistic background selection on genome variation
+    may not be as similar to those of sweeps as previously thought \citep{schrider2020background}.
 
 \section*{Discussion}
     \label{Discussion}
@@ -876,8 +904,10 @@ Given the plethora of evidence for recessive deleterious mutations (cite PMID: 4
 
     \subsubsection*{Simulations with selective sweeps}
 
-    To test methods for detecting selective sweeps, we simulated 100 evenly distributed 5Mb
+    To test methods for detecting selective sweeps, we simulated 100 evenly distributed 5cM
     segments of human chromosome 1.
+    As recombination rate varies across the genome, the size of the region in base pairs simulated varied, however the recombination distance,
+    which is critical for the linked effects of a sweep, was held constant.
     Each segment was simulated in each of the following three settings:
     (1) neutral, (2) background selection (BGS), and (3) hard sweep with BGS.
     In all three settings, we applied a genetic map from the HapMap Project
@@ -888,7 +918,7 @@ Given the plethora of evidence for recessive deleterious mutations (cite PMID: 4
     \cite{kim2017inference} (\stdpopsim label \texttt{Gamma\_K17}) to exons annotated by the HAVANA group release 104
     (\cite{ensembl2018}; \stdpopsim label \texttt{ensembl\_havana\_104\_exons}).
     Hard sweeps were modeled by generating a single beneficial mutation 
-    with selection coefficient of $s = 0.03$ in the center of the 5Mb genomic segment
+    with selection coefficient of $s = 0.03$ in the center of the 5cM genomic segment
     and discarding simulations in which the beneficial mutation did not reach (or exceed) a terminal frequency of $95\%$.
     For each of the 100 genomic segments of chromosome 1, we generated 1,000 replicate datasets under each of the three settings.
     Each simulation generated 10 diploid genomes for each of the two sampled populations: YRI and CEU.
@@ -935,14 +965,14 @@ Given the plethora of evidence for recessive deleterious mutations (cite PMID: 4
 
     \subsection*{Selective sweeps detection}
 
-    In this analysis, we compared three different criteria for sweep detection:
-    (1) reduced nucleotide diversity ($\pi$),
-    (2) the composite likelihood ratio (CLR) computed by \sweepfinder \citep{degiorgio2016sweepfinder2},
-    and (3) a probability for sweeps computed using the supervised learning approach of \diploshic \citep{kern2018diplos}.
-    Nucleotide diversity was computed directly from the underlying tree sequences using \tskit \citep{ralph2020efficiently}
-    over 10 equally sized and non-overlapping subwindows, and 
-    the CLR was computed at 21 uniformly distributed positions along the simulated region.
-    To train the \diploshic classifier, we used \texttt{discoal} \citep{kern2016discoal} to simulate 20 haploid sequences of length 1.21Mbp
+    Each of the three sweep-detection methods is based on a test statistic.
+    Reduced nucleotide diversity is based on nucleotide diversity  ($\pi$) 
+    computed directly from the underlying tree sequences using \tskit \citep{ralph2020efficiently}
+    over 10 equally sized and non-overlapping subwindows.
+    \sweepfinder \citep{degiorgio2016sweepfinder2} is based a composite likelihood ratio (CLR) 
+    computed at 21 uniformly distributed positions along the simulated region.
+    \diploshic \citep{kern2018diplos} uses supervised learning to train a sweep classifier.
+    Its training phase used \texttt{discoal} \citep{kern2016discoal} to simulate 20 haploid sequences of length 1.21Mbp
     with a constant population size of $N_e=10,000$, a mutation rate of $2\times 10^{-8}$, and a recombination rate of $2\times 10^{-8}$.
     For \texttt{discoal} simulations that included selective sweeps,
     selection coefficients were drawn from a uniform distribution between 0.001 and 0.10,
@@ -953,8 +983,9 @@ Given the plethora of evidence for recessive deleterious mutations (cite PMID: 4
     we expect it to perform suboptimally on the simulated segments of human chromosome 1,
     which were generated using mroe relaistic simulations (see \textbf{Simulations with selective sweeps} above).
 
-    Each of the three sweep-detection methods was associated with a threshold for its test statistic ($\pi$, \sweepfinder's CLR, or \diploshic's probability)
-    that was determined using an empirical distribution representing a null model without sweeps.
+    The three sweep-detection methods were associated with thresholds for their respective test statistics
+    ($\pi$, \sweepfinder's CLR, or \diploshic's probability),
+    which were determined using an empirical distribution representing a null model without sweeps.
     We considered two null models: a neutral evolution model (neutral),
     and a model with background selection from deleterious mutations in exons (BGS).
     Each null model was represented by a different set of $100,000$ simulations generated according to the appropriate model
@@ -1088,8 +1119,11 @@ PhoSin & Vaquita2Epoch 1R22 & exons & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0
     \caption{
     \label{fig:roc-curves}
     Receiver operating characteristic (ROC) curves for the three methods for detecting sweeps.
-    False positive rates were established using neutral simulations that contained no sweeps
-    but were conditioned on the same population history as the CEU and YRI samples.
+    True positive rates (TPR) were computed across all 100,000 datasets simulated with selective sweeps,
+    and false positive rates (FPR) were established by applying the methods to genomes simulated
+    under neutral evolution with the same demographic history and genetic map
+    used in the simulations that included sweeps (see \textbf{Methods}).
+    \igcomment{Add AUCs?}
     }
     %DRS-fig: can we include AUCs here?
 \end{figure}
@@ -1100,13 +1134,24 @@ PhoSin & Vaquita2Epoch 1R22 & exons & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0
     \centering
     \includegraphics[width=0.8 \textwidth]{figures/sweeps/relationship_power_exon.pdf}
     \caption{
-    Power to detect selective sweeps at 100 locations along human chromosome 1 under a three-population out-of-Africa model \citep{gutenkunst2009inferring}  
-    with and without purifying selection as a function of local exon density.
-    Simulations are as described in Figure \ref{fig:chr1_power}.
-    Each panel shows the results of simulations with purifying selection acting on exons (red; labelled BGS)
-    and without purifying selection (blue; labelled Neutral).
-    True positive rate is shown for these methods for the CEU and YRI samples (left and right respectively).
-    Points represent the power at each location and trend lines along with 95\% confidence intervals are shown fit to those points.
+    %IG: copied new caption from fig 6 and adjusted.
+        Power to detect selective sweeps as a function of local exon density.
+        This figure shows the same power estimates shown in Figure \ref{fig:chr1_power},
+        but with the 100 genomic segments sorted according to their
+        exon density instead of position along chromosome 1.
+        \igcomment{Specify exactly how exon density is computed (\% of bases in exons?) and how the curves were computed}
+        %IG: copoed from the caption of fig 5
+	Genomic segments were simulated with sweeps under a three population out-of-Africa model
+        \citep{gutenkunst2009inferring} and with background selection from deleterious mutations in exons.
+        Three methods for detecting sweeps were applied to simulated data:
+        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row),
+        2) \diploshic \citep{kern2018diplos} (middle row),
+        and 3) reduced diversity ($\pi$) (bottom row).
+        Power (true positive rate) is shown for these methods for the CEU and YRI
+        samples (left and right respectively).
+        The thresholds of the test statistics were set to control for
+        $5\%$ false positive rate under a neutral null model (blue)
+        and a null model with background selection from deleterious mutations in exons (red).
     }
     \label{fig:power-exon}
 \end{figure}
