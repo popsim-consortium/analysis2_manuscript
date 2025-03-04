@@ -984,10 +984,9 @@
     and the output of \polydfe was saled by $2 \mu / \theta$, 
     where $\mu$ is the assumed mutation rate and 
     $\theta$ is the population-scaled mutation rate estimated by each method ($\theta = 4N_{e}\mu$).
-    \igcomment{Do we really multiple $\alpha$ by $\nu$ in rescaling for \dadicli?}
-    For \dadicli, we report $\alpha * \nu / (\theta / (4 \mu L p))$, where
-    $\alpha$ and $\nu$ are the inferred shape and rate parameters of the \dadicli's inferred gamma distribution,
-    $L$ is the total number of sites available for the analysis,
+    For \dadicli, the gamma distribution is parameterized using the shape and rate ($\alpha$ and $\nu$, respectively). 
+    The mean value of the distribution, which is $s$ is transformed from $\alpha$ and $\nu$ and rescaled as $\alpha * \nu / (\theta / (4 \mu L p))$,
+    where $L$ is the total number of sites available for the analysis,
     $p$ is the proportion of sites under selection.
 
 
