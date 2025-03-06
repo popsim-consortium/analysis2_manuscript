@@ -741,7 +741,7 @@
     and 3) reduced diversity ($\pi$).
     For each method, we determined a threshold for its test-statistic 
     using each of the two null models separately (neutral and BGS) and controlling 
-    for $5\%$ false positive rate.
+    for a $5\%$ false positive rate.
     We then applied each method to data simulated with sweeps for two sampled populations (YRI and CEU)
     in each of the 100 locations along human chromosome 1 (Figure \ref{fig:chr1_power}).
     First, we notice that power to detect sweeps is slightly lower when the test statistic threshold
@@ -847,9 +847,9 @@
     empirical data, with reproducibility, computational efficiency, and rigor.
 
     One important finding we made using the new stdpopsim selection API is that inference of the DFE is sensitive to the dominance of deleterious mutations.
-    All three of the inference methods of the DFE applied here assume that deleterious mutations act in an additive fashion (h=0.5) by default.
+    All three of the inference methods of the DFE applied here assume that deleterious mutations act in an additive fashion ($h=0.5$) by default.
     However, the simulated DFE for the vaquita genome included highly recessive mutations.
-    Specifically, these simulations used a DFE where mutations with $s>0.01$ are quite recessive, with $h<=0.01$ and where mutations with $0.001<s<0.01$ have $h=0.1$.
+    Specifically, these simulations used a DFE where mutations with $s<-0.01$ are quite recessive, with $h<=0.01$ and where mutations with $-0.01<s<-0.001$ have $h=0.1$.
     We found that the three DFE inference methods underestimated $E[s]$ and overestimated the shape parameter (Fig 4).
     This performance is not surprising as decreasing $h$ for a given distribution of $s$ will lead to a decrease in $hs$,
     or an apparent decrease in the amount of selection.
@@ -1073,6 +1073,7 @@ We thank Tom Booker for discussions and encouragement to incorporate realistic B
     MFR, ST, NP, and ADK were supported in part by NIH award R35GM148253.
     RNG and LNT were supported in part by NIH award R35GM149235.
     DRS was supported in part by NIH award R35GM138286.
+    KEL was supported by NIH award R35GM119856.
 
     %other funding sources?
 \printbibliography
