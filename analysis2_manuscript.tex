@@ -249,11 +249,11 @@
     to explore the power and limitations of statistical methods \citep[e.g.,][]{przeworski2002signature},
     and increasingly to provide a basis for machine learning and other
     simulation-based inference methods \citep[e.g.,][]{beaumont2002approximate,pavlidis2010searching,lin2011distinguishing,kern2018diplos,mughal2019localizing,sanchez2021deep,wang2021automatic}. \kelcomment{also cite: PMID: 36617238 }
-    While this is so, joint simulation of complex demography and selection
-    is challenging,  requires a deep understanding of the underlying
-    evolutionary processes, and necessitates a number of parameter choices including
-    the strength of selection and the
-    recombination rate, as well as a parameterized demographic model.
+    However, joint simulation of complex demography and selection
+    is challenging, requiring a deep understanding of the underlying
+    evolutionary processes, and necessitating a number of parameter choices including
+    the strength of selection, the
+    recombination rate, and a parameterized demographic model.
     This is a daunting task for many researchers, and can be a barrier to
     the adoption of simulation-based methods in population genetics.
     Furthermore, different simulation and inference tools may use different structures
@@ -271,19 +271,19 @@
     via the \stdpopsim project \citep{adrion2020community}. \stdpopsim
     provides a standardized interface for accessing a wide range of
     population genetic models, and has begun to be be widely adopted by the community. %maybe add citations here?
-    While that is so, the original version of \stdpopsim did not include
+    Yet, the original version of \stdpopsim did not include
     models of selection, which is a major limitation for more empirically motivated
     applications of population genetic simulation. In particular, modeling selection
     through simulation is critical for understanding processes such
-    as adaptation\citep[e.g.][]{thornton2019polygenic,hartfield2024polygenic}, the effects of selective sweeps \citep[e.g.][]{braverman1995hitchhiking,fay2000hitchhiking,przeworski2002signature,przeworski2005signature,schrider2015soft}, and the impact of
+    as adaptation \citep[e.g.][]{thornton2019polygenic,hartfield2024polygenic}, the effects of selective sweeps \citep[e.g.][]{braverman1995hitchhiking,fay2000hitchhiking,przeworski2002signature,przeworski2005signature,schrider2015soft}, and the impact of
     background selection on genetic diversity
     \citep[e.g.][]{charlesworth1993effect,charlesworth1995pattern,williamson2002genealogy,ewing2016consequences,torres2020temporal}.
     Ideally, one would like
     to have a single, unified framework for simulating both neutral and
-    non-neutral evolutionary processes, and to be able to compare the
+    non-neutral evolutionary processes and to be able to compare the
     results of these simulations to empirical data in a manner that is
     both accessible to a wide range of researchers and highly reproducible. 
-    Furthermore the framework should include the complex realities of 
+    Furthermore, the framework should include the complex realities of 
     genomes, including heterogenous recombination rates, 
     variation in the size and density of functional elements, and
     non-equilibrium demographic histories. Ideally, one should be able
@@ -291,7 +291,7 @@
     from a species of interest \citep[e.g.][]{schrider2020background,rodrigues2024shared}.
 
     % goals
-    In this manuscript, we provide an overview of a major new addition
+    Here, we provide an overview of a major new addition
     to \stdpopsim---the inclusion of models of selection.
     We begin by describing the models of selection that we have implemented,
     as well as the parameter choices that are available to the user.
@@ -325,7 +325,7 @@
     %an important new class representing a specfic distribution of fitness effects
     to the \stdpopsim API: the \texttt{DFE} class and the \texttt{Annotation} class.
     The \texttt{DFE} class provides an interface for specifying
-    a distribution of the fitness effects of new mutations.
+    a distribution of the fitness effects (DFE) of new mutations.
     Each \texttt{DFE} object specifies a list of mutation types and
     their proportions, where 
     each mutation type is associated with a dominance coefficient
@@ -333,13 +333,13 @@
     the distribution of selection coefficients (e.g., fixed-value, normally-distributed, gamma-distributed),
     and the parameters of this distribution.
     Each \texttt{Annotation} object is typically associated with a collection of functional
-    genomic elements whose coordinates are specified using a GFF3 file. %
+    genomic elements whose coordinates are specified using a GFF3 annotation file. %
     %    
     For example, say that we wish to implement a model of selection consistent with the
     DFE inferred by Kim et al. (\citeyear{kim2017inference}) for exons in the human genome.
     The associated \texttt{DFE} object is defined with two mutation types,
     neutral and deleterious, corresponding to synonymous and non-synonimous sites.
-    with their proportions set to follow their expected
+    with their proportions set to their expected
     prevelanece in exons. 
     The neutral mutation type is associted with a fixed selection coefficient (0),
     and the deleterious mutation type is associated with a dominance coefficient of $0.5$ and
@@ -361,7 +361,7 @@
         distribution of fitness effects (DFE) and a set of functional
         annotations. }
     \end{figure}
-    
+    \kelcomment{For Figure 1 at the bottom, it says "Kyriazis et al. 2013". This should be "2023" instead}
     As with other aspects of \stdpopsim, we intend the selection models to be as biologically accurate as possible.
     Thus, the \stdpopsim catalog provides \texttt{Annotation} objects based on specices' publically available functional genomic elements 
     and \texttt{DFE} objects based on published DFE estimates (Figure \ref{fig:schematic}A).
@@ -413,7 +413,7 @@
     that enables selective sweeps to be simulated in \stdpopsim.
     This class augments a demographic model with an ``extended event''
     which conditions on the introduction of a selected mutation at a given time and position
-    and with a given selection coefficient. Further the user can specify the minimum frequency
+    and with a given selection coefficient. Further, the user can specify the minimum frequency
     of the selected allele at the time of sampling. As these extended events are implemented
     on top of the existing \stdpopsim API, they can be combined with other models of selection
     and demography to provide a rich model of the combined effects of multiple disparate evolutionary processes
@@ -445,11 +445,14 @@
     One of the most common applications of population genetic inference is to estimate
     the effective population size over time, $N_e(t)$, from genetic data. This can be done
     using a variety of methods, including the sequential Markovian coalescent
-    \citep{li2011inference,Schiffels2020,terhorst2017robust}, \kelcomment{mabye also cite Gutenkunst 2009 Dadi paper here} 
-    \igcomment{I'm not sure it's all that relevant, since it doesn't strictly infer N(t)}
-    \drscomment{One could use dadi for that, but then we should also cite things like fastsimcoal and ABC, while explaining
-    that users can use those methods to infer piecewise-constant N(t) histories as well with a prespecified number of epochs
-    and priors around their params, but maybe that is too much of a digression here? I'm fine either way}
+    \citep{li2011inference,Schiffels2020,terhorst2017robust}, 
+    
+    
+    %\kelcomment{mabye also cite Gutenkunst 2009 Dadi paper here} 
+    %\igcomment{I'm not sure it's all that relevant, since it doesn't strictly infer N(t)}
+    %\drscomment{One could use dadi for that, but then we should also cite things like fastsimcoal and ABC, while explaining
+    %that users can use those methods to infer piecewise-constant N(t) histories as well with a prespecified number of epochs
+    %and priors around their params, but maybe that is too much of a digression here? I'm fine either way}
     through use of the site frequency spectrum (SFS) \citep{liu2020stairway},
     as well as through identity by descent information \citep{santiago2020recent}.
     Since all of these methods assume neutral evolution, they are typically applied to genomic
@@ -486,7 +489,7 @@
     In both scenarios, we ran three replicate simulations
     under the out of Africa (OOA) demographic model of
     \citep{ragsdale2019models} using a genetic map from the HapMap Project \citep{international2007second} (see \textbf{Methods}).
-    Simulations with selection were implemented by modeling purifying selection on exons
+    Simulations with selection were implemented by modeling purifying selection on nonsynonymous mutations
     % IG: moved details to methods
     %, defined from the HAVANA group release 104 for the human genome,
     using a DFE inferred by \cite{kim2017inference}.
@@ -505,7 +508,7 @@
     on neutral simulations \citep{adrion2020community},
     we see that each method has its strengths and weaknesses.
     Methods based on the sequential Markovian coalescent (\smcpp and \msmc)
-    appear to overal produce the most accurate trajectories of $N_e(t)$
+    appear to produce the most accurate trajectories of $N_e(t)$ overall
     in this setting, although they tend to under-estimate the population
     bottleneck associated with the population split.
     On the other hand, \stairway, which utilizes the site frequency spectrum,
@@ -624,7 +627,7 @@
     %In the out-of-Africa model (Fig.~\ref{fig:homsap-dfe.ooa}) the performance of the methods is more mixed. 
     Overall, inferred DFEs varied across populations and inference methods (Figure \ref{fig:homsap-dfe.ooa}).
     Note that while the estimation accuracy for the DFE parameters themselves (Figure \ref{fig:homsap-dfe.ooa}A-B) is useful,
-    examining the difference between the actual and inferred distributions can be more helpful for showing how well a method
+    examining the difference between the actual and inferred distributions of $s$ can be more helpful for showing how well a method
     has recovered the true DFE (Figure \ref{fig:homsap-dfe.ooa}C).
     The distributions of $s$ inferred by \polydfe and \dadicli had higher mean values (in absolute value)
     but smaller shape parameters, while \grapes inferred distributions with lower mean values and shape parameters.
@@ -641,6 +644,7 @@
     simulations but with no population size changes (Figure \ref{fig:homsap-dfe.constant}).
     In this simpler setting, \polydfe overlapped the true mean selection coefficient and shape parameter, whereas 
     the other methods do not. 
+    \kelcomment{From looking at the SI Figure, these differences seem really slight. Also, with only 3 replicates, I think it's hard to conclusively say that some methods overlap the true values while others do not. I might instead just say here that all methods are close, but deviate slightly in different ways.
     \grapes exhibits similar biases without population size changes as in the simulations with more complex demography,
     but with milder under-estimation of the shape parameter, but \dadicli shows an inverse pattern
     with overestimated shape parameter and slightly underestimated mean. 
@@ -652,7 +656,7 @@
         \label{fig:vaquita-dfe}
         Inferred versus simulated DFEs from simulated vaquita genomes.
         Simulations were performed using a two-epoch model of vaquita porpoise demography with a gamma-distributed DFE
-        acting on exons with a relationship between the selection coefficient ($s$) and dominance coefficient ($h$) (see \textbf{Methods}).
+        acting on nonsynonymous mutations with a relationship between the selection coefficient ($s$) and dominance coefficient ($h$) (see \textbf{Methods}).
         The DFE is inferred by analyzing all simulated genomes jointly by one of three different methods:
         \grapes, \polydfe, and \dadicli.
         (A-B) Mean absolute value of selection coefficient ($\lvert E(s) \rvert $) and shape parameter are
@@ -666,9 +670,10 @@
     \end{figure}
     
     %IG: describe experiment and cite figure later
+    \kelcomment{Throughout this section, we talk about "mutations in exons". Is it more accurate to say "nonsynonymous mutations"? In other words, the simulations of exons include by synonymous and nonsynonymous mutations, but only the nonsynonymous ones experience selection and only nonsynonymous variants are used in DFE inference. Did I get that right? Maybe saying that clearly here would be good}
     %In Figures \ref{fig:vaquita-dfe.constant} and \ref{fig:vaquita-dfe} we show a comparison of estimates
     Next, we benchmarked these three DFE-inference methods on simulations of the vaquita porpoise genome.
-    Recall that these simulations apply a gamma-distributed selection coefficient to mutations in exons
+    Recall that these simulations apply a gamma distribution of selection coefficients to nonsynonymous mutations 
     and a relationship between the selection and dominance coefficients (see \textbf{Methods}).
     In this setting, all methods perform uniformly worse than in the human genome simulations,
     with consistent underestimation of the mean selection coefficient    
@@ -736,7 +741,7 @@
     and 3) reduced diversity ($\pi$).
     For each method, we determined a threshold for its test-statistic 
     using each of the two null models separately (neutral and BGS) and controlling 
-    for $5\%$ false positive rate.
+    for a $5\%$ false positive rate.
     We then applied each method to data simulated with sweeps for two sampled populations (YRI and CEU)
     in each of the 100 locations along human chromosome 1 (Figure \ref{fig:chr1_power}).
     First, we notice that power to detect sweeps is slightly lower when the test statistic threshold
@@ -842,9 +847,9 @@
     empirical data, with reproducibility, computational efficiency, and rigor.
 
     One important finding we made using the new stdpopsim selection API is that inference of the DFE is sensitive to the dominance of deleterious mutations.
-    All three of the inference methods of the DFE applied here assume that deleterious mutations act in an additive fashion (h=0.5) by default.
+    All three of the inference methods of the DFE applied here assume that deleterious mutations act in an additive fashion ($h=0.5$) by default.
     However, the simulated DFE for the vaquita genome included highly recessive mutations.
-    Specifically, these simulations used a DFE where mutations with $s>0.01$ are quite recessive, with $h<=0.01$ and where mutations with $0.001<s<0.01$ have $h=0.1$.
+    Specifically, these simulations used a DFE where mutations with $s<-0.01$ are quite recessive, with $h<=0.01$ and where mutations with $-0.01<s<-0.001$ have $h=0.1$.
     We found that the three DFE inference methods underestimated $E[s]$ and overestimated the shape parameter (Fig 4).
     This performance is not surprising as decreasing $h$ for a given distribution of $s$ will lead to a decrease in $hs$,
     or an apparent decrease in the amount of selection.
@@ -1068,6 +1073,7 @@ We thank Tom Booker for discussions and encouragement to incorporate realistic B
     MFR, ST, NP, and ADK were supported in part by NIH award R35GM148253.
     RNG and LNT were supported in part by NIH award R35GM149235.
     DRS was supported in part by NIH award R35GM138286.
+    KEL was supported by NIH award R35GM119856.
 
     %other funding sources?
 \printbibliography
