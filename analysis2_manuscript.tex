@@ -564,19 +564,17 @@
     Another common application of population genetic inference is to estimate the distribution of fitness effects (DFE) of new mutations
     from genetic data. The new framework of modeling selection in \stdpopsim makes it an ideal tool for easily benchmarking and comparing
     the performance of different methods for inferring the DFE. 
-    %IG: I don't think we need this intro.
-    %We performed simulations using the 
-    %human and vaquita porpoise models described above, with complex demographic histories and models of selection acting on exons.
-    %
-    A challenge when comparing different inferred and simulated distributions of the selection coefficient ($s$) is differing convention regarding its definition.
-    The simulator SLiM and the inference tool \grapes define the selection coefficient $s$ such that a homozygote has fitness $1+s$.
+
+    A challenge when comparing different inferred and simulated distributions of the selection coefficient ($s$)
+    is differing conventions in the literature regarding its definition.
+    The simulator \texttt{SLiM} and the inference tool \grapes define the selection coefficient $s$ such that a homozygote has fitness $1+s$.
     On the other hand, \dadicli and \polydfe define the selection coefficient such that a homozygote has fitness $1+ 2s$.
      %https://academic.oup.com/genetics/article/207/3/1103/5930676
     Moreover, inferred distributions of selection coefficients are typically scaled by an inferred ancestral
     effective population size $N_e$, and different methods assume different scaling.
     \dadicli infers the distribution of $2 N_e s$ while \polydfe and \grapes infer the distribution of $4 N_e s$.
     %https://academic.oup.com/genetics/article/207/3/1103/5930676, https://academic.oup.com/genetics/article/216/2/559/6066183
-    For comparison, here we have normalized all inference results to the convention of SLiM (see \textbf{Methods}).
+    For comparison, here we have normalized all inference results to the convention of \texttt{SLiM} (see \textbf{Methods}).
     % Add citation to fastDFE as the successor to polyDFE: https://academic.oup.com/mbe/article/41/5/msae070/7641109 ?
 
     \begin{figure}[b!]
@@ -609,10 +607,7 @@
     In each case we note that the DFE is estimated from segregating sites only,
     without the use of substitution data, as \stdpopsim's models currently do not
     contain outgroup populations or species that can be used to estimate divergence.
-    %IG: no need to map figures. Just describe results and cite figs
-    %Figure \ref{fig:homsap-dfe.constant} shows estimates from a single, constant size population of humans, 
-    %while Figure \ref{fig:homsap-dfe.ooa} shows estimates from a model of human out-of-Africa demography.
-    %In the out-of-Africa model (Fig.~\ref{fig:homsap-dfe.ooa}) the performance of the methods is more mixed. 
+     
     Overall, inferred DFEs varied across populations and inference methods (Figure \ref{fig:homsap-dfe.ooa}).
     Note that while the estimation accuracy for the DFE parameters themselves (Figure \ref{fig:homsap-dfe.ooa}A-B) is useful,
     examining the difference between the actual and inferred distributions can be more helpful for showing how well a method
@@ -655,12 +650,10 @@
         The distribution of $2 h s$ is multimodal because of the simulated relationship between $h$ and $s$ (see text).
         }
     \end{figure}
-    
-    %IG: describe experiment and cite figure later
-    %In Figures \ref{fig:vaquita-dfe.constant} and \ref{fig:vaquita-dfe} we show a comparison of estimates
+
     Next, we benchmarked these three DFE-inference methods on simulations of the vaquita porpoise genome.
     Recall that these simulations apply a gamma-distributed selection coefficient to mutations in exons
-    and a relationship between the selection and dominance coefficients (see \textbf{Methods}).
+    with a relationship between the selection and dominance coefficients (see \textbf{Methods}).
     In this setting, all methods perform uniformly worse than in the human genome simulations,
     with consistent underestimation of the mean selection coefficient    
     and overestimation of the shape parameter (Figure \ref{fig:vaquita-dfe}A-B). 
@@ -673,7 +666,6 @@
     Reassuringly, all three methods infer distributions that appear to fit the main mode of the simulated distribution of $2hs$.
     This is likely because deleterious alleles are typically at low frequency and thus heterozygous, 
     where their selective effect is $h s$ rather than $s$.
-    %KEL: I moved the last sentence from here to the Discussion and fleshed it out
 
 \section*{Detection of Selective Sweeps}
     \label{sweeps}
@@ -727,9 +719,9 @@
     and 3) reduced diversity ($\pi$).
     For each method, we determined a threshold for its test-statistic 
     using each of the two null models separately (neutral and BGS) and controlling 
-    for $5\%$ false positive rate.
-    We then applied each method to data simulated with sweeps for two sampled populations (YRI and CEU)
-    in each of the 100 locations along human chromosome 1 (Figure \ref{fig:chr1_power}).
+    for a $5\%$ false positive rate.
+    We then applied each method to data simulated with sweeps for two samples (YRI and CEU)
+    in each of 100 locations along human chromosome 1 (Figure \ref{fig:chr1_power}).
     First, we notice that power to detect sweeps is slightly lower when the test statistic threshold
     is determined using simulated data with background selection (BGS null model).
     %This observation is consistent with what was previously shown by \cite{schrider2020background},
@@ -739,8 +731,7 @@
     Second, the power to detect sweeps is generally higher in the YRI sample
     than in the CEU sample, which is consistent with the fact that YRI has a larger ancestral effective population size and
     thus both stronger selection and more variation to detect a sweep \citep[e.g.,][]{simonsen1995properties}.
-    Further, the CEU population experienced the out-of-Africa bottleneck
-    that may mute the signal of a sweep.  
+    Conversely, the CEU population experienced the out-of-Africa bottleneck that may mute the signal of a sweep.  
     Finally and most importantly, the power to detect sweeps varies considerably along the chromosome,
     and this variation is much greater than the variation in power between CEU and YRI or between
     null models. This is likely due to the effects of recombination rate heterogeniety (Figure \ref{fig:chr1_power}).% as well
@@ -755,7 +746,7 @@
     This is may result from the fact that we trained \diploshic on simulations under a constant size population,
     which more closely matches the demographic history of YRI, than that of CEU, which 
     is characterized by a strong recent bottleneck followed by population expansion.
-    \drscomment{note: I am couching the language above a bit because we have previously shown that shic doesn't suffer in the sweep vs. nonsweep question when doing other train-on-constant-test-on-nonequilib benchmarks. Could be something else going on here (or some interaction between demog misspec and rec rate variation), but in any case I am not certain of the cause so I am toning down our certainty slightly.}
+    %\drscomment{note: I am couching the language above a bit because we have previously shown that shic doesn't suffer in the sweep vs. nonsweep question when doing other train-on-constant-test-on-nonequilib benchmarks. Could be something else going on here (or some interaction between demog misspec and rec rate variation), but in any case I am not certain of the cause so I am toning down our certainty slightly.}
     Interestingly, the simple method that uses reduced diversity ($\pi$) as an indicator
     for a selective sweep performs reasonably well overall (especially on the CEU sample).
     However, its accuracy is much more variable along the chromosome compared to the other two method (see Figure \ref{fig:chr1_power}),
@@ -804,8 +795,8 @@
     which is consistent with sweeps having a larger genomic footprint in regions of low
     recombination.
     \diploshic on the other hand shows a slight increase in power with recombination rates,
-    probably because it is designed to distinguish regions where a sweep happened from regions linked to a sweep,
-    and if the recombination rate is too low (or selection too strong) then the window examined by \diploshic may
+    presumably because it is designed to distinguish regions where a sweep happened from regions linked to a sweep,
+    and if the recombination rate is too low (or selection too strong) then the genomic window examined by \diploshic may
     not be large enough to exhibit enough of a recovery in patterns of diversity flanking the sweep.
     These results confirm that reduced genetic diversity performs well as an indicator for selective sweeps only in regions with
     low recombination rate.
