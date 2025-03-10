@@ -33,6 +33,7 @@
     backend=biber,
     natbib=true,
     style=authoryear,
+    uniquename=false,
     ]{biblatex}
 \addbibresource{references.bib}
 
@@ -232,8 +233,8 @@
     history from allele frequencies \citep{ewing2016consequences,schrider2016effects} and
     estimates of inverse coalescent rate \citep{schrider2016effects, johri2021impact, cousins2024accurate}.
     Thus, it is imperative to jointly account for the effects of selection
-    and demography when inferring evolutionary history from genetic data \citep{sheehan2016deep,johri2020toward}.
-    However, this is a challenging task from a modeling perspective \citep{johri2022prospect}. % MFR this is a bit unclear
+    and demography when inferring evolutionary history from genetic data \citep[e.g.,][]{sheehan2016deep,johri2020toward},
+    yet standardized tools for doing so remain limited.
 
     % simulation
     To meet the growing need for the interpretation,
@@ -243,14 +244,16 @@
     including both backward-in-time coalescent simulations
     \citep{kingman1982genealogy,hudson1983testing, hudson1990gene}
     and forward-in-time simulations of complex demography and selection
-    \citep[e.g.,][]{gillespie1984molecular,thornton2014c++, haller2019slim}.  \kelcomment{maybe also cite https://doi.org/10.1093/bioinformatics/btn522}
+    \citep[e.g.,][]{gillespie1984molecular, hernandez2008flexible, thornton2014c++, haller2019slim}. 
     The development of simulation tools has been driven by the need to
     understand the effects of complex evolutionary processes on genetic
-    variation \citep[e.g.,][]{galloway2020few},\kelcomment{also cite: PMID: 32487519 } \drscomment{and maybe a few others? PMIDs: 24102784 and thornton2019polygenic} to provide a null model for hypothesis testing
+    variation \citep[e.g.,][]{peischl2013accumulation, thornton2019polygenic, galloway2020few, zhang2020impact}, 
+     to provide a null model for hypothesis testing
     \citep[e.g.,][]{hudson1992statistical,hudson1994evidence,sabeti2002detecting},
     to explore the power and limitations of statistical methods \citep[e.g.,][]{przeworski2002signature},
     and increasingly to provide a basis for machine learning and other
-    simulation-based inference methods \citep[e.g.,][]{beaumont2002approximate,pavlidis2010searching,lin2011distinguishing,kern2018diplos,mughal2019localizing,sanchez2021deep,wang2021automatic}. \kelcomment{also cite: PMID: 36617238 }
+    simulation-based inference methods 
+    \citep[e.g.,][]{beaumont2002approximate,lin2011distinguishing,kern2018diplos,mughal2019localizing,sanchez2021deep,wang2021automatic, zhang2023maladapt, smith2023dispersenn2}.
     While this is so, joint simulation of complex demography and selection
     is challenging,  requires a deep understanding of the underlying
     evolutionary processes, and necessitates a number of parameter choices including
@@ -272,13 +275,15 @@
     of community resources for sharing and distributing simulation software
     via the \stdpopsim project \citep{adrion2020community}. \stdpopsim
     provides a standardized interface for accessing a wide range of
-    population genetic models, and has begun to be be widely adopted by the community. %maybe add citations here?
-    While that is so, the original version of \stdpopsim did not include
+    population genetic models, and has begun to be be widely adopted by the community 
+    \citep[e.g.,][]{speidel2021inferring, wang2021automatic, yang2022trustgwas, degiorgio2022spatially, browning2023fast, schweiger2023ultrafast, temple2024modeling, haag2025pandora}.
+    While that is so, previous releases of \stdpopsim did not include
     models of selection, which is a major limitation for more empirically motivated
     applications of population genetic simulation. In particular, modeling selection
     through simulation is critical for understanding processes such
-    as adaptation\citep[e.g.][]{thornton2019polygenic,hartfield2024polygenic}, the effects of selective sweeps \citep[e.g.][]{braverman1995hitchhiking,fay2000hitchhiking,przeworski2002signature,przeworski2005signature,schrider2015soft}, and the impact of
-    background selection on genetic diversity
+    as adaptation\citep[e.g.][]{thornton2019polygenic,hartfield2024polygenic}, the effects of selective sweeps 
+    \citep[e.g.][]{braverman1995hitchhiking,fay2000hitchhiking,przeworski2002signature,przeworski2005signature,schrider2015soft}, 
+    and the impact of background selection on genetic diversity
     \citep[e.g.][]{charlesworth1993effect,charlesworth1995pattern,williamson2002genealogy,ewing2016consequences,torres2020temporal}.
     Ideally, one would like
     to have a single, unified framework for simulating both neutral and
