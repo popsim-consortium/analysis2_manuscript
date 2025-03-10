@@ -114,6 +114,7 @@
 % \author[11]{Benjamin C. Haller}
 % \author[12,13]{Ahmed R. Hasan}
 \author[14,15]{Xin Huang}
+\author[5]{Kevin Korfmann}
 % \author[16]{Leonardo Nicola Martin Iasi}
 % \author[17]{Ekaterina Noskova}
 % \author[18]{Jana Obšteter}
@@ -198,8 +199,9 @@
     \label{abstract}
     Natural selection is a fundamental evolutionary force that shapes patterns of genetic variation across species. 
     However, simulating realistic models that incorporate both selection and complex demographic histories
-    is challenging, limiting our ability to benchmark statistical methods aimed at detecting selection and explore theoretical predictions.
-    \stdpopsim is a tool for facilitating the simulation of a contiually expanding catalog of population genetic models.
+    is challenging, limiting our ability to benchmark statistical methods aimed at detecting selection and to explore theoretical predictions.
+    \stdpopsim, a simulation library that provides an extensive catalog of population genetic models,
+    aims to provide a standardized interface for simulating realistic models that incorporate both selection and complex demographic histories.
     Here we present a major extension to the \stdpopsim{} framework that enables simulation of various modes
     of natural selection, including background selection, selective sweeps, and arbitrary distributions of fitness effects (DFE).
     This extension maintains \stdpopsim's core principles of reproducibility and standardization while adding support
@@ -209,7 +211,7 @@
     Our results demonstrate the robustness of demographic inference methods to selection on linked sites, 
     reveal the sensitivity of DFE inference methods to model assumptions, 
     and show how genomic features like recombination rate and the density of functional sequence influence power to detect selective sweeps.
-    This extension to \stdpopsim{} provides a powerful new resource for the population genetics community
+    This extension to \stdpopsim{} provides a powerful, new resource for the population genetics community
     to explore the interplay between selection and other evolutionary forces in a reproducible framework.
 
 \section*{Introduction}
@@ -286,7 +288,7 @@
     Furthermore the framework should include the complex realities of 
     genomes, including heterogenous recombination rates, 
     variation in the size and density of functional elements, and
-    non-equilibrium demographic histories. Ideally, one should be able
+    non-equilibrium demographic histories. Moreover, one should be able
     to model all of these features simultaneously using estimates and annotations obtained
     from a species of interest \citep[e.g.][]{schrider2020background,rodrigues2024shared}.
 
