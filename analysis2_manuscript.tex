@@ -323,13 +323,10 @@
     This was accomplished through the use of a standardized interface
     and data structure that allows for the curated addition of new
     species and models, and can use either
-    msprime \citep{Baumdicker2022} or SLiM \citep{haller2019slim}
+    \texttt{msprime} \citep{Baumdicker2022} or \texttt{SLiM} \citep{haller2019slim}
     as the backend engine for efficient population genetic simulation.
-    %IG: edited here to add details on the spec of the DFE and Annotation classes
-    %moved below the information on how they are used in simulation. Please check!
     To extend \stdpopsim's functionality to include models of selection, 
     we introduce two new classes
-    %an important new class representing a specfic distribution of fitness effects
     to the \stdpopsim API: the \texttt{DFE} class and the \texttt{Annotation} class.
     The \texttt{DFE} class provides an interface for specifying
     a distribution of the fitness effects of new mutations.
@@ -339,16 +336,15 @@
     (currently limited to values between 0 and 1, inclusive),
     the distribution of selection coefficients (e.g., fixed-value, normally-distributed, gamma-distributed),
     and the parameters of this distribution.
-    Each \texttt{Annotation} object is typically associated with a collection of functional
-    genomic elements whose coordinates are specified using a GFF3 file. %
-    %    
-    For example, say that we wish to implement a model of selection consistent with the
+    Each \texttt{Annotation} object represents a collection of functional
+    genomic elements (e.g., exons, introns, intergenic regions, etc.)
+    whose coordinates are specified using a GFF3 file.      
+    More concretely, consider implementing a model of selection consistent with the
     DFE inferred by Kim et al. (\citeyear{kim2017inference}) for exons in the human genome.
     The associated \texttt{DFE} object is defined with two mutation types,
-    neutral and deleterious, corresponding to synonymous and non-synonimous sites.
-    with their proportions set to follow their expected
-    prevelanece in exons. 
-    The neutral mutation type is associted with a fixed selection coefficient (0),
+    neutral and deleterious, corresponding to synonymous and non-synonymous sites.
+    with their proportions set to follow their expected prevalence in exons. 
+    The neutral mutation type is associated with a fixed selection coefficient (0),
     and the deleterious mutation type is associated with a dominance coefficient of $0.5$ and
     a gamma-distributed selection coefficient
     with mean and shape as inferred by Kim et al. (\citeyear{kim2017inference}).
@@ -370,7 +366,7 @@
     \end{figure}
     
     As with other aspects of \stdpopsim, we intend the selection models to be as biologically accurate as possible.
-    Thus, the \stdpopsim catalog provides \texttt{Annotation} objects based on specices' publically available functional genomic elements 
+    Thus, the \stdpopsim catalog provides \texttt{Annotation} objects based on specices' publicly available functional genomic elements 
     and \texttt{DFE} objects based on published DFE estimates (Figure \ref{fig:schematic}A).
     By using annotation objects, one can, for example, simulate populations where selected mutations (whose selection
     coefficients are drawn from a specified DFE) occur within annotation regions (e.g. exons), while all mutations
@@ -379,21 +375,14 @@
     \stdpopsim currently has implemented DFEs for four species in the catalogue:
     \textit{Arabidopsis thaleana} \citep{huber2018gene}, \textit{Drosophila melanogaster} \citep{ragsdale2016triallelic,huber2017determining},
     humans \citep{huber2017determining,kim2017inference}, and the vaquita porpoise \textit{Phocoena sinus} \citep{robinson2022critically}.
-    While the DFEs are from a limited number of sepecies, these DFEs can be applied to other species
+    While the DFEs are from a limited number of species, these DFEs can be applied to other species
     in the catalog if and when it is suitable. 
     For instance, one could simulate a butterfly species with a gamma-distributed DFE originally
     estimated from humans, or a human population with a DFE estimated from \textit{Drosophila}.
     Furthermore, the user can specify a custom DFE and provide their own annotations
     of functional elements to simulate selection in a species for which we do not yet have 
     a published DFE included in the catalog. This flexibility allows for a wide range of
-    models of selection to be simulated. %, and for the results of these simulations to be
-    %compared to empirical data or used as a null model for hypothesis testing.
-    % DRS: commenting that stuff out because there are obviously other use cases that could be
-    % listed here (e.g. ML/ABC, and if we don't know enough about a species to do that then
-    % we probably have no business doing hypothesis testing either, which could be just as
-    % misleading or maybe even more so), so the simplest solution is to cut this as it is
-    % not needed here.
-   
+    models of selection to be simulated. 
   
     From a user's perspective, a model of selection is specified by pairing a \texttt{DFE} object
     with a collection of genomic segments defined using an \texttt{Annotation} object.
@@ -404,16 +393,10 @@
     a portion of the genome to simulate,
     a genetic map if available, a model of demography, and pairings of DFEs with genomic segments
     using either the python API or the command-line interface (Figure \ref{fig:schematic}B-C).
-    %IG: commented this out because I think it's covered by the text I wrote above
-    %A \texttt{DFE} object can apply to specified intervals within a chromosome,
-    %and can be combined with other \texttt{DFE} objects 
     Simulations with selection are generated
-    using the SLiM simulation engine, which is
-    %is perhaps
+    using the \texttt{SLiM} simulation engine, which is perhaps
     the most flexible simulation engine for modeling selection available to date
-    (msprime's selection models are relatively limited and thus not currently used by \stdpopsim).
-    %IG: this is a nice statement, but I couldn't figure where to plug it after my changes so I'm leaving it commented
-    %all in an automated and user-friendly fashion. 
+    (\texttt{msprime}'s selection models are relatively limited and thus not currently used by \stdpopsim).
 
     % sweep interface
     In addition to the \texttt{DFE} class, we have also implemented a class (\texttt{stdpopsim.ext.selective\_sweep})
@@ -423,19 +406,18 @@
     and with a given selection coefficient. Further the user can specify the minimum frequency
     of the selected allele at the time of sampling. As these extended events are implemented
     on top of the existing \stdpopsim API, they can be combined with other models of selection
-    and demography to provide a rich model of the combined effects of multiple disparate evolutionary processes
+    and demography to provide a model of the combined effects of multiple, disparate evolutionary processes
     on genetic variation in a population.
     
 
     % current numbers of DFEs / species / etc
-    % DRS: are we giving this a version number?
-    At this release the \stdpopsim catalog comprises 24 species (i.e. genome representations)
-    for which we have included 28 demographic models, 37 genetic maps, and 7 DFEs. %someone should double check the numbers
+    % ADK: check version number
+    At this release (version 0.3XX) the \stdpopsim catalog comprises 27 species (i.e. genome representations)
+    for which we have included 35 demographic models, 38 genetic maps, 12 DFEs, and 8 annotation objects. %ADK: checked this on 3/10/25
     Additions to the catalog are ongoing---we point the reader to our previously published 
     report detailing this effort \citep{lauterbur2023expanding}. We welcome contributions from the
     community and encourage those interested in contributing to visit https://popsim-consortium.github.io/stdpopsim-docs
     or contact one of the PopSim Consortium members for guidance.
-    \igcomment{Mention releas number above, update the num of species and models and maybe also mention the number of annotation objects.}
 
 
 %IG: commented out this intro paragraph. Better to dive right in.
