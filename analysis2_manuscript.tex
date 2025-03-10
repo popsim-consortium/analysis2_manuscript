@@ -435,20 +435,21 @@
     the effective population size over time, $N_e(t)$, from genetic data. This can be done
     using a variety of methods, including the sequential Markovian coalescent
     \citep{li2011inference,Schiffels2020,terhorst2017robust}, \kelcomment{mabye also cite Gutenkunst 2009 Dadi paper here} 
-    \igcomment{I'm not sure it's all that relevant, since it doesn't strictly infer N(t)}
-    \drscomment{One could use dadi for that, but then we should also cite things like fastsimcoal and ABC, while explaining
-    that users can use those methods to infer piecewise-constant N(t) histories as well with a prespecified number of epochs
-    and priors around their params, but maybe that is too much of a digression here? I'm fine either way}
+    %\igcomment{I'm not sure it's all that relevant, since it doesn't strictly infer N(t)}
+    %\drscomment{One could use dadi for that, but then we should also cite things like fastsimcoal and ABC, while explaining
+    % that users can use those methods to infer piecewise-constant N(t) histories as well with a prespecified number of epochs
+    % and priors around their params, but maybe that is too much of a digression here? I'm fine either way}
+    % ADK: I think we are good as is
     through use of the site frequency spectrum (SFS) \citep{liu2020stairway},
     as well as through identity by descent information \citep{santiago2020recent}.
-    Since all of these methods assume neutral evolution, they are typically applied to genomic
+    Since all of these methods assume neutrality, they are typically applied to genomic
     segments that are not expected to be directly affected by selection (e.g., by masking exons
     and conserved elements).
     However, natural selection acting on linked sites---even those that are masked out of the
     analysis---can bias estimates of $N_e(t)$
-    away from true census population sizes by increasing the 
+    away from census population sizes by increasing the 
     rate of coalescence in the genome \citep[e.g.][]{schrider2016effects}. 
-    Using \stdpopsim, we can easily examine how different methods for inferring $N_e(t)$
+    Using \stdpopsim, we can readily examine how different methods for inferring $N_e(t)$
     are influenced by selection on linked sites,
     which in the case of negative selection is commonly referred to as \emph{background selection}
     \citep{charlesworth1993effect,hudson1995deleterious}.
@@ -471,7 +472,7 @@
         }
     \end{figure}
 
-    For this purpose, we simulated human genomes with and without natural selection.
+    To do this we simulated human genomes with and without natural selection.
     In both scenarios, we ran three replicate simulations
     under the out of Africa (OOA) demographic model of
     \citep{ragsdale2019models} using a genetic map from the HapMap Project \citep{international2007second} (see \textbf{Methods}).
@@ -488,7 +489,8 @@
     for each method the estimates produced from data with selection (Figure
     \ref{fig:human-demography}; orange) and without selection (Figure
     \ref{fig:human-demography}; blue) are fairly similar.
-    Thus, this particular parameterization of background selection does not
+    Thus, this particular parameterization of background selection
+    in combination with selection only at exonic sites in the out-of-Africa demographic model does not
     appear to notably bias the estimates produced by these methods.
     As noted in previous studies that compared demography inference methods
     on neutral simulations \citep{adrion2020community},
