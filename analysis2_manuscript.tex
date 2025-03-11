@@ -65,6 +65,8 @@
 \makeatother
 
 \newcommand{\tskit}{\texttt{tskit}\xspace}
+\newcommand{\slim}{\texttt{SLiM}\xspace}
+\newcommand{\msprime}{\texttt{msprime}\xspace}
 
 % add commands for msmc2, stairway plot, gone, and smc++
 \newcommand{\msmc}{\texttt{msmc2}\xspace}
@@ -111,11 +113,12 @@
 % \author[8]{Arjun Biddanda}
 % \author[5]{Victoria Caudill}
 % \author[9]{Jean Cury}
-% \author[10]{Ignacio Echevarria}
-% \author[11]{Benjamin C. Haller}
-% \author[12,13]{Ahmed R. Hasan}
+\author[10]{Peter D. Fields}
+\author[11]{Benjamin C. Haller}
 \author[14,15]{Xin Huang}
+\author[30]{Ben Jeffrey}
 \author[5]{Kevin Korfmann}
+\author[5]{Jiseon Min}
 % \author[16]{Leonardo Nicola Martin Iasi}
 % \author[17]{Ekaterina Noskova}
 % \author[18]{Jana Obšteter}
@@ -133,13 +136,15 @@
 % \author[27]{Juan Manuel Vazquez}
 % \author[28]{Ryan K. Waples}
 % \author[29]{Anthony Wilder Wohns}
-% \author[30]{Yan Wong}
+\author[30]{Yan Wong}
 % \author[31]{Franz Baumdicker}
-% \author[32]{Reed A. Cartwright}
-% \author[33]{Gregor Gorjanc}
-\author[4]{Kirk E. Lohmueller}
+%\author[32]{Reed A. Cartwright}
+\author[33]{Gregor Gorjanc}
+\author[28]{Christian D. Huber}
+
 \author[34]{Ryan N. Gutenkunst}
 \author[30]{Jerome Kelleher}
+\author[4]{Kirk E. Lohmueller}
 \author[35]{Aaron P. Ragsdale}
 
 \author[37]{Daniel R. Schrider}
@@ -159,8 +164,8 @@
 % \affil[7]{\small{AncestryDNA, San Francisco CA 94107, USA}}
 % \affil[8]{\small{54Gene, Inc., Washington DC 20005, USA}}
 % \affil[9]{\small{Université Paris-Saclay, CNRS, INRIA, Laboratoire Interdisciplinaire des Sciences du Numérique, UMR 9015 Orsay, France}}
-% \affil[10]{\small{School of Life Sciences, University of Glasgow, Glasgow, UK}}
-% \affil[11]{\small{Department of Computational Biology, Cornell University, Ithaca NY, USA}}
+\affil[10]{\small{The Jackson Laboratory, Bar Harbor, ME, 04609 USA}}
+\affil[11]{\small{Department of Computational Biology, Cornell University, Ithaca NY, USA}}
 % \affil[12]{\small{Department of Cell and Systems Biology, University of Toronto, Toronto ON, Canada}}
 % \affil[13]{\small{Department of Biology, University of Toronto Mississauga, Mississauga ON, Canada}}
 \affil[14]{\small{Department of Evolutionary Anthropology, University of Vienna, Vienna, Austria}}
@@ -177,13 +182,13 @@
 % \affil[25]{\small{Department of Genetics, Stanford University School of Medicine, Stanford CA 94305, USA}}
 % \affil[26]{\small{Department of Cell and Molecular Biology, National Bioinformatics Infrastructure Sweden, Science for Life Laboratory, Uppsala University, Husargatan 3, SE-752 37 Uppsala, Sweden}}
 % \affil[27]{\small{Department of Integrative Biology, University of California, Berkeley, Berkeley CA, USA}}
-% \affil[28]{\small{Department of Biostatistics, University of Washington, Seattle WA, USA}}
+\affil[28]{\small{Department of Biology, Pennsylvania State University, University Park, PA 16802, USA}}
 % \affil[29]{\small{Broad Institute of MIT and Harvard, Cambridge MA 02142, USA}}
 \affil[30]{\small{Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, Oxford OX3 7LF, UK}}
 % \affil[31]{\small{Cluster of Excellence - Controlling Microbes to Fight Infections, Eberhard Karls Universität Tübingen, Tübingen, Baden-Württemberg, Germany}}
 % \affil[32]{\small{School of Life Sciences and The Biodesign Institute, Arizona State University, Tempe AZ, USA}}
-% \affil[33]{\small{The Roslin Institute and Royal (Dick) School of Veterinary Studies, University of Edinburgh, Edinburgh EH25 9RG, UK}}
-\affil[34]{\small{Department of Molecular and Cellular Biology, University of Arizona, Tucson AZ 85721, USA}}
+\affil[33]{\small{The Roslin Institute and Royal (Dick) School of Veterinary Studies, University of Edinburgh, Edinburgh EH25 9RG, UK}}
+\affil[34]{\small{Department of Molecular and Cellular Biology, University of Arizona, Tucson, AZ 85721, USA}}
 \affil[35]{\small{Department of Integrative Biology, University of Wisconsin-Madison, Madison WI, USA}}
 \affil[36]{\small{Department of Mathematics, University of Oregon, Eugene OR 97402, USA}}
 \affil[37]{\small{Department of Genetics, University of North Carolina at Chapel Hill, Chapel Hill NC 27599, USA}}
@@ -323,7 +328,7 @@
     This was accomplished through the use of a standardized interface
     and data structure that allows for the curated addition of new
     species and models, and can use either
-    \texttt{msprime} \citep{Baumdicker2022} or \texttt{SLiM} \citep{haller2019slim}
+    \msprime \citep{Baumdicker2022} or \slim \citep{haller2019slim}
     as the backend engine for efficient population genetic simulation.
     To extend \stdpopsim's functionality to include models of selection, 
     we introduce two new classes
@@ -394,9 +399,9 @@
     a genetic map if available, a model of demography, and pairings of DFEs with genomic segments
     using either the python API or the command-line interface (Figure \ref{fig:schematic}B-C).
     Simulations with selection are generated
-    using the \texttt{SLiM} simulation engine, which is perhaps
+    using the \slim simulation engine, which is perhaps
     the most flexible simulation engine for modeling selection available to date
-    (\texttt{msprime}'s selection models are relatively limited and thus not currently used by \stdpopsim).
+    (\msprime's selection models are relatively limited and thus not currently used by \stdpopsim).
 
     % sweep interface
     In addition to the \texttt{DFE} class, we have also implemented a class (\texttt{stdpopsim.ext.selective\_sweep})
@@ -567,14 +572,14 @@
 
     A challenge when comparing different inferred and simulated distributions of the selection coefficient ($s$)
     is differing conventions in the literature regarding its definition.
-    The simulator \texttt{SLiM} and the inference tool \grapes define the selection coefficient $s$ such that a homozygote has fitness $1+s$.
+    The simulator \slim and the inference tool \grapes define the selection coefficient $s$ such that a homozygote has fitness $1+s$.
     On the other hand, \dadicli and \polydfe define the selection coefficient such that a homozygote has fitness $1+ 2s$.
      %https://academic.oup.com/genetics/article/207/3/1103/5930676
     Moreover, inferred distributions of selection coefficients are typically scaled by an inferred ancestral
     effective population size $N_e$, and different methods assume different scaling.
     \dadicli infers the distribution of $2 N_e s$ while \polydfe and \grapes infer the distribution of $4 N_e s$.
     %https://academic.oup.com/genetics/article/207/3/1103/5930676, https://academic.oup.com/genetics/article/216/2/559/6066183
-    For comparison, here we have normalized all inference results to the convention of \texttt{SLiM} (see \textbf{Methods}).
+    For comparison, here we have normalized all inference results to the convention of \slim (see \textbf{Methods}).
     % Add citation to fastDFE as the successor to polyDFE: https://academic.oup.com/mbe/article/41/5/msae070/7641109 ?
 
     \begin{figure}[b!]
@@ -874,7 +879,7 @@
     \subsection*{Whole genome simulations}
     In this study we performed simulations of the human and vaquita porpoise genomes
     using the \stdpopsim{} framework.
-    All simulations were executed using the SLiM engine with a burn-in of $2N$ generations
+    All simulations were executed using the \slim engine with a burn-in of $2N$ generations
     (where $N$ is the initial population size), and a scaling factor of 2 (to reduce running time).
     Each simulation was implemented using a relatively short python script, similar to the one shown in Figure 1B
     (see \textbf{Data availablity} below).
@@ -892,7 +897,7 @@
     Simulations with selection additionally applied a DFE model with gamma-distributed selection coefficients inferred by
     \cite{kim2017inference} (\stdpopsim label \texttt{Gamma\_K17}) to exons annotated by the HAVANA group release 104
     (\cite{ensembl2018}; \stdpopsim label \texttt{ensembl\_havana\_104\_exons}).
-    Each simulation generate 100 diploid genomes from each of the three extant human populations (YRI, CEU, and CHB),
+    Each simulation generated 100 diploid genomes from each of the three extant human populations (YRI, CEU, and CHB),
     with each genome consisting of 22 autosomes.
     Using these settings, we generated three replicate datasets without selection
     and three replicate datasets with selection.
@@ -963,7 +968,7 @@
     % may in reality be under selection. As above, all methods were run using default settings.
     \igcomment{I edited the description below written by Silas. Please check to make sure it's still accurate.}
     As described above, each DFE-inference method scales selection coefficients slightly differently.
-    We thus rescaled each program's output to obtain a selection coefficient ($s$) consistent with the one used by SLiM.
+    We thus rescaled each program's output to obtain a selection coefficient ($s$) consistent with the one used by \slim.
     The output of \grapes  was scaled by a factor of  $\mu / \theta$,
     and the output of \polydfe was saled by $2 \mu / \theta$, 
     where $\mu$ is the assumed mutation rate and 
@@ -995,7 +1000,7 @@
     with selection coefficient of $s = 0.03$ in the center of the 5cM genomic segment
     and discarding simulations in which the beneficial mutation did not reach (or exceed) a terminal frequency of $95\%$.
     For each of the 100 genomic segments of chromosome 1, we generated 1,000 replicate datasets under each of the three settings.
-    As with the whole-genome simulations (see above), we used the SLiM engine with a burn-in of $2N$ generations
+    As with the whole-genome simulations (see above), we used the \slim engine with a burn-in of $2N$ generations
     (where $N$ is the initial population size), and a scaling factor of 2.
     Each simulation generated 10 diploid genomic segments for each of the two sampled populations: YRI and CEU.
     The sequences simulated with a hard sweep and BGS were used for sweep detection,
@@ -1043,7 +1048,10 @@
     in which the test statistic exceeded the threshold determined by each of the two null models (neutral and BGS).
 
 \section*{Data availability}\label{data_availability}
-
+The release of \stdpopsim is available at \url{https://github.com/popsim-consortium/stdpopsim}.
+This paper coincides with version 0.3.XX of \stdpopsim. %be sure to check this
+The entire analysis pipeline associated with this paper is available
+as a snakemake workflow at \url{https://github.com/popsim-consortium/analysis2}.
 
 \section*{Acknowledgments}\label{acknowledgements}
 We thank Tom Booker for discussions and encouragement to incorporate realistic BGS models into \stdpopsim.
