@@ -826,32 +826,37 @@
     One important finding we made using the new stdpopsim selection API is that inference of the DFE is sensitive to the dominance of deleterious mutations.
     All three of the inference methods of the DFE applied here assume that deleterious mutations act in an additive fashion (h=0.5) by default.
     However, the simulated DFE for the vaquita genome included highly recessive mutations.
-    Specifically, these simulations used a DFE where mutations with $s>0.01$ are quite recessive, with $h<=0.01$ and where mutations with $0.001<s<0.01$ have $h=0.1$.
-    We found that the three DFE inference methods underestimated $E[s]$ and overestimated the shape parameter (Fig 4).
+    Specifically, these simulations used a DFE where mutations with $s>0.01$ are quite recessive, 
+    with $h<=0.01$, and where mutations with $0.001<s<0.01$ have $h=0.1$.
+    We found that the three DFE inference methods underestimated $E[s]$ and overestimated the shape parameter (Figure \ref{fig:vaquita-dfe}).
     This performance is not surprising as decreasing $h$ for a given distribution of $s$ will lead to a decrease in $hs$,
     or an apparent decrease in the amount of selection.
     Fitting a mis-specified DFE that assumes $h=0.5$ will then lead to underestimates of $E[s]$.
-    Indeed, the distribution of $hs$ is much more accurately estimated (Fig 4b).
-    Overall, these results are consistent with prior work showing that it is challenging to separately infer the DFE of $s$ along with $h$ (cite PMID: 24830675; PMID: 39302992; PMID: 34951958 )
-    and that a large proportion ($>5\%$) of recessive deleterious mutations can confound inferences of $s$ (PMID: 37074880).
-    Given the plethora of evidence for recessive deleterious mutations (cite PMID: 4630587, PMID: 39114967 , PMID: 30013096 , PMID: 21098719 ),
+    Indeed, the distribution of $hs$ is much more accurately estimated (Figure \ref{fig:vaquita-dfe}b).
+    Overall, these results are consistent with prior work showing that it is challenging to separately
+    infer the DFE of $s$ along with $h$ \citep{veeramah2014evidence, kyriazis2024constraining, balick2022overcoming}
+    and that a large proportion ($>5\%$) of recessive deleterious mutations can confound inferences of $s$ \citep{wade2023quantifying}.
+    Given the plethora of evidence for recessive deleterious mutations 
+    \citep{mukai1972mutation, agrawal2011inferences, huber2018gene, di2024revisiting,},
     these results suggest the need for care in DFE inference.
-    Kyriazis and Lohmueller (PMID: 39302992 ) inferred the DFE of $s$ for nonsynonymous mutations in humans when considering different values of $h$.
-    Intriguingly, additive models show a satisfactory fit to the SFS of nonsynonymous variants in humans (Kyriazis et al) and more complex models of dominance do not substantially improve the fit.
-    Nevertheless, models including recessive deleterious mutations, like those simulated here for the vaquita genome, show a similar fit to the SFS and may be more biologically realistic than fully additive models,
+    Kyriazis and Lohmueller \citeyear{kyriazis2024constraining} inferred the DFE of $s$ for nonsynonymous mutations
+    in humans when considering different values of $h$.
+    Intriguingly, additive models showed a satisfactory fit to the SFS of nonsynonymous variants in humans
+    and more complex models of dominance did not substantially improve the fit.
+    Nevertheless, models including recessive deleterious mutations, like those simulated here for the vaquita genome,
+    show a similar fit to the SFS and may be more biologically realistic than fully additive models,
     given the evidence for the presence of recessive deleterious mutations.
     More broadly, new computational approaches are needed to precisely quantify the DFE and the covariance of $h$ and $s$.
 
-    Regarding sweep detection, the inclusion of selection models into \stdpopsim allowed us to easily compare the
+    Regarding sweep detection, the inclusion of selection models into \stdpopsim allowed us to readily compare the
     effectiveness of different methods on data reflecting the demographic history, recombination rate variation,
     and genomic locations of negatively selected sites present in human populations. These results clearly demonstrate
     the impact of recombination rate variation, and underscore the importance of training methods on data with variable
-    recombination rates (e.g. following Schrider and Kern \citeyear{schrider2017soft}). In addition, our results
+    recombination rates (e.g., following Schrider and Kern \citeyear{schrider2017soft}). In addition, our results
     illustrate a strength of likelihood methods like \sweepfinder, which do not require a predefined window size and
     thus will perform better than \diploshic---which only examines relative summarie of diversity across a window instead
     of the actual values of these diversity measures---on very strong sweeps that effect diversity across a wide stretch of
-    chromosomes that extends far beyond \diploshic's window size. \drscomment{Maybe this isn't the coolest stuff ever but
-    I thought it might be worth saying something about our sweep detection stuff in the Discussion.}
+    chromosomes that extends far beyond \diploshic's window size. 
 
     Although we have shown how the new \stdpopsim API can be used to benchmark the performance of different methods,
     the benchmarks shown here merely scratch the surface of what can be done with the new API.
@@ -861,10 +866,7 @@
     The additions to \stdpopsim described here further expand this tool's utility for both 
     characterizing the patterns of diversity expected under a wide range of population genetic
     models, and for benchmarking methods for the analysis of genetic data
-    on common ground
-    %, using the same simulations and parameterizations of models of selection
-    % DRS: this sentence got pretty bloated with my edits so I commented part of it out
-    in a way that was not possible before.
+    on common ground in a way that was not possible before.
 
 \section*{Methods}
     \label{methods}
