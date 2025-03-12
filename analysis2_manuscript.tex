@@ -956,6 +956,7 @@
     How was demographic inference done for the different models via the different programs?,
     etc.
     Can someone write this up?}
+    % ADK: I've added a section below that describes the DFE inference methods used in this study.
     
     % We used three software packages to infer the distribution of fitness effects (DFE) from genetic data:
     % \dadicli \citep{Huang2023,kim2017inference}, \polydfe \citep{tataru2020polydfe}, and \grapes \citep{galtier2016adaptive}.
@@ -966,19 +967,32 @@
     % thus our inferences is a best case scenario. Empirical inference of the DFE is a much
     % harder problem as some mutations assumed to be free of selection
     % may in reality be under selection. As above, all methods were run using default settings.
-    \igcomment{I edited the description below written by Silas. Please check to make sure it's still accurate.}
+    The DFE inference using \dadicli was conducted by first inferring a demographic model from neutral sites,
+    using a two epoch demographic model with 100 repeated runs of the optimization procedure.
+    \dadicli then proceeds by using a cached strategy wherein we used 2000 points in the $gamma$ distribution.
+    Finally, the DFE was inferred using a ratio of non-synonymous to synonymous mutations of 2.31, again with 
+    100 repeated runs of the optimization procedure.
+    For \polydfe, we used model 'C' which uses a mixture of a gamma distribution and an exponential distribution,
+    where the gamma component is used for negatively selected mutations. For optimization we used
+    the default BFGS optimizer with the '-e' flag to automatically estimate the initial parameters values.
+    For \grapes, we inferred the DFE under the `GammaZero' model, which assumes that selection coefficients
+    are drawn from a single gamma distribution. We used the `-no-div-param' flag to disable the use
+    of divergence-based parameter estimation. All other settings were left at their default values.
+    All methods used the same exon annotations as generated in the simulations. The total number of coding sites
+    in the human and vaquita genomes used were 61,644,801 and 31,039513 respectively.
+
+    % ADK: I've added a section below that describes the DFE inference methods used in this study.
+    For comparison among methods, estimates were rescaled. 
     As described above, each DFE-inference method scales selection coefficients slightly differently.
     We thus rescaled each program's output to obtain a selection coefficient ($s$) consistent with the one used by \slim.
     The output of \grapes  was scaled by a factor of  $\mu / \theta$,
     and the output of \polydfe was saled by $2 \mu / \theta$, 
     where $\mu$ is the assumed mutation rate and 
     $\theta$ is the population-scaled mutation rate estimated by each method ($\theta = 4N_{e}\mu$).
-    \igcomment{Do we really multiple $\alpha$ by $\nu$ in rescaling for \dadicli?}
     For \dadicli, we report $\alpha * \nu / (\theta / (4 \mu L p))$, where
     $\alpha$ and $\nu$ are the inferred shape and rate parameters of the \dadicli's inferred gamma distribution,
     $L$ is the total number of sites available for the analysis,
     $p$ is the proportion of sites under selection.
-
 
 
     \subsection*{Simulations with selective sweeps}
