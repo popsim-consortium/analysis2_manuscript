@@ -828,6 +828,13 @@
     as it allows for a wide range of models of selection to be easily simulated and compared to
     empirical data, with reproducibility, computational efficiency, and rigor.
 
+    Inference of the DFE was done here using exon annotations of the genome in question.
+    A key distinction between our analyses and those done in practice
+    is that we have complete knowledge of which sites are under selection in the simulation,
+    thus our inferences represent a best case scenario. Empirical inference of the DFE is a much
+    harder problem as some mutations assumed to be free of selection
+    may in reality be under selection
+
     One important finding we made using the new stdpopsim selection API is that inference of the DFE is sensitive to the dominance of deleterious mutations.
     All three of the inference methods of the DFE applied here assume that deleterious mutations act in an additive fashion (h=0.5) by default.
     However, the simulated DFE for the vaquita genome included highly recessive mutations.
@@ -887,7 +894,7 @@
     The complete simulation workflow is available at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/simulation.snake}
     (see \textbf{Data availablity} below).
 
-   
+
     \subsubsection*{Simulations of complete human genomes}
     Simulation of human genomes used a genetic map from the HapMap Project
     \citep{international2007second} (\stdpopsim label \texttt{HapMapII\_GRCh38}) and
@@ -939,10 +946,10 @@
     and exons (to avoid the direct effect of natural selection).
     Thus, inference from datasets simulated with selection was not influenced by direct selection
     acting on exons, but it was influenced by selection acting on linked sites (background selection).    
-   
+
     We assessed the accuracy of demographic inferences from three software packages:
     \msmc \citep{Schiffels2020}, \stairway \citep{liu2020stairway}, \gone \citep{santiago2020recent},
-     and \smcpp \citep{terhorst2017robust}.
+    and \smcpp \citep{terhorst2017robust}.
     For \msmc \citep{Schiffels2020}, we used a random sample of $N=6$ simulated genomes with 20
     iterations of the EM algorithm.
     For \gone \citep{santiago2020recent}, we set \texttt{max\_snps} to 500,000,
@@ -956,23 +963,10 @@
     
 
     \subsection*{DFE inference}
-    %\igcomment{I commented all the text that was here because it wasn't relevant to the methods. We might want to add it to the discussion.
-    %Kirk also noted that a lot of methods-level details are missing:
-    %how big was the coding sequence length?
-    %How was demographic inference done for the different models via the different programs?,
-    %etc.
-    %Can someone write this up?
-    % ADK: I've added a section below that describes the DFE inference methods used in this study.
-    
-    % We used three software packages to infer the distribution of fitness effects (DFE) from genetic data:
-    % \dadicli \citep{Huang2023,kim2017inference}, \polydfe \citep{tataru2020polydfe}, and \grapes \citep{galtier2016adaptive}.
-    % Each software package was run using the same set of simulations.
-    % For these analyses we used the exon annotations from the human and vaquita porpoise genomes respectively.
-    % A key distinction between our analyses and those done in practice
-    % is that we have complete knowledge of which sites are under selection in the simulation,
-    % thus our inferences is a best case scenario. Empirical inference of the DFE is a much
-    % harder problem as some mutations assumed to be free of selection
-    % may in reality be under selection. As above, all methods were run using default settings.
+    % ADK: I've tried to deal with all the comments here    
+    We used three software packages to infer the distribution of fitness effects (DFE) from genetic data:
+    \dadicli \citep{Huang2023,kim2017inference}, \polydfe \citep{tataru2020polydfe}, and \grapes \citep{galtier2016adaptive}.
+    Each software package was run using the same set of simulations.
     The DFE inference using \dadicli was conducted by first inferring a demographic model from neutral sites,
     using a two epoch demographic model with 100 repeated runs of the optimization procedure.
     \dadicli then proceeds by using a cached strategy wherein we used 2000 points in the $gamma$ distribution.
@@ -1057,9 +1051,9 @@
     Each null model was represented by a different set of $100,000$ simulations generated according to the appropriate model
     (see \textbf{Simulations with selective sweeps} above).
     Thus, for each test statistic we determined two thresholds corresponding to these two different null models (neutral and BGS)
-    using the extreme $5\%$ quantile in each empirical distribution (and excluding regions with extremely low recombination rate).
-    \igcomment{Can we say what the rec rate cutoff was and how many regions were excluded here?
-    Shouldn't we have excluded these regions from the simulations altogether?}.
+    using the extreme $5\%$ quantile in each empirical distribution.
+    Simulated regions where the central 1Mb had a recombination rate of less than $10^{-3}cM$ were excluded from the analysis.
+    This excluded 7 regions from the analysis. 
     Then, power (or true positive rate) to detect a sweep by a given method was determined for
     100 evenly-spaced positions on chromosome 1 as follows:
     each sweep-detection method was applied to the 1,000 
