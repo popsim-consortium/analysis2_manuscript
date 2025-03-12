@@ -439,7 +439,7 @@
     One of the most common applications of population genetic inference is to estimate
     the effective population size over time, $N_e(t)$, from genetic data. This can be done
     using a variety of methods, including the sequential Markovian coalescent
-    \citep{li2011inference,Schiffels2020,terhorst2017robust}, \kelcomment{mabye also cite Gutenkunst 2009 Dadi paper here} 
+    \citep{li2011inference,Schiffels2020,terhorst2017robust}, 
     %\igcomment{I'm not sure it's all that relevant, since it doesn't strictly infer N(t)}
     %\drscomment{One could use dadi for that, but then we should also cite things like fastsimcoal and ABC, while explaining
     % that users can use those methods to infer piecewise-constant N(t) histories as well with a prespecified number of epochs
@@ -485,6 +485,10 @@
     % IG: moved details to methods
     %, defined from the HAVANA group release 104 for the human genome,
     using a DFE inferred by \cite{kim2017inference}.
+    A basic summary of nucleotide diversity from these simulations is shown in Figure \ref{fig:homsap-summary-stats},
+    which shows that the presence of selection decreases polymorphism in simulations with selection only slightly
+    at the genome-wide level, but more substantially within exonic regions under both a constant population size
+    and the out-of-Africa demographic model.
     Following the simulation, inference of $N_e(t)$ was conducted from each of the six simulated datasets using four methods: 1) \msmc \citep{Schiffels2020}, 
     2) \stairway \citep{liu2020stairway}, 3) \gone \citep{santiago2020recent}, and 4) \smcpp \citep{terhorst2017robust}.
     % IG: I commented this out because it appeared distracting. We can add a note in the end of this analysis
@@ -538,7 +542,13 @@
     in which very deleterious mutations (with selection coefficient $s<-0.1$) are fully recessive
     (dominance coefficient $h=0$) and weakly deleterious mutations ($s\geq -0.001$) are nearly
     additive ($h=0.4$; see \textbf{Methods}).
-    Here, we see that the site-frequency-based method (\stairway) produces more accurate
+    As above, a basic summary of nucleotide diversity from these simulations is shown in Figure \ref{fig:vaquita-summary-stats},
+    which again shows that the presence of selection decreases polymorphism in simulations with selection, but that the effect
+    is only readily apparent within exonic regions. Further in this case,
+    we see that the two-epoch demographic model used in the simulations actually leads to a slight increase
+    in diversity versus the constant population size model.
+    
+    In comparing demography inference methods, we see that the site-frequency-based method (\stairway) produces more accurate
     inference than the two methods based on the sequential Markovian coalescent (\smcpp and \msmc; see Figure \ref{fig:vaquita-demography}).
     Reagrdless of these differences, we see that background selection again does not
     appear to considerably influence the inference of any of the four methods for this species,
@@ -613,7 +623,7 @@
     without the use of substitution data, as \stdpopsim's models currently do not
     contain outgroup populations or species that can be used to estimate divergence.
      
-    Overall, inferred DFEs varied across populations and inference methods (Figure \ref{fig:homsap-dfe.ooa}).
+    Overall, inferred DFEs varied across populations and inference methods (Figure \ref{fig:homsap-dfe.ooa}, Table \ref{tab:dfe_table}).
     Note that while the estimation accuracy for the DFE parameters themselves (Figure \ref{fig:homsap-dfe.ooa}A-B) is useful,
     examining the difference between the actual and inferred distributions can be more helpful for showing how well a method
     has recovered the true DFE (Figure \ref{fig:homsap-dfe.ooa}C).
@@ -635,7 +645,9 @@
     \grapes exhibits similar biases without population size changes as in the simulations with more complex demography,
     but with milder under-estimation of the shape parameter, but \dadicli shows an inverse pattern
     with overestimated shape parameter and slightly underestimated mean. 
-    
+    As a sanity check, we also inferred the DFE from human genome simulations with a constant population size 
+    (Figure \ref{fig:homsap-dfe.constant}, Table \ref{tab:dfe_table}), but largely the results are similar.
+
     \begin{figure}[b!]
         \centering
         \includegraphics[width=0.8\textwidth]{figures/PhoSin/Vaquita2Epoch_1R22/PhoSin_Vaquita2Epoch_1R22_Gamma_R22_Phocoena_sinus.mPhoSin1.pri.110_exons_DFE_plot.pdf}
@@ -661,9 +673,9 @@
     with a relationship between the selection and dominance coefficients (see \textbf{Methods}).
     In this setting, all methods perform uniformly worse than in the human genome simulations,
     with consistent underestimation of the mean selection coefficient    
-    and overestimation of the shape parameter (Figure \ref{fig:vaquita-dfe}A-B). 
+    and overestimation of the shape parameter (Figure \ref{fig:vaquita-dfe}A-B, Table \ref{tab:dfe_table}). 
     Similar patterns are observed when re-running the simulations with a simpler demographic model
-    without population size changes (Figure \ref{fig:vaquita-dfe.constant}).
+    without population size changes (Figure \ref{fig:vaquita-dfe.constant}, Table \ref{tab:dfe_table}).
     We suspect that this is due to the fact that all DFE inference methods used here assume an additive model ($h = \frac{1}{2}$),
     while mutations in the simulated genomes were more recessive ($h < \frac{1}{2}$), and their dominance decreased with the strength of selection. 
     To examine the influence of this model misspecification, we compared the inferred distributions of $s$ to the 
@@ -1090,6 +1102,36 @@ We thank Tom Booker for discussions and encouragement to incorporate realistic B
 
 \section*{Supplementary Material}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{figures/HomSap/summary_stats.png}
+    \caption{
+    \label{fig:homsap-summary-stats}
+    Summaries of diversity for human simulations. The left and right panels show
+    nucleotide diversity ($\pi$) calculated over all three replicate datasets
+    for the Constant size and Out-of-Africa demographic models respectively.
+    Each panel shows four violins representing the distribution of $\pi$ values
+    under a model without selection (blue), a model with background selection (orange),
+    calculated from either the entire genome (labeled neutral or DFE)
+    or from exonic regions only (labeled exons-only).
+    }
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{figures/PhoSin/summary_stats.png}
+    \caption{
+    \label{fig:vaquita-summary-stats}
+    Summaries of diversity for vaquita simulations. The left and right panels show
+    nucleotide diversity ($\pi$) calculated over all three replicate datasets
+    for the Constant size and two-epoch demographic models respectively.
+    Each panel shows four violins representing the distribution of $\pi$ values
+    under a model without selection (blue), a model with background selection (orange),
+    calculated from either the entire genome (labeled neutral or DFE)
+    or from exonic regions only (labeled exons-only).
+    }
+\end{figure}
+
 \begin{figure}[b!]
     \centering
     \includegraphics[width=\textwidth]{figures/PhoSin/Vaquita2Epoch_1R22/estimated_Ne_t_final.pdf}
@@ -1149,7 +1191,6 @@ We thank Tom Booker for discussions and encouragement to incorporate realistic B
     Performance of methods to infer the distribution of fitness effects (DFE) from genetic data
     under constant population size  where all sites along the simulated chromosome can experience selected and neutral mutation
     as opposed to exonic regions only.\\
-    \igcomment{This fig is not cited anywhere. Do we really need it?}
     }
 \end{figure}
 
@@ -1206,20 +1247,19 @@ We thank Tom Booker for discussions and encouragement to incorporate realistic B
 
 \caption{\bf{Performance of DFE methods across the simulation scenarios}. 
 Bold rows show the lowest mean absolute error (MAE) for the two DFE parameters
-for each species.\\
-\igcomment{This table is not cited anywhere. The analysis of ``all sites" is also not mentioned anywhere. Do we want to add it?}
-}
+for each species.}
+
 \begin{tabular}{lllrrrrrr}
 \toprule
 species ID & demography & annotation & \makecell{MAE \\ $E|s|$ \\ dadi-cli} & \makecell{MAE \\ $E|s|$ \\ grapes} & \makecell{MAE \\ $E|s|$ \\ polyDFE} & \makecell{MAE \\ shape \\ dadi-cli} & \makecell{MAE \\ shape \\ grapes} & \makecell{MAE \\ shape \\ polyDFE} \\
 \midrule
-HomSap & Constant & all sites & 0.0027 & 0.0111 & \bf{0.0018} & \bf{0.00071} & 0.029 & 0.014 \\
+%HomSap & Constant & all sites & 0.0027 & 0.0111 & \bf{0.0018} & \bf{0.00071} & 0.029 & 0.014 \\
 HomSap & Constant & exons & \bf{0.0012} & 0.0101 & 0.0023 & 0.030 & 0.0086 & \bf{0.0068} \\
-HomSap & OOA 5R19 & all sites & 0.012 & 0.012 & \bf{0.0074} & \bf{0.027} & 0.055 & 0.035 \\
+%HomSap & OOA 5R19 & all sites & 0.012 & 0.012 & \bf{0.0074} & \bf{0.027} & 0.055 & 0.035 \\
 HomSap & OOA 5R19 & exons & 0.014 & 0.0111 & \bf{0.0072} & 0.031 & 0.051 & \bf{0.024} \\
-PhoSin & Constant & all sites & \bf{0.024} & 0.025 & 0.024 & 0.21 & 0.24 & \bf{0.19} \\
+%PhoSin & Constant & all sites & \bf{0.024} & 0.025 & 0.024 & 0.21 & 0.24 & \bf{0.19} \\
 PhoSin & Constant & exons & 0.024 & 0.025 & 0.024 & \bf{0.23} & 0.25 & 0.23 \\
-PhoSin & Vaquita2Epoch 1R22 & all sites & \bf{0.024} & 0.025 & 0.024 & 0.20 & 0.23 & \bf{0.18} \\
+%PhoSin & Vaquita2Epoch 1R22 & all sites & \bf{0.024} & 0.025 & 0.024 & 0.20 & 0.23 & \bf{0.18} \\
 PhoSin & Vaquita2Epoch 1R22 & exons & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0.21 \\
 \bottomrule
 \end{tabular}
