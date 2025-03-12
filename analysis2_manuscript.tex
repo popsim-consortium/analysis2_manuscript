@@ -67,6 +67,7 @@
 \newcommand{\tskit}{\texttt{tskit}\xspace}
 \newcommand{\slim}{\texttt{SLiM}\xspace}
 \newcommand{\msprime}{\texttt{msprime}\xspace}
+\newcommand{\snakemake}{\texttt{snakemake}\xspace}
 
 % add commands for msmc2, stairway plot, gone, and smc++
 \newcommand{\msmc}{\texttt{msmc2}\xspace}
@@ -417,7 +418,7 @@
 
     % current numbers of DFEs / species / etc
     % ADK: check version number
-    At this release (version 0.3XX) the \stdpopsim catalog comprises 27 species (i.e. genome representations)
+    At this release (version 0.3) the \stdpopsim catalog comprises 27 species (i.e. genome representations)
     for which we have included 35 demographic models, 38 genetic maps, 12 DFEs, and 8 annotation objects. %ADK: checked this on 3/10/25
     Additions to the catalog are ongoing---we point the reader to our previously published 
     report detailing this effort \citep{lauterbur2023expanding}. We welcome contributions from the
@@ -482,8 +483,6 @@
     under the out of Africa (OOA) demographic model of
     \citep{ragsdale2019models} using a genetic map from the HapMap Project \citep{international2007second} (see \textbf{Methods}).
     Simulations with selection were implemented by modeling purifying selection on exons
-    % IG: moved details to methods
-    %, defined from the HAVANA group release 104 for the human genome,
     using a DFE inferred by \cite{kim2017inference}.
     A basic summary of nucleotide diversity from these simulations is shown in Figure \ref{fig:homsap-summary-stats},
     which shows that the presence of selection decreases polymorphism in simulations with selection only slightly
@@ -501,11 +500,15 @@
     Thus, this particular parameterization of background selection
     in combination with selection only at exonic sites in the out-of-Africa demographic model does not
     appear to notably bias the estimates produced by these methods.
+    In light of Figure \ref{fig:human-demography}, this makes sense-- 
+    the effect of selection is only apparent within exonic regions and presumably sites
+    very closely linked, thus masking of exons should be sufficient to remove the effects of selection
+    from our simulations. 
     As noted in previous studies that compared demography inference methods
     on neutral simulations \citep{adrion2020community},
     we see that each method has its strengths and weaknesses.
     Methods based on the sequential Markovian coalescent (\smcpp and \msmc)
-    appear to overal produce the most accurate trajectories of $N_e(t)$
+    appear overall to produce the most accurate trajectories of $N_e(t)$
     in this setting, although they tend to under-estimate the population
     bottleneck associated with the population split.
     On the other hand, \stairway, which utilizes the site frequency spectrum,
@@ -548,11 +551,13 @@
     we see that the two-epoch demographic model used in the simulations actually leads to a slight increase
     in diversity versus the constant population size model.
     
-    In comparing demography inference methods, we see that the site-frequency-based method (\stairway) produces more accurate
-    inference than the two methods based on the sequential Markovian coalescent (\smcpp and \msmc; see Figure \ref{fig:vaquita-demography}).
-    Reagrdless of these differences, we see that background selection again does not
+    In comparing demography inference methods, we see that the SFS-based method (\stairway) produces more accurate
+    inference than the two methods based on the sequential Markovian coalescent 
+    (\smcpp and \msmc; see Figure \ref{fig:vaquita-demography}).
+    Regardless of these differences, we see that background selection again does not
     appear to considerably influence the inference of any of the four methods for this species,
-    which has a very different evolutionary history than humans.
+    at least for the parameterization used here, 
+    even though vaquita has a very different evolutionary history than humans.
     
     
     % MFR: Should we say somewhere that people use to expect from BGS? That is, that it can be seen as a reduction in local rates of coalescences and thus that we would expect these methods to be somewhat downwardly biased in the presence of BGS?
@@ -595,8 +600,6 @@
     \begin{figure}[b!]
         \centering
         \includegraphics[width=\linewidth]{figures/HomSap/OOA/HomSap_discrete_DFE}
-        \drscomment{I think it would be good to increase the font size for the A,B,C panel legends and also
-        draw a horizontal line above panel C so it is clear that all three plots at the bottom are part of C.}
         \caption{Inferred versus simulated DFEs from simulated human genomes.
         Simulations were performed using a human out-of-Africa demographic model with a gamma-distributed DFE
         acting on exons (see \textbf{Methods}).
@@ -788,9 +791,7 @@
         This figure shows the same power estimates shown in Figure \ref{fig:chr1_power},
         but with the 100 genomic segments sorted according to their
         average recombination rates instead of position along chromosome 1.
-        \igcomment{Specify how the curves were computed}
-        %IG: copoed from the caption of fig 5
-	Genomic segments were simulated with sweeps under a three population out-of-Africa model
+    	Genomic segments were simulated with sweeps under a three population out-of-Africa model
         \citep{gutenkunst2009inferring} and with background selection from deleterious mutations in exons.
         Three methods for detecting sweeps were applied to simulated data:
         1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row),
@@ -801,6 +802,7 @@
         The thresholds of the test statistics were set to control for
         $5\%$ false positive rate under a neutral null model (blue)
         and a null model with background selection from deleterious mutations in exons (red).
+        Fitted lines represent loess smoothed regressions.
         }
         \label{fig:power-recomb}
     \end{figure}
@@ -840,15 +842,31 @@
     as it allows for a wide range of models of selection to be easily simulated and compared to
     empirical data, with reproducibility, computational efficiency, and rigor.
 
-    Inference of the DFE was done here using exon annotations of the genome in question.
-    A key distinction between our analyses and those done in practice
-    is that we have complete knowledge of which sites are under selection in the simulation,
-    thus our inferences represent a best case scenario. Empirical inference of the DFE is a much
-    harder problem as some mutations assumed to be free of selection
-    may in reality be under selection
+    The exploration of performance among methods done here is not meant to be thorough 
+    benchmarking, but instead meant to highlight the utility of the \stdpopsim resource. 
+    Having said that, there are a number of interesting results that bear discussion. 
+    The first pertains to estimation of demographic history ($N_e(t)$) in the context of
+    linked purifying selection. Our genomic simulations of humans and vaquita that incorporate
+    selection model published DFEs that operate at exonic positions of the genome only. 
+    As shown in Figures \ref{fig:homsap-summary-stats} and \ref{fig:vaquita-summary-stats},
+    this combination only produces sizeable decreases in polymorphism at exonic positions, 
+    which represent a small minority of sites within the genome, and does not lead to large-scale
+    perturbations in genome-wide diversity. Thus it is not surprising that estimates of $N_e(t)$
+    from genome-wide data from which exons have been masked should be accurate 
+    (e.g., Figures \ref{fig:human-demography} and \ref{fig:vaquita-demography}). 
+    However the question remains to what extent this would be true in empirical data where
+    selection is not constrained to coding positions. For instance, we know
+    that many genomes harbor large numbers
+    of conserved non-coding elements \citep[e.g.,]{siepel2005evolutionarily} with extremely
+    strong selection acting on them \citep{katzman2007human,mclean2008dispensability},
+    thus we caution extrapolating from our simulation results. Future studies might build upon
+    the annotations we used here to include selection at other portions of the genome as well
+    as mixtures of DFEs across sites. 
 
-    One important finding we made using the new stdpopsim selection API is that inference of the DFE is sensitive to the dominance of deleterious mutations.
-    All three of the inference methods of the DFE applied here assume that deleterious mutations act in an additive fashion (h=0.5) by default.
+    A second important finding we made using the new stdpopsim selection API is that inference of the DFE
+    is sensitive to the dominance of deleterious mutations.
+    All three of the inference methods of the DFE applied here assume that deleterious mutations act
+    in an additive fashion (h=0.5) by default.
     However, the simulated DFE for the vaquita genome included highly recessive mutations.
     Specifically, these simulations used a DFE where mutations with $s>0.01$ are quite recessive, 
     with $h<=0.01$, and where mutations with $0.001<s<0.01$ have $h=0.1$.
@@ -872,15 +890,26 @@
     given the evidence for the presence of recessive deleterious mutations.
     More broadly, new computational approaches are needed to precisely quantify the DFE and the covariance of $h$ and $s$.
 
+    Further, inference of the DFE was done here using exon annotations of the genome in question.
+    A key distinction between our analyses and those done in practice
+    is that we have complete knowledge of which sites are under selection in the simulation,
+    thus our inferences represent a best case scenario. Empirical inference of the DFE is a much
+    harder problem as some mutations assumed to be free of selection
+    may in reality be under selection.
+
     Regarding sweep detection, the inclusion of selection models into \stdpopsim allowed us to readily compare the
     effectiveness of different methods on data reflecting the demographic history, recombination rate variation,
     and genomic locations of negatively selected sites present in human populations. These results clearly demonstrate
     the impact of recombination rate variation, and underscore the importance of training methods on data with variable
-    recombination rates (e.g., following Schrider and Kern \citeyear{schrider2017soft}). In addition, our results
-    illustrate a strength of likelihood methods like \sweepfinder, which do not require a predefined window size and
-    thus will perform better than \diploshic---which only examines relative summarie of diversity across a window instead
-    of the actual values of these diversity measures---on very strong sweeps that effect diversity across a wide stretch of
-    chromosomes that extends far beyond \diploshic's window size. 
+    recombination rates \citep[e.g.,][]{schrider2017soft}. In addition, our results
+    illustrate a strength of likelihood methods like \sweepfinder, that do not require a predefined window size.
+    Window-based methods, such as \diploshic, tend to lag in performance when the perturbation due to a sweep is at 
+    a much greater or smaller scale than the chosen window size, as can occur with very strong sweeps or low levels of 
+    recombination. Moreover while all the methods examined here retain adequate power for sweep identification across
+    scenarios, including the inclusion of background selection, our results underscore the importance of developing 
+    methods that are well powered in the face of unknown demographic histories. Indeed, the largest differences
+    in power we observed across simulated scenarios were between demographic histories and not the inclusion of background
+    selection. 
 
     Although we have shown how the new \stdpopsim API can be used to benchmark the performance of different methods,
     the benchmarks shown here merely scratch the surface of what can be done with the new API.
@@ -901,7 +930,7 @@
     in which chromosomes were simulated separately from one another.
     All simulations were executed using the \slim engine with a burn-in of $10N$ generations
     (where $N$ is the initial population size), and a scaling factor of 1 (no scaling).
-    All simulations were implemented using as part of a snakemake workflow,
+    All simulations were implemented using as part of a \snakemake workflow,
     where the code utilized is similar to the one shown in Figure 1B.
     The complete simulation workflow is available at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/simulation.snake}
     (see \textbf{Data availablity} below).
@@ -922,7 +951,7 @@
     Three additional datasets, used in Figure \ref{fig:homsap-dfe.constant},
     were simulated with the same model of selection and a simple demographic model with one population with a constant size of $10,000$.
     Each of these simulations generated 100 diploid genomes.
-    The configuration file used in combination with our snakemake workflow
+    The configuration file used in combination with our \snakemake workflow
     for these simulations can be found at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/config/snakemake/production_config_HomSap.yml}.
     
     \subsubsection*{Simulations of complete vaquita porpoise genomes}
@@ -947,7 +976,7 @@
     Three additional datasets, used in Figure \ref{fig:vaquita-dfe.constant},
     were simulated with the same model of selection and a simple demographic model with one population with a constant size of $3,500$.
     \igcomment{If we end up using Fig. S3, then we should add a line describing it's simulation here.}
-    The configuration file used in combination with our snakemake workflow
+    The configuration file used in combination with our \snakemake workflow
     for these simulations can be found at 
     \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/config/snakemake/production_config_PhoSin.yml}.
 
@@ -970,7 +999,7 @@
     and used a `dimFactor' of 5000, both of which represent default settings.
     For \smcpp \citep{terhorst2017robust} we used the unfolded SFS (`--unfold'), 
     along with the true mutation rate under which the simulations were generated. 
-    The complete snakemake workflow for demographic inference can be found at
+    The complete \snakemake workflow for demographic inference can be found at
     \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/n_t.snake}.
     
 
@@ -1006,7 +1035,7 @@
     $L$ is the total number of sites available for the analysis,
     $p$ is the proportion of sites under selection. 
     Complete details for the DFE inference analysis can be found in the
-    snakemake workflow at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/dfe.snake}.
+    \snakemake workflow at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/dfe.snake}.
 
 
     \subsection*{Simulations with selective sweeps}
@@ -1075,14 +1104,14 @@
     We note that using an empirical distribution to determine the threshold for calling a selective
     sweep with \diploshic deviates from the original implementation of the method,
     however for consistency among methods we chose to take this approach.
-    The complete snakemake workflow for sweep detection can be found at
+    The complete \snakemake workflow for sweep detection can be found at
     \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/sweep_simulate.snake}.
 
 \section*{Data availability}\label{data_availability}
 The release of \stdpopsim is available at \url{https://github.com/popsim-consortium/stdpopsim}.
 This paper coincides with version 0.3.XX of \stdpopsim. %be sure to check this
 The entire analysis pipeline associated with this paper is available
-as a snakemake workflow at \url{https://github.com/popsim-consortium/analysis2}.
+as a \snakemake workflow at \url{https://github.com/popsim-consortium/analysis2}.
 
 \section*{Acknowledgments}\label{acknowledgements}
 We thank Tom Booker for discussions and encouragement to incorporate realistic BGS models into \stdpopsim.
@@ -1222,10 +1251,8 @@ We thank Tom Booker for discussions and encouragement to incorporate realistic B
         Power to detect selective sweeps as a function of local exon density.
         This figure shows the same power estimates shown in Figure \ref{fig:chr1_power},
         but with the 100 genomic segments sorted according to their
-        exon density instead of position along chromosome 1.
-        \igcomment{Specify exactly how exon density is computed (\% of bases in exons?) and how the curves were computed}
-        %IG: copoed from the caption of fig 5
-	Genomic segments were simulated with sweeps under a three population out-of-Africa model
+        exon density (percentage of exonic bases per window)instead of position along chromosome 1.
+	    Genomic segments were simulated with sweeps under a three population out-of-Africa model
         \citep{gutenkunst2009inferring} and with background selection from deleterious mutations in exons.
         Three methods for detecting sweeps were applied to simulated data:
         1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row),
@@ -1236,6 +1263,7 @@ We thank Tom Booker for discussions and encouragement to incorporate realistic B
         The thresholds of the test statistics were set to control for
         $5\%$ false positive rate under a neutral null model (blue)
         and a null model with background selection from deleterious mutations in exons (red).
+        Fitted lines represent loess smoothed regressions.
     }
     \label{fig:power-exon}
 \end{figure}
