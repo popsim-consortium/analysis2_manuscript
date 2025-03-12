@@ -153,13 +153,13 @@
 \author[5]{Andrew D. Kern}
 
 
- \affil[*]{\small{These authors contributed equally to the paper.}}
+\affil[*]{\small{These authors contributed equally to the paper.}}
 % \affil[+]{\small{Corresponding authors: lauterbur@gmail.com ; ilan.gronau@runi.ac.il.}}
 % \affil[1]{\small{Department of Ecology and Evolutionary Biology, University of Arizona, Tucson AZ 85719, USA}}
 % \affil[2]{\small{Department of Ecology and Evolutionary Biology, University of California, Los Angeles, Los Angeles CA, USA}}
 % \affil[3]{\small{Embark Veterinary, Inc., Boston MA 02111, USA}}
- \affil[4]{\small{Section for Molecular Ecology and Evolution, Globe Institute, University of Copenhagen, Denmark}}
- \affil[5]{\small{Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA}}
+\affil[4]{\small{Section for Molecular Ecology and Evolution, Globe Institute, University of Copenhagen, Denmark}}
+\affil[5]{\small{Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA}}
 % \affil[6]{\small{School of Mathematics and Statistics, University of Melbourne, Australia}}
 % \affil[7]{\small{AncestryDNA, San Francisco CA 94107, USA}}
 % \affil[8]{\small{54Gene, Inc., Washington DC 20005, USA}}
@@ -878,16 +878,15 @@
 
     \subsection*{Whole genome simulations}
     In this study we performed simulations of the human and vaquita porpoise genomes
-    using the \stdpopsim{} framework.
-    All simulations were executed using the \slim engine with a burn-in of $2N$ generations
-    (where $N$ is the initial population size), and a scaling factor of 2 (to reduce running time).
-    Each simulation was implemented using a relatively short python script, similar to the one shown in Figure 1B
+    using the \stdpopsim{} framework. We ran replicate datasets for each genome/parameter combination,
+    in which chromosomes were simulated separately from one another.
+    All simulations were executed using the \slim engine with a burn-in of $10N$ generations
+    (where $N$ is the initial population size), and a scaling factor of 1 (no scaling).
+    All simulations were implemented using as part of a snakemake workflow,
+    where the code utilized is similar to the one shown in Figure 1B.
+    The complete simulation workflow is available at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/simulation.snake}
     (see \textbf{Data availablity} below).
-    \igcomment{We should add a link to the analysis2 repo in data/code availablity section}
-    %https://github.com/popsim-consortium/analysis2/tree/main
-    % DRS: Maybe we should say something about how easy it was to do these simulations, and maybe even show
-    % some example code somewhere to prove our point? Could help emphasize the utility of this resource.
-    % IG: added a note about this above.
+
    
     \subsubsection*{Simulations of complete human genomes}
     Simulation of human genomes used a genetic map from the HapMap Project
@@ -904,6 +903,8 @@
     Three additional datasets, used in Figure \ref{fig:homsap-dfe.constant},
     were simulated with the same model of selection and a simple demographic model with one population with a constant size of $10,000$.
     Each of these simulations generated 100 diploid genomes.
+    The configuration file used in combination with our snakemake workflow
+    for these simulations can be found at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/config/snakemake/production_config_HomSap.yml}.
     
     \subsubsection*{Simulations of complete vaquita porpoise genomes}
     Simulation of vaquita porpoise genomes used 
@@ -927,35 +928,40 @@
     Three additional datasets, used in Figure \ref{fig:vaquita-dfe.constant},
     were simulated with the same model of selection and a simple demographic model with one population with a constant size of $3,500$.
     \igcomment{If we end up using Fig. S3, then we should add a line describing it's simulation here.}
-
+    The configuration file used in combination with our snakemake workflow
+    for these simulations can be found at 
+    \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/config/snakemake/production_config_PhoSin.yml}.
 
 
     \subsection*{Inference of $N_e(t)$}
-    %We assessed the accuracy of demographic inferences from
-    %\msmc \citep{Schiffels2020}, \stairway \citep{liu2020stairway}, \gone \citep{santiago2020recent}, and \smcpp \citep{terhorst2017robust}.
-    Inference of $N_e(t)$ was conducted on simulated datasets after masking non-recombining portion
+    Inference of $N_e(t)$ was conducted on simulated datasets after masking non-recombining portions
     of the genome (to avoid bias caused by extreme recombination rate variation)
     and exons (to avoid the direct effect of natural selection).
     Thus, inference from datasets simulated with selection was not influenced by direct selection
     acting on exons, but it was influenced by selection acting on linked sites (background selection).    
-    %IG: I commented because it doesn't seem relevant for methods
-    %Comparisons between inferences made with and without selection were 
-    %of particular interest.
+   
+    We assessed the accuracy of demographic inferences from three software packages:
+    \msmc \citep{Schiffels2020}, \stairway \citep{liu2020stairway}, \gone \citep{santiago2020recent},
+     and \smcpp \citep{terhorst2017robust}.
     For \msmc \citep{Schiffels2020}, we used a random sample of $N=6$ simulated genomes with 20
     iterations of the EM algorithm.
     For \gone \citep{santiago2020recent}, we set \texttt{max\_snps} to 500,000,
     the number of generations to 2,000, and the number of bins to 400, all representing default settings.
-    For \stairway \citep{liu2020stairway} and \smcpp \citep{terhorst2017robust} we used the default settings.
-    \igcomment{Nothing more to say about \stairway plot and \smcpp?}
+    For \stairway \citep{liu2020stairway} we did one run of theta estimation for each replicate dataset,
+    and used a `dimFactor' of 5000, both of which represent default settings.
+    For \smcpp \citep{terhorst2017robust} we used the unfolded SFS (`--unfold'), 
+    along with the true mutation rate under which the simulations were generated. 
+    The complete snakemake workflow for demographic inference can be found at
+    \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/n_t.snake}.
     
 
     \subsection*{DFE inference}
-    \igcomment{I commented all the text that was here because it wasn't relevant to the methods. We might want to add it to the discussion.
-    Kirk also noted that a lot of methods-level details are missing:
-    how big was the coding sequence length?
-    How was demographic inference done for the different models via the different programs?,
-    etc.
-    Can someone write this up?}
+    %\igcomment{I commented all the text that was here because it wasn't relevant to the methods. We might want to add it to the discussion.
+    %Kirk also noted that a lot of methods-level details are missing:
+    %how big was the coding sequence length?
+    %How was demographic inference done for the different models via the different programs?,
+    %etc.
+    %Can someone write this up?
     % ADK: I've added a section below that describes the DFE inference methods used in this study.
     
     % We used three software packages to infer the distribution of fitness effects (DFE) from genetic data:
@@ -1024,21 +1030,19 @@
     used by the three sweep-detection methods (see below).
 
     \subsection*{Selective sweeps detection}
-    %\drscomment{Maybe it makes sense to move this up to right after the sweep simulation section. Should make it easier for readers to follow.}
-    %IG: I moved that section down here to bring them together
     
     Each of the three sweep-detection methods is based on a test statistic.
     Reduced nucleotide diversity is based on nucleotide diversity  ($\pi$) 
     computed directly from the underlying tree sequences using \tskit \citep{ralph2020efficiently}
     over 10 equally sized and non-overlapping subwindows.
-    \sweepfinder \citep{degiorgio2016sweepfinder2} is based a composite likelihood ratio (CLR) 
+    \sweepfinder \citep{degiorgio2016sweepfinder2} is based on a composite likelihood ratio (CLR) 
     computed at 21 uniformly distributed positions along the simulated region.
     \diploshic \citep{kern2018diplos} uses supervised learning to train a sweep classifier.
     Its training phase used \texttt{discoal} \citep{kern2016discoal} to simulate 20 haploid sequences of length 1.21Mbp
     with a constant population size of $N_e=10,000$, a mutation rate of $2\times 10^{-8}$, and a recombination rate of $2\times 10^{-8}$.
     For \texttt{discoal} simulations that included selective sweeps,
-    selection coefficients were drawn from a uniform distribution between 0.001 and 0.10,
-    and the time of the sweep was chosen from a uniform distribution between 0 and $0.01N_e$ generations in the past.
+    selection coefficients were drawn from a uniform distribution between $0.001$ and $0.10$,
+    and the time of the sweep was chosen from a uniform distribution between $0$ and $0.01N_e$ generations in the past.
     For soft sweeps, the frequency at which selection was introduced was drawn from a uniform distribution between $0.0001$ and $0.1$.
     We note that since the training set of \diploshic was generated under a simple model with
     constant mutation and recombination rates and constant effective population size,
@@ -1057,11 +1061,16 @@
     \igcomment{Can we say what the rec rate cutoff was and how many regions were excluded here?
     Shouldn't we have excluded these regions from the simulations altogether?}.
     Then, power (or true positive rate) to detect a sweep by a given method was determined for
-    100 evenly-spaced positions on chromosome 1 as follows.
-    The sweep-detection method was applied to the 1,000 
+    100 evenly-spaced positions on chromosome 1 as follows:
+    each sweep-detection method was applied to the 1,000 
     simulated datasets generated with a hard sweep (neutral and BGS) for that position,
     and the power was set to be the proportion of simulations (out of 1,000)
     in which the test statistic exceeded the threshold determined by each of the two null models (neutral and BGS).
+    We note that using an empirical distribution to determine the threshold for calling a selective
+    sweep with \diploshic deviates from the original implementation of the method,
+    however for consistency among methods we chose to take this approach.
+    The complete snakemake workflow for sweep detection can be found at
+    \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/sweep_simulate.snake}.
 
 \section*{Data availability}\label{data_availability}
 The release of \stdpopsim is available at \url{https://github.com/popsim-consortium/stdpopsim}.
