@@ -327,7 +327,7 @@
         distribution of fitness effects (DFE) and a set of functional
         annotations. }
     \end{figure}
-    \kelcomment{For Figure 1 at the bottom, it says "Kyriazis et al. 2013". This should be "2023" instead}
+
     As with other aspects of \stdpopsim, we intend the selection models to be as biologically accurate as possible.
     Thus, the \stdpopsim catalog provides \texttt{Annotation} objects based on specices' publicly available functional genomic elements 
     and \texttt{DFE} objects based on published DFE estimates (Figure \ref{fig:schematic}A).
@@ -599,15 +599,13 @@
     (relative to the other two populations), whereas \polydfe
     produces its most accurate estimate from the CHB genomes.
     To factor out the influence of demographic changes, we also analyzed genomes generated using similar
-    simulations but with no population size changes (Figure \ref{fig:homsap-dfe.constant}).
+    simulations but with no population size changes (Figure \ref{fig:homsap-dfe.constant}, Table \ref{tab:dfe_table}).
     In this simpler setting, \polydfe overlapped the true mean selection coefficient and shape parameter, whereas 
-    the other methods do not. 
-    \kelcomment{From looking at the SI Figure, these differences seem really slight. Also, with only 3 replicates, I think it's hard to conclusively say that some methods overlap the true values while others do not. I might instead just say here that all methods are close, but deviate slightly in different ways.
+    the other methods do not show as close a correspondence.
     \grapes exhibits similar biases without population size changes as in the simulations with more complex demography,
     but with milder under-estimation of the shape parameter, but \dadicli shows an inverse pattern
     with overestimated shape parameter and slightly underestimated mean. 
-    As a sanity check, we also inferred the DFE from human genome simulations with a constant population size 
-    (Figure \ref{fig:homsap-dfe.constant}, Table \ref{tab:dfe_table}), but largely the results are similar.
+    While that is so, it is hard to be definitive as our sample size is small with 3 simulated replicates. 
 
     \begin{figure}[b!]
         \centering
