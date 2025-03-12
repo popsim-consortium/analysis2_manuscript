@@ -292,7 +292,7 @@
     we introduce two new classes
     to the \stdpopsim API: the \texttt{DFE} class and the \texttt{Annotation} class.
     The \texttt{DFE} class provides an interface for specifying
-    a distribution of the fitness effects (DFE)of new mutations.
+    a distribution of the fitness effects (DFE) of new mutations.
     Each \texttt{DFE} object specifies a list of mutation types and
     their proportions, where 
     each mutation type is associated with a dominance coefficient
@@ -327,7 +327,7 @@
         distribution of fitness effects (DFE) and a set of functional
         annotations. }
     \end{figure}
-    
+    \kelcomment{For Figure 1 at the bottom, it says "Kyriazis et al. 2013". This should be "2023" instead}
     As with other aspects of \stdpopsim, we intend the selection models to be as biologically accurate as possible.
     Thus, the \stdpopsim catalog provides \texttt{Annotation} objects based on specices' publicly available functional genomic elements 
     and \texttt{DFE} objects based on published DFE estimates (Figure \ref{fig:schematic}A).
@@ -439,7 +439,7 @@
     In both scenarios, we ran three replicate simulations
     under the out of Africa (OOA) demographic model of
     \citep{ragsdale2019models} using a genetic map from the HapMap Project \citep{international2007second} (see \textbf{Methods}).
-    Simulations with selection were implemented by modeling purifying selection on exons
+    Simulations with selection were implemented by modeling purifying selection on nonsynonymous mutations
     using a DFE inferred by \cite{kim2017inference}.
     A basic summary of nucleotide diversity from these simulations is shown in Figure \ref{fig:homsap-summary-stats},
     which shows that the presence of selection decreases polymorphism in simulations with selection only slightly
@@ -602,6 +602,7 @@
     simulations but with no population size changes (Figure \ref{fig:homsap-dfe.constant}).
     In this simpler setting, \polydfe overlapped the true mean selection coefficient and shape parameter, whereas 
     the other methods do not. 
+    \kelcomment{From looking at the SI Figure, these differences seem really slight. Also, with only 3 replicates, I think it's hard to conclusively say that some methods overlap the true values while others do not. I might instead just say here that all methods are close, but deviate slightly in different ways.
     \grapes exhibits similar biases without population size changes as in the simulations with more complex demography,
     but with milder under-estimation of the shape parameter, but \dadicli shows an inverse pattern
     with overestimated shape parameter and slightly underestimated mean. 
@@ -697,6 +698,7 @@
     For each method, we determined a threshold for its test-statistic 
     using each of the two null models separately (neutral and BGS) and controlling 
     for a $5\%$ false positive rate.
+
     We then applied each method to data simulated with sweeps for two samples (YRI and CEU)
     in each of 100 locations along human chromosome 1 (Figure \ref{fig:chr1_power}).
     First, we notice that power to detect sweeps is slightly lower when the test statistic threshold
@@ -995,6 +997,7 @@
     \snakemake workflow at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/dfe.snake}.
 
 
+
     \subsection*{Simulations with selective sweeps}
 
     To test methods for detecting selective sweeps, we simulated 100 evenly distributed 5cM
@@ -1079,6 +1082,7 @@ We thank Tom Booker for discussions and encouragement to incorporate realistic B
     RNG and LNT were supported in part by NIH award R35GM149235.
     DRS was supported in part by NIH award R35GM138286.
     KEL was supported by NIH award R35GM119856.
+
     %other funding sources?
 \printbibliography
 
