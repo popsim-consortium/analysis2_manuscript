@@ -2,7 +2,7 @@ all: analysis2_manuscript.pdf
 
 analysis2_manuscript.pdf: analysis2_manuscript.tex references.bib
 	pdflatex analysis2_manuscript.tex
-	bibtex analysis2_manuscript
+	biber analysis2_manuscript
 	pdflatex analysis2_manuscript.tex
 	pdflatex analysis2_manuscript.tex
 	pdflatex analysis2_manuscript.tex
