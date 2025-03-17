@@ -103,7 +103,7 @@
 % co-first authors
 \author[1,*]{Graham Gower}
 \author[2,*]{Nathaniel S. Pope}
-\author[2,*]{Murillo F. Rodrigues}
+\author[2,19,*]{Murillo F. Rodrigues}
 \author[2,*]{Silas Tittes}
 \author[3,*]{Linh N. Tran}
 
@@ -158,6 +158,8 @@
 \affil[16]{\small{Efi Arazi School of Computer Science, Reichman University, Herzliya, Israel}}
 \affil[17]{\small{Department of Genetics, University of North Carolina at Chapel Hill, Chapel Hill NC 27599, USA}}
 \affil[18]{\small{Department of Data Science, University of Oregon, Eugene OR 97402, USA}}
+\affil[19]{\small{Division of Genetics, Oregon National Primate Center, Oregon Health and Science University, Beaverton OR 97006, USA}}
+
 
 \date{\small{\today{}}}
 
@@ -741,6 +743,8 @@
     In the YRI sample, \diploshic outperforms the other two methods,
     with an AUC of 0.979, followed by using outliers of $\pi$ with an AUC of 0.957,
     and then \sweepfinder with an AUC of 0.939.
+    Note, however, that despite the apparent good performance of the $\pi$ statistic,
+    it showed extreme heterogeneity across the genome. % MFR: I think this is an important point. Basically there is a Simpson's paradox here.
     We note that we trained \diploshic on simulations under a constant size population,
     which more closely matches the demographic history of YRI, than that of CEU, which 
     is characterized by a strong recent bottleneck followed by population expansion.
@@ -1250,7 +1254,7 @@ workshop participants who provided feedback and suggestions for improvements.
     Receiver operating characteristic (ROC) curves for the three methods for detecting sweeps.
     True positive rates (TPR) were computed across all 100,000 datasets simulated with selective sweeps,
     and false positive rates (FPR) were established by applying the methods to genomes simulated
-    under neutral evolution with the same demographic history and genetic map
+    under BGS applied on exons with the same demographic history and genetic map
     used in the simulations that included sweeps (see \textbf{Methods}).
     AUC scores are shown for each method. \sweepfinder is labelled CLR in the figure.
     }
