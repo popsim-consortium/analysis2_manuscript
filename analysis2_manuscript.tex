@@ -694,7 +694,7 @@
         % coefficient of $s = 0.03$, and only sampled if they reached a terminal
         % frequency of 0.95 or greater.
         Three methods for detecting sweeps were applied to simulated data:
-        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row),
+        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row -- labelled CLR),
         2) \diploshic \citep{kern2018diplos} (middle row),
         and 3) reduced diversity ($\pi$) (bottom row).
         Power (true positive rate) is shown for these methods for the CEU and YRI
@@ -704,7 +704,6 @@
         and a null model with background selection from deleterious mutations in exons (red).
         Also shown are heatmaps of exon density and local recombination rate along the
         chromosome (bottom).
-        \igcomment{In fig, replace CLR with \sweepfinder; also in figs 6 S5 S6}
         }
         \label{fig:chr1_power}
     \end{figure}
@@ -735,15 +734,19 @@
 
     We compared the overall performance of the three sweep-detection methods using
     receiver operating characteristic (ROC) curves (Figure \ref{fig:roc-curves}).
-    Different methods perform better for each of the sampled populations,
-    with \sweepfinder performing better than the other two on the CEU sample,
-    and \diploshic performing better on the YRI sample.
-    This is may result from the fact that we trained \diploshic on simulations under a constant size population,
+    Performance varies for each of the sampled populations.
+    In the CEU sample, \sweepfinder and \diploshic perform similarly with a high area under the curve (AUC) score,
+    (AUC = 0.906 and 0.903 respectively), but both underperform the simple method
+    that uses reduced diversity ($\pi$) as an indicator (AUC = 0.932).
+    In the YRI sample, \diploshic outperforms the other two methods,
+    with an AUC of 0.979, followed by using outliers of $\pi$ with an AUC of 0.957,
+    and then \sweepfinder with an AUC of 0.939.
+    We note that we trained \diploshic on simulations under a constant size population,
     which more closely matches the demographic history of YRI, than that of CEU, which 
     is characterized by a strong recent bottleneck followed by population expansion.
     %\drscomment{note: I am couching the language above a bit because we have previously shown that shic doesn't suffer in the sweep vs. nonsweep question when doing other train-on-constant-test-on-nonequilib benchmarks. Could be something else going on here (or some interaction between demog misspec and rec rate variation), but in any case I am not certain of the cause so I am toning down our certainty slightly.}
     Interestingly, the simple method that uses reduced diversity ($\pi$) as an indicator
-    for a selective sweep performs reasonably well overall (especially on the CEU sample).
+    for a selective sweep performs very well overall (especially on the CEU sample).
     However, its accuracy is much more variable along the chromosome compared to the other two method (see Figure \ref{fig:chr1_power}),
     and for quite a few locations along the chromosome it has power below $50\%$
     when applied to both sample sets.
@@ -769,7 +772,7 @@
     	Genomic segments were simulated with sweeps under a three population out-of-Africa model
         \citep{gutenkunst2009inferring} and with background selection from deleterious mutations in exons.
         Three methods for detecting sweeps were applied to simulated data:
-        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row),
+        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row-- labelled CLR),
         2) \diploshic \citep{kern2018diplos} (middle row),
         and 3) reduced diversity ($\pi$) (bottom row).
         Power (true positive rate) is shown for these methods for the CEU and YRI
@@ -1249,7 +1252,7 @@ workshop participants who provided feedback and suggestions for improvements.
     and false positive rates (FPR) were established by applying the methods to genomes simulated
     under neutral evolution with the same demographic history and genetic map
     used in the simulations that included sweeps (see \textbf{Methods}).
-    \igcomment{Add AUCs?}
+    AUC scores are shown for each method. \sweepfinder is labelled CLR in the figure.
     }
     %DRS-fig: can we include AUCs here?
 \end{figure}
@@ -1268,7 +1271,7 @@ workshop participants who provided feedback and suggestions for improvements.
 	    Genomic segments were simulated with sweeps under a three population out-of-Africa model
         \citep{gutenkunst2009inferring} and with background selection from deleterious mutations in exons.
         Three methods for detecting sweeps were applied to simulated data:
-        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row),
+        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row -- labelled CLR),
         2) \diploshic \citep{kern2018diplos} (middle row),
         and 3) reduced diversity ($\pi$) (bottom row).
         Power (true positive rate) is shown for these methods for the CEU and YRI
