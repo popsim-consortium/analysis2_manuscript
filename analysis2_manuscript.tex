@@ -99,39 +99,43 @@
 
 \title{Accessible, realistic genome simulation with selection using \stdpopsim}
 
+% author tranche explanation:
+% co-first authors
 \author[1,*]{Graham Gower}
-\author[2*]{Nathaniel S. Pope}
-\author[2*]{Murillo F. Rodrigues}
-\author[2*]{Silas Tittes}
-\author[3*]{Linh N. Tran}
+\author[2,*]{Nathaniel S. Pope}
+\author[2,*]{Murillo F. Rodrigues}
+\author[2,*]{Silas Tittes}
+\author[3,*]{Linh N. Tran}
 
+% additional authors
 \author[4]{Ornob Alam}
 \author[5]{Maria Izabel A. Cavassim}
 \author[6]{Peter D. Fields}
 \author[7]{Benjamin C. Haller}
 \author[8,9]{Xin Huang}
 \author[10]{Ben Jeffrey}
-\author[5]{Christopher C. Kyriazis}
 \author[2]{Kevin Korfmann}
+\author[5]{Christopher C. Kyriazis}
 \author[2]{Jiseon Min}
 \author[11]{Inés Rebollo}
 \author[2]{Clara T. Rehmann}
-\author[2]{Chris C. R. Smith}
 \author[2]{Scott T. Small}
+\author[2]{Chris C. R. Smith}
 \author[12]{Georgia Tsambos}
-
-
 \author[10]{Yan Wong}
-\author[13]{Gregor Gorjanc}
-\author[14]{Christian D. Huber}
 \author[13]{Yu Zhang}
 
+% PI additional authors
+\author[14]{Christian D. Huber}
+\author[13]{Gregor Gorjanc}
+\author[15]{Aaron P. Ragsdale}
+
+% PIs that were very involved in the project
+\author[16]{Ilan Gronau}
 \author[3]{Ryan N. Gutenkunst}
 \author[10]{Jerome Kelleher}
 \author[5]{Kirk E. Lohmueller}
-\author[15]{Aaron P. Ragsdale}
-\author[16]{Daniel R. Schrider}
-\author[17]{Ilan Gronau}
+\author[17]{Daniel R. Schrider}
 \author[2,18]{Peter L. Ralph}
 \author[2]{Andrew D. Kern}
 
@@ -151,8 +155,8 @@
 \affil[13]{\small{The Roslin Institute and Royal (Dick) School of Veterinary Studies, University of Edinburgh, Edinburgh EH25 9RG, UK}}
 \affil[14]{\small{Department of Biology, Pennsylvania State University, University Park, PA 16802, USA}}
 \affil[15]{\small{Department of Integrative Biology, University of Wisconsin-Madison, Madison WI, USA}}
-\affil[16]{\small{Department of Genetics, University of North Carolina at Chapel Hill, Chapel Hill NC 27599, USA}}
-\affil[17]{\small{Efi Arazi School of Computer Science, Reichman University, Herzliya, Israel}}
+\affil[16]{\small{Efi Arazi School of Computer Science, Reichman University, Herzliya, Israel}}
+\affil[17]{\small{Department of Genetics, University of North Carolina at Chapel Hill, Chapel Hill NC 27599, USA}}
 \affil[18]{\small{Department of Data Science, University of Oregon, Eugene OR 97402, USA}}
 
 \date{\small{\today{}}}
@@ -917,8 +921,8 @@
     at the time of writing, the library includes over 11,000 lines of testing code,
     that run 2,862 unit tests, including comparisons to QC implementations
     and cross-checks for agreement, including between \slim and \msprime implementations of the same models.
-    For instance, for testing we make use of \slim's scriptability to separately record in-simulation metadata
-    information about current population sizes, DFEs, etcetera,
+    For instance, for testing we make use of \slim's scriptability to separately record in metadata
+    of the simulation current population sizes, DFEs, etcetera,
     which are then programmatically compared to the models used to generate the \slim script
     that ran the simulation.
     We make use of automatic test ``code coverage'' tools to help ensure that all portions of the code base
@@ -1116,6 +1120,8 @@ as a \snakemake workflow at \url{https://github.com/popsim-consortium/analysis2}
 
 \section*{Acknowledgments}\label{acknowledgements}
 We thank Tom Booker for discussions and encouragement to incorporate realistic BGS models into \stdpopsim.
+We thank the numerous users of the \stdpopsim package and well as
+workshop participants who provided feedback and suggestions for improvements.
 
 \section*{Funding}
     \label{funding}
