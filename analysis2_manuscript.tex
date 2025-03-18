@@ -99,38 +99,44 @@
 
 \title{Accessible, realistic genome simulation with selection using \stdpopsim}
 
+% author tranche explanation:
+% co-first authors
 \author[1,*]{Graham Gower}
-\author[2*]{Nathaniel S. Pope}
-\author[2*]{Murillo F. Rodrigues}
-\author[2*]{Silas Tittes}
-\author[3*]{Linh N. Tran}
+\author[2,*]{Nathaniel S. Pope}
+\author[2,19,*]{Murillo F. Rodrigues}
+\author[2,*]{Silas Tittes}
+\author[3,*]{Linh N. Tran}
 
+% additional authors
 \author[4]{Ornob Alam}
 \author[5]{Maria Izabel A. Cavassim}
 \author[6]{Peter D. Fields}
 \author[7]{Benjamin C. Haller}
 \author[8,9]{Xin Huang}
 \author[10]{Ben Jeffrey}
-\author[5]{Christopher C. Kyriazis}
 \author[2]{Kevin Korfmann}
+\author[5]{Christopher C. Kyriazis}
 \author[2]{Jiseon Min}
-\author[2]{Chris C. R. Smith}
-
-\author[2]{Scott T. Small}
-\author[2]{Clara T. Rehmann}
 \author[11]{Inés Rebollo}
+\author[2]{Clara T. Rehmann}
+\author[2]{Scott T. Small}
+\author[2]{Chris C. R. Smith}
+\author[12]{Georgia Tsambos}
 \author[10]{Yan Wong}
-\author[12]{Gregor Gorjanc}
-\author[13]{Christian D. Huber}
-\author[]{Yu Zhang}
+\author[13]{Yu Zhang}
 
+% PI additional authors
+\author[14]{Christian D. Huber}
+\author[13]{Gregor Gorjanc}
+\author[15]{Aaron P. Ragsdale}
+
+% PIs that were very involved in the project
+\author[16]{Ilan Gronau}
 \author[3]{Ryan N. Gutenkunst}
 \author[10]{Jerome Kelleher}
 \author[5]{Kirk E. Lohmueller}
-\author[14]{Aaron P. Ragsdale}
-\author[15]{Daniel R. Schrider}
-\author[16]{Ilan Gronau}
-\author[2,17]{Peter L. Ralph}
+\author[17]{Daniel R. Schrider}
+\author[2,18]{Peter L. Ralph}
 \author[2]{Andrew D. Kern}
 
 \affil[*]{\small{These authors contributed equally to the paper.}}
@@ -145,12 +151,15 @@
 \affil[9]{\small{Human Evolution and Archaeological Sciences (HEAS), University of Vienna, Vienna, Austria}}
 \affil[10]{\small{Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, Oxford OX3 7LF, UK}}
 \affil[11]{\small{Instituto Nacional de Investigación Agropecuaria (INIA), Estación Experimental Las Brujas, Ruta 48 km 10, Canelones, Uruguay}}
-\affil[12]{\small{The Roslin Institute and Royal (Dick) School of Veterinary Studies, University of Edinburgh, Edinburgh EH25 9RG, UK}}
-\affil[13]{\small{Department of Biology, Pennsylvania State University, University Park, PA 16802, USA}}
-\affil[14]{\small{Department of Integrative Biology, University of Wisconsin-Madison, Madison WI, USA}}
-\affil[15]{\small{Department of Genetics, University of North Carolina at Chapel Hill, Chapel Hill NC 27599, USA}}
+\affil[12]{\small{Department of Genome Sciences, University of Washington, Seattle WA, USA}}
+\affil[13]{\small{The Roslin Institute and Royal (Dick) School of Veterinary Studies, University of Edinburgh, Edinburgh EH25 9RG, UK}}
+\affil[14]{\small{Department of Biology, Pennsylvania State University, University Park, PA 16802, USA}}
+\affil[15]{\small{Department of Integrative Biology, University of Wisconsin-Madison, Madison WI, USA}}
 \affil[16]{\small{Efi Arazi School of Computer Science, Reichman University, Herzliya, Israel}}
-\affil[17]{\small{Department of Data Science, University of Oregon, Eugene OR 97402, USA}}
+\affil[17]{\small{Department of Genetics, University of North Carolina at Chapel Hill, Chapel Hill NC 27599, USA}}
+\affil[18]{\small{Department of Data Science, University of Oregon, Eugene OR 97402, USA}}
+\affil[19]{\small{Division of Genetics, Oregon National Primate Center, Oregon Health and Science University, Beaverton OR 97006, USA}}
+
 
 \date{\small{\today{}}}
 
@@ -687,7 +696,7 @@
         % coefficient of $s = 0.03$, and only sampled if they reached a terminal
         % frequency of 0.95 or greater.
         Three methods for detecting sweeps were applied to simulated data:
-        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row),
+        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row -- labelled CLR),
         2) \diploshic \citep{kern2018diplos} (middle row),
         and 3) reduced diversity ($\pi$) (bottom row).
         Power (true positive rate) is shown for these methods for the CEU and YRI
@@ -697,7 +706,6 @@
         and a null model with background selection from deleterious mutations in exons (red).
         Also shown are heatmaps of exon density and local recombination rate along the
         chromosome (bottom).
-        \igcomment{In fig, replace CLR with \sweepfinder; also in figs 6 S5 S6}
         }
         \label{fig:chr1_power}
     \end{figure}
@@ -728,15 +736,19 @@
 
     We compared the overall performance of the three sweep-detection methods using
     receiver operating characteristic (ROC) curves (Figure \ref{fig:roc-curves}).
-    Different methods perform better for each of the sampled populations,
-    with \sweepfinder performing better than the other two on the CEU sample,
-    and \diploshic performing better on the YRI sample.
-    This is may result from the fact that we trained \diploshic on simulations under a constant size population,
+    Performance varies for each of the sampled populations.
+    In the CEU sample, \sweepfinder and \diploshic perform similarly with a high area under the curve (AUC) score,
+    (AUC = 0.906 and 0.903 respectively), but both underperform the simple method
+    that uses reduced diversity ($\pi$) as an indicator (AUC = 0.932).
+    In the YRI sample, \diploshic outperforms the other two methods,
+    with an AUC of 0.979, followed by using outliers of $\pi$ with an AUC of 0.957,
+    and then \sweepfinder with an AUC of 0.939.
+    We note that we trained \diploshic on simulations under a constant size population,
     which more closely matches the demographic history of YRI, than that of CEU, which 
     is characterized by a strong recent bottleneck followed by population expansion.
     %\drscomment{note: I am couching the language above a bit because we have previously shown that shic doesn't suffer in the sweep vs. nonsweep question when doing other train-on-constant-test-on-nonequilib benchmarks. Could be something else going on here (or some interaction between demog misspec and rec rate variation), but in any case I am not certain of the cause so I am toning down our certainty slightly.}
     Interestingly, the simple method that uses reduced diversity ($\pi$) as an indicator
-    for a selective sweep performs reasonably well overall (especially on the CEU sample).
+    for a selective sweep performs very well overall (especially on the CEU sample).
     However, its accuracy is much more variable along the chromosome compared to the other two method (see Figure \ref{fig:chr1_power}),
     and for quite a few locations along the chromosome it has power below $50\%$
     when applied to both sample sets.
@@ -762,7 +774,7 @@
     	Genomic segments were simulated with sweeps under a three population out-of-Africa model
         \citep{gutenkunst2009inferring} and with background selection from deleterious mutations in exons.
         Three methods for detecting sweeps were applied to simulated data:
-        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row),
+        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row-- labelled CLR),
         2) \diploshic \citep{kern2018diplos} (middle row),
         and 3) reduced diversity ($\pi$) (bottom row).
         Power (true positive rate) is shown for these methods for the CEU and YRI
@@ -914,8 +926,8 @@
     at the time of writing, the library includes over 11,000 lines of testing code,
     that run 2,862 unit tests, including comparisons to QC implementations
     and cross-checks for agreement, including between \slim and \msprime implementations of the same models.
-    For instance, for testing we make use of \slim's scriptability to separately record in-simulation metadata
-    information about current population sizes, DFEs, etcetera,
+    For instance, for testing we make use of \slim's scriptability to separately record as metadata
+    the simulation parameters (current population sizes, DFEs, etc.),
     which are then programmatically compared to the models used to generate the \slim script
     that ran the simulation.
     We make use of automatic test ``code coverage'' tools to help ensure that all portions of the code base
@@ -1113,6 +1125,8 @@ as a \snakemake workflow at \url{https://github.com/popsim-consortium/analysis2}
 
 \section*{Acknowledgments}\label{acknowledgements}
 We thank Tom Booker for discussions and encouragement to incorporate realistic BGS models into \stdpopsim.
+We thank the numerous users of the \stdpopsim package and well as
+workshop participants who provided feedback and suggestions for improvements.
 
 \section*{Funding}
     \label{funding}
@@ -1238,9 +1252,9 @@ We thank Tom Booker for discussions and encouragement to incorporate realistic B
     Receiver operating characteristic (ROC) curves for the three methods for detecting sweeps.
     True positive rates (TPR) were computed across all 100,000 datasets simulated with selective sweeps,
     and false positive rates (FPR) were established by applying the methods to genomes simulated
-    under neutral evolution with the same demographic history and genetic map
+    under BGS applied on exons with the same demographic history and genetic map
     used in the simulations that included sweeps (see \textbf{Methods}).
-    \igcomment{Add AUCs?}
+    AUC scores are shown for each method. \sweepfinder is labelled CLR in the figure.
     }
     %DRS-fig: can we include AUCs here?
 \end{figure}
@@ -1259,7 +1273,7 @@ We thank Tom Booker for discussions and encouragement to incorporate realistic B
 	    Genomic segments were simulated with sweeps under a three population out-of-Africa model
         \citep{gutenkunst2009inferring} and with background selection from deleterious mutations in exons.
         Three methods for detecting sweeps were applied to simulated data:
-        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row),
+        1) \sweepfinder \citep{degiorgio2016sweepfinder2} (top row -- labelled CLR),
         2) \diploshic \citep{kern2018diplos} (middle row),
         and 3) reduced diversity ($\pi$) (bottom row).
         Power (true positive rate) is shown for these methods for the CEU and YRI
