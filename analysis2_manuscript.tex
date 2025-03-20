@@ -207,7 +207,7 @@
     estimates of inverse coalescent rate \citep{schrider2016effects, johri2021impact, cousins2024accurate}.
     Thus, it is imperative to jointly account for the effects of selection
     and demography when inferring evolutionary history from genetic data \citep[e.g.,][]{sheehan2016deep,johri2020toward},
-    yet tools for doing so remain limited.
+    yet the number of tools for doing so remain limited.
 
     % simulation
     To meet the growing need for the interpretation,
@@ -247,7 +247,7 @@
     of community resources for sharing and distributing simulation software
     via the \stdpopsim project \citep{adrion2020community}. \stdpopsim
     provides a standardized interface for accessing a wide range of
-    population genetic models, and has begun to be be widely adopted by the community
+    population genetic models, and has been widely adopted by the community
     \citep[e.g.,][]{speidel2021inferring, wang2021automatic, yang2022trustgwas, degiorgio2022spatially, browning2023fast, schweiger2023ultrafast, temple2024modeling, haag2025pandora}.
     Yet, previous releases of \stdpopsim did not include
     models of selection, which is a major limitation for more empirically motivated
@@ -351,7 +351,7 @@
     coefficients are drawn from a specified DFE) occur within annotation regions (e.g. exons), while all mutations
     occurring outside of these regions do not affect fitness.
     There are relatively few species with published DFE estimates in the literature.
-    \stdpopsim currently has implemented DFEs for five species in the catalogue:
+    \stdpopsim currently has implemented DFEs for five species in the catalog:
     \textit{Arabidopsis thaliana} \citep{huber2018gene},
     \textit{Drosophila melanogaster} \citep{ragsdale2016triallelic,huber2017determining,zhen2021greater},
     humans \citep{huber2017determining,kim2017inference,kyriazis2022using,castellano2019compmarison,castellano2019compmarison,rodrigues2024shared},
@@ -398,7 +398,7 @@
     for which we have included 35 demographic models, 38 genetic maps, 12 DFEs, and 8 annotation objects. %ADK: checked this on 3/10/25
     Additions to the catalog are ongoing---we point the reader to our previously published
     report detailing this effort \citep{lauterbur2023expanding}. We welcome contributions from the
-    community and encourage those interested in contributing to visit https://popsim-consortium.github.io/stdpopsim-docs
+    community and encourage those interested in contributing to visit \url{https://popsim-consortium.github.io/stdpopsim-docs}
     or contact one of the PopSim Consortium members for guidance.
 
 
@@ -655,7 +655,7 @@
         %\citep{gutenkunst2009inferring}
         and with background selection from deleterious mutations in exons.
         Three methods for detecting sweeps were applied to simulated data:
-        \sweepfinder (top row -- labelled CLR),
+        \sweepfinder (top row -- labeled CLR),
         \diploshic (middle row),
         and reduced diversity ($\pi$) (bottom row).
         Power (true positive rate) is shown for these methods for the CEU and YRI
@@ -705,7 +705,7 @@
     is characterized by a strong recent bottleneck followed by population expansion.
     Interestingly, the simple method that uses reduced diversity ($\pi$) as an indicator
     for a selective sweep performs very well overall (especially on the CEU sample).
-    However, its accuracy is much more variable along the chromosome compared to the other two method (see Figure \ref{fig:chr1_power}),
+    However, its accuracy is much more variable along the chromosome compared to the other two methods (see Figure \ref{fig:chr1_power}),
     and for quite a few locations along the chromosome it has power below $50\%$
     when applied to both sample sets.
     \sweepfinder appears to have the least variation in power along the chromosome or across populations.
@@ -725,7 +725,7 @@
     	Genomic segments were simulated with sweeps under a three population out-of-Africa model
         and with background selection from deleterious mutations in exons.
         Three methods for detecting sweeps were applied to simulated data:
-        \sweepfinder (top row-- labelled CLR),
+        \sweepfinder (top row-- labeled CLR),
         \diploshic (middle row),
         and reduced diversity ($\pi$) (bottom row).
         Power (true positive rate) is shown for these methods for the CEU and YRI
@@ -779,7 +779,7 @@
     linked purifying selection. Our simulations of humans and vaquita genomes
     model deleterious mutations only at exonic positions of the genome.
     As shown in Figures \ref{fig:homsap-summary-stats} and \ref{fig:vaquita-summary-stats},
-    this combination only produces sizeable decreases in polymorphism at exonic positions,
+    this combination only produces sizable decreases in polymorphism at exonic positions,
     which represent a small minority of sites within the genome, and does not lead to large-scale
     perturbations in genome-wide diversity. Thus, it is not surprising that estimates of $N_e(t)$
     from genome-wide data from which exons have been masked should be accurate
@@ -866,7 +866,7 @@
     Following the protocol established previously for other aspects of \stdpopsim{} \citep{adrion2020community},
     new DFEs are subject to a rigorous quality control (QC) process,
     by which a separate individual re-implements the same DFE, and the two implementations
-    are programatically tested for equality.
+    are programmatically tested for equality.
     %IG: tried to put a more positive spin on the DFE bug example
     This QC process has proven its effectiveness in numerous occasions in detecting implementation bugs
     and resolving modeling ambiguities.
@@ -950,7 +950,7 @@
     Thus, inference from datasets simulated with selection was not influenced by direct selection
     acting on exons, but it was influenced by selection acting on linked sites (background selection).
     %
-    We assessed the accuracy of demographic inferences from three software packages:
+    We assessed the accuracy of demographic inferences from four software packages:
     \msmc \citep{Schiffels2020}, \stairway \citep{liu2020stairway}, \gone \citep{santiago2020recent},
     and \smcpp \citep{terhorst2017robust}.
     For \msmc
@@ -983,7 +983,7 @@
     are drawn from a single gamma distribution. We used the \texttt{-no-div-param} flag to disable the use
     of divergence-based parameter estimation. All other settings were left at their default values.
     All methods used the same exon annotations as generated in the simulations. The total number of coding sites
-    in the human and vaquita genomes used were 61,644,801 and 31,039513 respectively.
+    in the human and vaquita genomes used were 61,644,801 and 31,039,513 respectively.
 
     % ADK: I've added a section below that describes the DFE inference methods used in this study.
     To facilitate direct comparison between inference methods,
@@ -1159,7 +1159,7 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
     \includegraphics[width=\textwidth]{figures/PhoSin/summary_stats.png}
     \caption{
     \label{fig:vaquita-summary-stats}
-    Genetic diversity in vaquite simulations.
+    Genetic diversity in vaquita simulations.
     Nucleotide diversity ($\pi$) was calculated for genomes simulated
     under constant population size (left panel) and under the two-epoch demographic model (right panel).
     Each panel shows four violin plots representing the distribution of $\pi$
@@ -1195,7 +1195,7 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
        and a gamma-distributed DFE acting on exons (see \textbf{Methods}).
         DFE is inferred by three different methods: \grapes, \polydfe , and \dadicli.
         Mean absolute value of selection coefficient ($\lvert E(s) \rvert$, panel A) and shape parameter (panel B)
-        are shown for each DFE inferred from all three simulated datase
+        are shown for each DFE inferred from all three simulated datasets
         with median values marked by horizontal bars
         and simulated values represented by dashed horizontal lines.
     }
@@ -1213,7 +1213,7 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
         with a relationship between the selection coefficient ($s$) and dominance coefficient ($h$) (see \textbf{Methods}).
         DFE is inferred by three different methods: \grapes, \polydfe , and \dadicli.
         Mean absolute value of selection coefficient ($\lvert E(s) \rvert$, panel A) and shape parameter (panel B)
-        are shown for each DFE inferred from all three simulated datase
+        are shown for each DFE inferred from all three simulated datasets
         with median values marked by horizontal bars
         and simulated values represented by dashed horizontal lines.
     }
@@ -1262,7 +1262,7 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
     	Genomic segments were simulated with sweeps under a three population out-of-Africa model
         and with background selection from deleterious mutations in exons.
         Three methods for detecting sweeps were applied to simulated data:
-        \sweepfinder (top row-- labelled CLR),
+        \sweepfinder (top row-- labeled CLR),
         \diploshic (middle row),
         and reduced diversity ($\pi$) (bottom row).
         Power (true positive rate) is shown for these methods for the CEU and YRI
