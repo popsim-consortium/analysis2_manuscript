@@ -18,7 +18,7 @@
 \usepackage{graphicx}
 \usepackage{lipsum}
 \usepackage{makecell}
-
+\usepackage[left]{lineno}
 
 
 \pagestyle{fancy}
@@ -96,7 +96,7 @@
 \newcommand{\drscomment}[1]{\textcolor{purple}{DRS: #1}}
 
 \newcommand{\igcomment}[1]{\textcolor{orange}{IG: #1}}
-
+\linenumbers
 \title{Accessible, realistic genome simulation with selection using \stdpopsim}
 
 % author tranche explanation:
@@ -355,15 +355,15 @@
     \stdpopsim currently has implemented DFEs for five species in the catalog:
     \textit{Arabidopsis thaliana} \citep{huber2018gene},
     \textit{Drosophila melanogaster} \citep{ragsdale2016triallelic,huber2017determining,zhen2021greater},
-    humans \citep{huber2017determining,kim2017inference,kyriazis2022using,castellano2019compmarison,castellano2019compmarison,rodrigues2024shared},
+    humans \citep{huber2017determining,kim2017inference,kyriazis2023using,castellano2019compmarison,castellano2019compmarison,rodrigues2024shared},
     \textit{Mus musculus} \citep{booker2021selective},
     and the vaquita porpoise \textit{Phocoena sinus} \citep{robinson2022critically}.
     While the DFEs are from a limited number of species, these DFEs can be applied to other species
     in the catalog if and when it is suitable.
     For instance, one could simulate a butterfly species with a gamma-distributed DFE originally
     estimated from humans, or a human population with a DFE estimated from \textit{Drosophila}.
-    Indeed, the DFE labeled \texttt{HomSap/Mixed\_K23} is recommended by \citet{kyriazis2022using}
-    for ``general'' use across species (lacking more specific information).
+    Indeed, the DFE labeled \texttt{HomSap/Mixed\_K23} is recommended by \citet{kyriazis2023using}
+    for ``general'' use across mammals (lacking more specific information).
     Furthermore, the user can specify a custom DFE and provide their own annotations
     of functional elements to simulate selection in a species for which we do not yet have
     a published DFE included in the catalog.
@@ -410,7 +410,7 @@
     using a variety of methods, including the sequential Markovian coalescent
     \citep{li2011inference,Schiffels2020,terhorst2017robust},
     through use of the site frequency spectrum (SFS) \citep{liu2020stairway},
-    as well as through identity by descent information \citep{santiago2020recent}.
+    as well as through linkage-disequilibrium information \citep{santiago2020recent}.
     Since all of these methods assume neutrality, they are typically applied to genomic
     segments that are not expected to be directly affected by selection (e.g., by masking exons
     and conserved elements).
@@ -1107,6 +1107,7 @@ workshop participants who provided feedback and suggestions for improvements.
 %%%%%%%% supplementary material
 \clearpage
 \beginsupplement
+\resetlinenumber
 
 \section*{Supplementary Material}
 
