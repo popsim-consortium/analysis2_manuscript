@@ -174,14 +174,11 @@
     Selection is a fundamental evolutionary force that shapes patterns of genetic variation across species.
     However, simulations incorporating realistic selection along heterogeneous genomes in complex demographic histories
     are challenging, limiting our ability to benchmark statistical methods aimed at detecting selection and to explore theoretical predictions.
-    % BCH: "simulations... are challenging".  I would also reverse the order: "limiting our ability to explore... and to benchmark", because as
-    % it is written not, "...and to explore" is very far from its first half "limiting our ability to...", making it hard for the reader to parse.
     \stdpopsim is a community-maintained simulation library that already provides an extensive catalog of
     species-specific population genetic models.
     Here we present a major extension to the \stdpopsim{} framework that enables simulation of various modes
     of selection, including background selection, selective sweeps,
     and arbitrary distributions of fitness effects (DFE) acting on annotated subsets of the genome (for instance, exons).
-    % BCH: I'd put "DFEs", since it is plural, although I recognize that others might disagree...
     This extension maintains \stdpopsim's core principles of reproducibility and accessibility while adding support
     for species-specific genomic annotations and published DFE estimates.
     We demonstrate the utility of this framework by benchmarking methods for demographic inference,
@@ -189,7 +186,6 @@
     Our results demonstrate the robustness of demographic inference methods to selection on linked sites,
     reveal the sensitivity of DFE-inference methods to model assumptions,
     and show how genomic features, like recombination rate and functional sequence density, influence power to detect selective sweeps.
-    % BCH: "the density of functional sequence" does not seem grammatical to me; either "sequences" plural, or the fix I've recommended, which I think is better.
     This extension to \stdpopsim{} provides a powerful new resource for the population genetics community
     to explore the interplay between selection and other evolutionary forces in a reproducible, low-barrier framework.
 
@@ -233,15 +229,12 @@
     simulation-based inference methods
     \citep[e.g.,][]{beaumont2002approximate,lin2011distinguishing,kern2018diplos,mughal2019localizing,sanchez2021deep,wang2021automatic, zhang2023maladapt, smith2023dispersenn2}.
     However, joint simulation of complex demography and selection on realistic genomes is challenging,
-    requiring a parameterized demographic model,
-    many choices including the strength and rate of selection,
-    and implementation of genetic maps and other genomic features related to the strength of selection.
-    % BCH: this reordering reads better to me since it was hard to tell whether "many choices" encompassed the parameterized demographic model or not;
-    % perhaps a different way of restructuring it would be better, if I've distorted the intended meaning, such as "many choices regarding parameters
-    % controlling selection and demography", e.g.
+    requiring many choices including the strength and rate of selection,
+    and a parameterized demographic model,
+    as well as implementation of genetic maps and other genomic features related to the strength of selection.
     This is a daunting task, and can be a barrier to
     the adoption of simulation-based methods in population genetics.
-    Furthermore, different simulation and inference tools often use different structures % BCH: considered may -> might, and then decided "often" is more accurate!
+    Furthermore, different simulation and inference tools often use different structures
     and parameter scalings for their models,
     making it difficult to directly compare across these tools and the studies that use them.
 
@@ -302,7 +295,6 @@
     and the targets of recent positive selection.
 
 \section*{Implementing Selection in \stdpopsim}
-    % BCH: I mostly skimmed/skipped this section; if you'd find it useful for me to review it, let me know, I'm just a bit swamped.  :->
     \label{selection}
 
     % implementing selection
@@ -351,17 +343,6 @@
         demography, and a model of selection that itself is composed of a
         distribution of fitness effects (DFE) and a set of functional
         annotations. }
-        % BCH: I notice that a rescaling factor of 20 is used here, which gives me pause.  I think this is my only major
-        % comment on this manuscript: I wonder whether we ought to add a brief discussion of the dangers of rescaling,
-        % specifically with respect to simulations involving selection since that is the topic at hand?  Dabi and Schrider
-        % discuss this at some length in their recent paper.  I'm not suggesting rehashing everything they say, but rather,
-        % adding one paragraph talking about the fact that stdpopsim offers a rescling parameter (as seen in this figure),
-        % but that the use of it might be particularly problematic/unpredictable in simulations involving selection,
-        % especially for large values of Q, and thus it ought to be used with caution, and with an effort to confirm that
-        % the rescaling factor chosen is not substantially distorting the key results from the simulations, with a cite
-        % to Dabi and Schrider.  (And probably also a cite to the other recent rescaling paper, which I forget the authors of.)
-        % My impression from D&S is that Q=20 is quite high, and might well distort things significantly; so I wonder if we
-        % also might want to show a smaller Q, like 2 or 5, in this figure so as not to give our imprimatur to people using Q=20!
     \end{figure}
 
     As with other aspects of \stdpopsim, we intend the selection models to be as biologically accurate as possible.
@@ -821,7 +802,7 @@
     Specifically, these simulations used a DFE where mutations with $s<-0.01$ are quite recessive,
     with $h<=0.01$, and where mutations with $-0.01<s<-0.001$ have $h=0.1$.
     We found that the three DFE-inference methods underestimated $E[s]$ and overestimated the shape parameter (Figure \ref{fig:vaquita-dfe}A-B).
-    This performance is not surprising since decreasing $h$ for a given distribution of $s$ will lead to a decrease in $hs$, % "as" vs. "since" is a pet peeve :->
+    This performance is not surprising since decreasing $h$ for a given distribution of $s$ will lead to a decrease in $hs$,
     or an apparent decrease in the amount of selection.
     Fitting a mis-specified DFE that assumes $h=0.5$ will then lead to underestimates of $E[s]$.
     Indeed, the distribution of $hs$ is much more accurately estimated (Figure \ref{fig:vaquita-dfe}C).
@@ -841,14 +822,14 @@
     More broadly, new computational approaches are needed to precisely quantify the DFE and the covariance of $h$ and $s$.
 
     Further, inference of the DFE was done here using exon annotations of the genome in question.
-    A key distinction between our analyses and those done in practice % BCH: I don't like "in practice"; "those done in empirical work"?
+    A key distinction between our analyses and those done in empirical work 
     is that we have complete knowledge of which sites are under selection in the simulation.
     Our inferences therefore represent a best case scenario. Empirical inference of the DFE is a much
     harder problem, since some mutations assumed to be free of selection
     might in reality be under selection, and the strength of selection can change over time or across environments.
 
     Regarding sweep detection, the inclusion of selection models into \stdpopsim allowed us to readily compare the
-    effectiveness of different detection methods using data that reflects the demographic history, recombination rate variation,
+    effectiveness of different methods using data that reflects the demographic history, recombination rate variation,
     and genomic locations of negatively selected sites present in human populations. These results clearly demonstrate
     the impact of recombination rate variation, and underscore the importance of training methods on data with variable
     recombination rates \citep[e.g.,][]{schrider2017soft}. In addition, our results
@@ -857,7 +838,7 @@
     larger than the chosen window size, as can occur with very strong sweeps or low levels of
     recombination. Moreover, while all the methods examined here retain adequate power for sweep identification across
     scenarios, including the inclusion of background selection, our results underscore the importance of developing
-    methods that are well powered in the face of unknown demographic histories. Indeed, larger differences % BCH: not crazy about "well powered"; "with adequate statistical power even in the face of..."?
+    methods with adequate statistical power even in the face of unknown demographic histories. Indeed, larger differences
     in power were observed when applying a method to genomes simulated with different demographic histories (i.e., YRI versus CEU)
     than when calibrating a method using a null model with and without background selection.
 
@@ -869,7 +850,7 @@
     The additions described here further expand the utility of \stdpopsim for both
     characterizing the patterns of diversity expected under a wide range of population genetic
     models, and for benchmarking methods for the analysis of genetic data
-    on common ground in a way that was not possible before. % BCH: "on common ground" seems like an odd phrasing to me? "on a level playing field", perhaps?
+    on common ground in a way that was not possible before. 
 
 \section*{Methods}
     \label{methods}
