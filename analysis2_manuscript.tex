@@ -383,14 +383,15 @@
     (\msprime's selection models are relatively limited and thus not currently used by \stdpopsim).
 
     % sweep interface
-    In addition to the \texttt{DFE} class, we have also implemented a class (\texttt{stdpopsim.selective\_sweep})
-    that enables selective sweeps to be simulated in \stdpopsim.
-    This class augments a demographic model with an event
-    which conditions on the introduction of a selected mutation at a given time and position
-    and with a given selection coefficient. Further, the user can specify the minimum frequency
-    of the selected allele at the time of sampling. As this functionality is implemented
-    on top of the existing \stdpopsim API, it can be combined with other models of selection
-    and demography to provide a model of the combined effects of multiple, disparate evolutionary processes
+    While the \texttt{DFE} class facilitates the simulation of non-neutral variation across a sequence,
+    it does not provide a means of specifying the origin and fate of particular selected alleles.
+    Thus, we have also implemented an API in \stdpopsim (\texttt{stdpopsim.selective\_sweep}) that enables 
+    selective sweeps to be simulated with a high degree of control.
+    This function augments a demographic model by introducing an advantageous mutation over a given time interval,
+    at a given position along the sequence; and conditions the simulation such that the mutation is above a particular 
+    frequency at the beginning and end of the sweep period.
+    As this functionality is implemented on top of the existing \stdpopsim API, it may be combined with other 
+    models of selection and demography to simulate the combined effects of multiple, disparate evolutionary processes
     on genetic variation in a population.
 
 
