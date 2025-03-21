@@ -173,7 +173,7 @@
     \label{abstract}
     Selection is a fundamental evolutionary force that shapes patterns of genetic variation across species.
     However, simulations incorporating realistic selection along heterogeneous genomes in complex demographic histories
-    is challenging, limiting our ability to benchmark statistical methods aimed at detecting selection and to explore theoretical predictions.
+    are challenging, limiting our ability to benchmark statistical methods aimed at detecting selection and to explore theoretical predictions.
     \stdpopsim is a community-maintained simulation library that already provides an extensive catalog of
     species-specific population genetic models.
     Here we present a major extension to the \stdpopsim{} framework that enables simulation of various modes
@@ -185,8 +185,8 @@
     DFE estimation, and selective sweep detection across several species and scenarios.
     Our results demonstrate the robustness of demographic inference methods to selection on linked sites,
     reveal the sensitivity of DFE-inference methods to model assumptions,
-    and show how genomic features, like recombination rate and the density of functional sequence, influence power to detect selective sweeps.
-    This extension to \stdpopsim{} provides a powerful, new resource for the population genetics community
+    and show how genomic features, like recombination rate and functional sequence density, influence power to detect selective sweeps.
+    This extension to \stdpopsim{} provides a powerful new resource for the population genetics community
     to explore the interplay between selection and other evolutionary forces in a reproducible, low-barrier framework.
 
 \section*{Introduction}
@@ -201,7 +201,7 @@
     For instance, changes in population size can lead to fluctuations
     in genetic diversity across a recombining chromosome
     that can mimic the effects of selection \citep{simonsen1995properties},
-    and lead to spurious inferences about the strength and targets of genetic adaptation
+    leading to spurious inferences about the strength and targets of genetic adaptation
     \citep{simonsen1995properties,akey2004population,nielsen2005genomic}.
     In turn, selection can confound our ability to infer demographic
     history from allele frequencies \citep{ewing2016consequences,schrider2016effects} and
@@ -219,13 +219,13 @@
     \citep{kingman1982genealogy,hudson1983testing, hudson1990gene}
     and forward-in-time simulations of complex demography and selection
     \citep[e.g.,][]{gillespie1984molecular, hernandez2008flexible, thornton2014c++, haller2019slim, gaynor2021AlphaSimR}.
-    The development of simulation tools has been driven by the need to
-    understand the effects of complex evolutionary processes on genetic
+    The development of simulation tools has been driven by several needs:
+    understanding the effects of complex evolutionary processes on genetic
     variation \citep[e.g.,][]{peischl2013accumulation, thornton2019polygenic, galloway2020few, zhang2020impact},
-     to provide a null model for hypothesis testing
+    obtaining a null model for hypothesis testing
     \citep[e.g.,][]{hudson1992statistical,hudson1994evidence,sabeti2002detecting},
-    to explore the power and limitations of statistical methods \citep[e.g.,][]{przeworski2002signature, macleod2014effects},
-    and increasingly to provide a basis for machine learning and other
+    exploring the power and limitations of statistical methods \citep[e.g.,][]{przeworski2002signature, macleod2014effects},
+    and increasingly, providing a basis for machine learning and other
     simulation-based inference methods
     \citep[e.g.,][]{beaumont2002approximate,lin2011distinguishing,kern2018diplos,mughal2019localizing,sanchez2021deep,wang2021automatic, zhang2023maladapt, smith2023dispersenn2}.
     However, joint simulation of complex demography and selection on realistic genomes is challenging,
@@ -234,7 +234,7 @@
     as well as implementation of genetic maps and other genomic features related to the strength of selection.
     This is a daunting task, and can be a barrier to
     the adoption of simulation-based methods in population genetics.
-    Furthermore, different simulation and inference tools may use different structures
+    Furthermore, different simulation and inference tools often use different structures
     and parameter scalings for their models,
     making it difficult to directly compare across these tools and the studies that use them.
 
@@ -260,7 +260,7 @@
     \citep[e.g.][]{charlesworth1993effect,charlesworth1995pattern,williamson2002genealogy,ewing2016consequences,torres2020temporal}.
     Ideally, one would like
     to have a simple, unified framework for simulating both neutral and
-    non-neutral evolutionary processes and to be able to compare the
+    non-neutral evolutionary processes, and to be able to compare the
     results of these simulations to empirical data in a manner that is
     both accessible to a wide range of researchers and highly reproducible.
     Furthermore, the framework should include the complex realities of
@@ -274,8 +274,8 @@
     thus lowering the barrier to production of complex, multifaceted simulations,
     and allowing a wider range of researchers to make use of high-quality simulations
     in developing or testing their work.
-    The project also holds as a central goal open, collaborative, and inclusive work,
-    viewing capacity-building across the community as equal in importance to software development.
+    A central goal of the project is open, collaborative, and inclusive work;
+    we view capacity-building across the community as equal in importance to software development.
 
     % goals
     Here, we provide an overview of a major new addition
@@ -766,7 +766,7 @@
 \section*{Discussion}
     \label{Discussion}
     In this paper, we have presented an important new addition to the \stdpopsim{} library
-    that allows for simulating genetic variation in the presence of selection.
+    that enables the simulation of genetic variation in the presence of selection.
     We have demonstrated the utility of this new API by showing how it can be used to benchmark
     the performance of different methods for demographic history inference, the inference of the distribution
     of fitness effects of new mutations, and the detection of selective sweeps.
@@ -775,9 +775,9 @@
 
     The exploration of performance among methods done here is not meant to be thorough
     benchmarking, but rather to highlight the utility of the \stdpopsim resource.
-    Having said that, there are a number of interesting results that bear discussion.
+    Having said that, there are a number of interesting results that merit discussion.
     The first pertains to estimation of demographic history ($N_e(t)$) in the context of
-    linked purifying selection. Our simulations of humans and vaquita genomes
+    linked purifying selection. Our simulations of human and vaquita genomes
     model deleterious mutations only at exonic positions of the genome.
     As shown in Figures \ref{fig:homsap-summary-stats} and \ref{fig:vaquita-summary-stats},
     this combination only produces sizable decreases in polymorphism at exonic positions,
@@ -790,7 +790,7 @@
     that many genomes harbor large numbers
     of conserved non-coding elements \citep[e.g.,][]{siepel2005evolutionarily} with extremely
     strong selection acting on them \citep{katzman2007human,mclean2008dispensability}.
-    We thus caution extrapolating from our results. Future studies might build upon
+    We thus caution regarding extrapolation from our results. Future studies might build upon
     the annotations we used here to include selection at other portions of the genome as well
     as mixtures of DFEs across sites.
 
@@ -802,7 +802,7 @@
     Specifically, these simulations used a DFE where mutations with $s<-0.01$ are quite recessive,
     with $h<=0.01$, and where mutations with $-0.01<s<-0.001$ have $h=0.1$.
     We found that the three DFE-inference methods underestimated $E[s]$ and overestimated the shape parameter (Figure \ref{fig:vaquita-dfe}A-B).
-    This performance is not surprising as decreasing $h$ for a given distribution of $s$ will lead to a decrease in $hs$,
+    This performance is not surprising since decreasing $h$ for a given distribution of $s$ will lead to a decrease in $hs$,
     or an apparent decrease in the amount of selection.
     Fitting a mis-specified DFE that assumes $h=0.5$ will then lead to underestimates of $E[s]$.
     Indeed, the distribution of $hs$ is much more accurately estimated (Figure \ref{fig:vaquita-dfe}C).
@@ -814,7 +814,7 @@
     these results suggest the need for care in DFE inference.
     Kyriazis and Lohmueller \citeyear{kyriazis2024constraining} inferred the DFE of $s$ for nonsynonymous mutations
     in humans when considering different values of $h$.
-    Intriguingly, additive models showed a satisfactory fit to the SFS of nonsynonymous variants in humans
+    Intriguingly, additive models showed a satisfactory fit to the SFS of nonsynonymous variants in humans,
     and more complex models of dominance did not substantially improve the fit.
     Nevertheless, models including recessive deleterious mutations, like those simulated here for the vaquita genome,
     show a similar fit to the SFS and may be more biologically realistic than fully additive models,
@@ -822,23 +822,23 @@
     More broadly, new computational approaches are needed to precisely quantify the DFE and the covariance of $h$ and $s$.
 
     Further, inference of the DFE was done here using exon annotations of the genome in question.
-    A key distinction between our analyses and those done in practice
-    is that we have complete knowledge of which sites are under selection in the simulation,
-    thus our inferences represent a best case scenario. Empirical inference of the DFE is a much
-    harder problem as some mutations assumed to be free of selection
-    may in reality be under selection and strength of selection can change over time or with environment.
+    A key distinction between our analyses and those done in empirical work 
+    is that we have complete knowledge of which sites are under selection in the simulation.
+    Our inferences therefore represent a best case scenario. Empirical inference of the DFE is a much
+    harder problem, since some mutations assumed to be free of selection
+    might in reality be under selection, and the strength of selection can change over time or across environments.
 
     Regarding sweep detection, the inclusion of selection models into \stdpopsim allowed us to readily compare the
-    effectiveness of different methods on data reflecting the demographic history, recombination rate variation,
+    effectiveness of different methods using data that reflects the demographic history, recombination rate variation,
     and genomic locations of negatively selected sites present in human populations. These results clearly demonstrate
     the impact of recombination rate variation, and underscore the importance of training methods on data with variable
     recombination rates \citep[e.g.,][]{schrider2017soft}. In addition, our results
-    illustrate a strength of likelihood methods like \sweepfinder, that do not require a predefined window size.
+    illustrate a strength of likelihood methods like \sweepfinder that do not require a predefined window size.
     Window-based methods, such as \diploshic, tend to lag in performance when the genomic region affected by the sweep is
     larger than the chosen window size, as can occur with very strong sweeps or low levels of
     recombination. Moreover, while all the methods examined here retain adequate power for sweep identification across
     scenarios, including the inclusion of background selection, our results underscore the importance of developing
-    methods that are well powered in the face of unknown demographic histories. Indeed, larger differences
+    methods with adequate statistical power even in the face of unknown demographic histories. Indeed, larger differences
     in power were observed when applying a method to genomes simulated with different demographic histories (i.e., YRI versus CEU)
     than when calibrating a method using a null model with and without background selection.
 
@@ -850,7 +850,7 @@
     The additions described here further expand the utility of \stdpopsim for both
     characterizing the patterns of diversity expected under a wide range of population genetic
     models, and for benchmarking methods for the analysis of genetic data
-    on common ground in a way that was not possible before.
+    on common ground in a way that was not possible before. 
 
 \section*{Methods}
     \label{methods}
@@ -866,10 +866,10 @@
     \subsection*{Quality control and software development}
     Following the protocol established previously for other aspects of \stdpopsim{} \citep{adrion2020community},
     new DFEs are subject to a rigorous quality control (QC) process,
-    by which a separate individual re-implements the same DFE, and the two implementations
+    by which a different individual re-implements the same DFE, and the two implementations
     are programmatically tested for equality.
     %IG: tried to put a more positive spin on the DFE bug example
-    This QC process has proven its effectiveness in numerous occasions in detecting implementation bugs
+    This QC process has proven its effectiveness on numerous occasions in detecting implementation bugs
     and resolving modeling ambiguities.
     For example, this process detected  an error in coding the log-normal distribution of
     the \textit{Drosophila melanogaster} DFE inferred by \citet[\stdpopsim label \texttt{LognormalPlusPositive\_R16}]{booker2021selective}.
@@ -879,7 +879,7 @@
     Subsequently, the QC process was able to find and fix this bug.
     In addition to QC, all changes and additions to the code must pass a comprehensive set of unit tests:
     at the time of writing, the library includes over 11,000 lines of testing code,
-    that run 2,862 unit tests, including comparisons to QC implementations
+    comprising 2,862 unit tests, including comparisons to QC implementations
     and cross-checks for agreement, including between \slim and \msprime implementations of the same models.
     For instance, for testing we make use of \slim's scriptability to separately record as metadata
     the simulation parameters (current population sizes, DFEs, etc.),
@@ -1086,7 +1086,7 @@ as a \snakemake workflow at \url{https://github.com/popsim-consortium/analysis2}
 
 \section*{Acknowledgments}\label{acknowledgements}
 We thank Tom Booker for discussions and encouragement to incorporate realistic BGS models into \stdpopsim.
-We thank the numerous users of the \stdpopsim package and well as
+We thank the numerous users of the \stdpopsim package, as well as
 workshop participants who provided feedback and suggestions for improvements.
 
 \section*{Funding}
