@@ -96,6 +96,14 @@
 \newcommand{\drscomment}[1]{\textcolor{purple}{DRS: #1}}
 
 \newcommand{\igcomment}[1]{\textcolor{orange}{IG: #1}}
+% Responses to reviews
+\input{review-response-commands}
+% set this to show line numbers and include responses to reviews or not
+\newif\ifreviewresponses
+\reviewresponsestrue  % include them
+% \reviewresponsesfalse  % don't include them
+\newcommand{\responsefile}{review-responses}  % name of the review responses file
+
 \linenumbers
 \title{Accessible, realistic genome simulation with selection using \stdpopsim}
 
@@ -1287,4 +1295,6 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
 \end{figure}
 
 \stopsupplement
+
+\includereviews
 \end{document}
