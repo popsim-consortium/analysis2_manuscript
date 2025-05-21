@@ -96,14 +96,6 @@
 \newcommand{\drscomment}[1]{\textcolor{purple}{DRS: #1}}
 
 \newcommand{\igcomment}[1]{\textcolor{orange}{IG: #1}}
-% Responses to reviews
-\input{review-response-commands}
-% set this to show line numbers and include responses to reviews or not
-\newif\ifreviewresponses
-\reviewresponsestrue  % include them
-% \reviewresponsesfalse  % don't include them
-\newcommand{\responsefile}{review-responses}  % name of the review responses file
-
 \linenumbers
 \title{Accessible, realistic genome simulation with selection using \stdpopsim}
 
@@ -795,8 +787,6 @@
     perturbations in genome-wide diversity. Thus, it is not surprising that estimates of $N_e(t)$
     from genome-wide data from which exons have been masked should be accurate
     (e.g., Figures \ref{fig:human-demography} and \ref{fig:vaquita-demography}).
-    Indeed our results echo those of \citet{marsh2024biases} who found
-    similar results on realistic human simulations that included selection.
     However, the question remains to what extent this would be true in empirical data where
     selection is not constrained to coding positions. For instance, we know
     that many genomes harbor large numbers
@@ -1295,6 +1285,4 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
 \end{figure}
 
 \stopsupplement
-
-\includereviews
 \end{document}
