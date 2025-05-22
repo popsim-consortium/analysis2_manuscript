@@ -205,7 +205,7 @@
     species to their environments. The effects of selection
     on genetic variation are complex, and can be difficult to disentangle
     from other evolutionary processes such as mutation, recombination,
-    and genetic drift \citep[e.g.,][]{gillespie1991causes}.
+    and genetic drift \citep[e.g.,][]{ohta1973slightly,lewontin1973distribution, kimura1985neutral, tajima1989statistical,gillespie1991causes, kern2018neutral}. \revpoint{2}{4}
     For instance, changes in population size can lead to fluctuations
     in genetic diversity across a recombining chromosome
     that can mimic the effects of selection \citep{simonsen1995properties},
@@ -321,12 +321,12 @@
     Each \texttt{DFE} object specifies a list of mutation types and
     their proportions, where
     each mutation type is associated with a dominance coefficient,
-    (currently limited to values between 0 and 1, inclusive),
+    (currently limited to values between 0 and 1, inclusive), \revpoint{1}{2}
     the distribution of selection coefficients (e.g., fixed-value, normally-distributed, gamma-distributed),
     and the parameters of this distribution.
     Each \texttt{Annotation} object represents a collection of functional
     genomic elements (e.g., exons, introns, intergenic regions, etc.)
-    whose coordinates are specified using a GFF3 annotation file.
+    whose coordinates are specified using a GFF3 annotation file. \revpoint{2}{1}
     More concretely, consider implementing a model of selection consistent with the
     DFE inferred by Kim et al. (\citeyear{kim2017inference}) for exons in the human genome.
     The associated \texttt{DFE} object is defined with two mutation types,
@@ -337,7 +337,7 @@
     a gamma-distributed selection coefficient
     with mean and shape as inferred by Kim et al. (\citeyear{kim2017inference}).
     \texttt{DFE} objects can also model a relationship between the selection and dominance coefficients \citep{huber2018gene}
-    by defining ranges of selection coefficients and associating each range with a different dominance coefficient (see below).
+    by defining ranges of selection coefficients and associating each range with a different dominance coefficient (see below). \revpoint{1}{5}
 
 
     \begin{figure}[t!]
@@ -460,7 +460,7 @@
     using a DFE inferred by \citet{kim2017inference}.
     A basic summary of nucleotide diversity from these simulations
     shows that the presence of selection decreases polymorphism only slightly
-    at the genome-wide level, but more substantially within exonic regions (Figure \ref{fig:homsap-summary-stats}).
+    at the genome-wide level, but more substantially within exonic regions (Figure \ref{fig:homsap-summary-stats}). \revpoint{1}{9}
     %IG: no need to specify the two scenarios shown in fig
     %under both a constant population size and the out-of-Africa demographic model
     Following the simulation, inference of $N_e(t)$ was conducted from each of the six simulated datasets using four methods:
@@ -577,11 +577,11 @@
     Overall, inferred DFEs varied across populations and inference methods (Figure \ref{fig:homsap-dfe.ooa}, Table \ref{tab:dfe_table}).
     Note that while the estimation accuracy for the DFE parameters themselves is informative (Figure \ref{fig:homsap-dfe.ooa}A-B),
     examining the difference between the actual and inferred distributions of $s$ can be more helpful for showing how well a method
-    has recovered the true DFE (Figure \ref{fig:homsap-dfe.ooa}C).
+    has recovered the true DFE (Figure \ref{fig:homsap-dfe.ooa}C). \revpoint{2}{3}
     The distributions of $s$ inferred by \polydfe and \dadicli had higher mean values (in absolute value)
     but smaller shape parameters, while \grapes inferred distributions with lower mean values and shape parameters.
     As a result, \polydfe and \dadicli over-estimate the fraction of mutations under strong selection ($s<-0.1$),
-    while \grapes considerably over-estimates the fraction of mutations under weak selection ($s\geq-0.0001$).
+    while \grapes considerably over-estimates the fraction of mutations under weak selection ($s\geq-0.0001$). \revpoint{2}{2}
 
     Population history appears to influence different methods in slightly different ways.
     For instance, \dadicli and \grapes produce more accurate estimates from the YRI genomes
@@ -769,7 +769,7 @@
     appears to consistently lead to reduced power for detecting sweeps regardless of the recombination rate.
     Interestingly, we do not see a clear correlation between power to detect sweeps and
     local exon density (Figure \ref{fig:power-exon}).
-    This is somewhat surprising given that background selection is expected to somewhat interfere with the sweep signature.
+    This is somewhat surprising given that background selection is expected to somewhat interfere with the sweep signature (reviewed in \citet{stephan2010genetic}) \revpoint{2}{6}
     This might suggest that the effects of realistic background selection on genome variation
     may not be as similar to those of sweeps as previously thought \citep{schrider2020background}.
 
@@ -795,7 +795,7 @@
     perturbations in genome-wide diversity. Thus, it is not surprising that estimates of $N_e(t)$
     from genome-wide data from which exons have been masked should be accurate
     (e.g., Figures \ref{fig:human-demography} and \ref{fig:vaquita-demography}).
-    Indeed our results echo those of \citet{marsh2024biases} who found
+    Indeed our results echo those of \citet{marsh2024biases} who found \revpoint{AE}{1}
     similar results on realistic human simulations that included selection.
     However, the question remains to what extent this would be true in empirical data where
     selection is not constrained to coding positions. For instance, we know
@@ -819,7 +819,7 @@
     Fitting a mis-specified DFE that assumes $h=0.5$ will then lead to underestimates of $E[s]$.
     Indeed, the distribution of $hs$ is much more accurately estimated (Figure \ref{fig:vaquita-dfe}C).
     Overall, these results are consistent with prior work showing that it is challenging to separately
-    infer the DFE of $s$ along with $h$ \citep{veeramah2014evidence, kyriazis2024constraining, balick2022overcoming}
+    infer the DFE of $s$ along with $h$ \citep{veeramah2014evidence, kyriazis2024constraining, balick2022overcoming} \revpoint{1}{6}
     and that a large proportion ($>5\%$) of recessive deleterious mutations can confound inferences of $s$ \citep{wade2023quantifying}.
     Given the plethora of evidence for recessive deleterious mutations
     \citep{mukai1972mutation, agrawal2011inferences, huber2018gene, di2024revisiting},
@@ -829,7 +829,7 @@
     Intriguingly, additive models showed a satisfactory fit to the SFS of nonsynonymous variants in humans,
     and more complex models of dominance did not substantially improve the fit.
     Nevertheless, models including recessive deleterious mutations, like those simulated here for the vaquita genome,
-    show a similar fit to the SFS and may be more biologically realistic than fully additive models,
+    show a similar fit to the SFS and may be more biologically realistic than fully additive models, \revpoint{1}{7}
     given the evidence for the presence of recessive deleterious mutations.
     More broadly, new computational approaches are needed to precisely quantify the DFE and the covariance of $h$ and $s$.
 
@@ -1169,10 +1169,12 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
     in genomes simulated without selection (blue) and genomes simulated with background selection (orange),
     calculated from either the entire genome (labeled neutral or DFE),
     or from exonic regions only (labeled exons-only).
-    Each violin plot summarizes three replicate simulations generated under the relevant scenario.
-    }
+    Here we show the results of $\pi$ computed across all three populations (CEU, CHB, YRI)
+    taken together (i.e., not separately for each population).
+    Each violin plot summarizes three replicate simulations generated under the relevant scenario. 
+    } 
 \end{figure}
-
+\revpoint{1}{9}
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{figures/PhoSin/summary_stats.png}

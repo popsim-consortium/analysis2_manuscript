@@ -48,6 +48,7 @@
   %%%%%%%%%%%%%%
   \reviewersection{AE}
   \begin{quote}
+    \color{gray}
     Two experts in population genetics examined this manuscript and gave Very High and Medium marks in the Impact of the resource reported. 
     Despite this mixed evaluations, I think this extension of stdpopsim contributed by many authors should be very useful in the community of population genomics. 
     However, referees found many places in the manuscript that need clarification. 
@@ -62,11 +63,12 @@
   \end{point}
   
   \reply{
-    TODO. \revref
+    Thanks for the suggestion. We have added this reference to the discussion section. \revref
   }
   
   \reviewersection{1}
   \begin{quote}
+    \color{gray}
     In this manuscript, a large team of authors (Gower, Pope, Rodrigues, Tittes et al) present the next 
     set of developments for the stdpopsim software, which facilitates "standard" population-genetic 
     simulations that can be set to follow estimated demographic and genetic (mutation rates, recombination maps) 
@@ -79,12 +81,14 @@
 \end{quote}
   
   \begin{quote}
+    \color{gray}
     In addition to announcing the new features available in stdpopsim, the paper describes three applications of the software: 
     one on demographic inference in the presence of background selection, another on DFE estimation, and a third on detection of selective sweeps. 
     Two of these contrast the results obtained using human vs. vaquita porpoise parameters.  
 \end{quote}
   
   \begin{quote}
+    \color{gray}
     I am generally supportive of the paper and of the broader stdpopsim project. 
     That said, I do have some constructive thoughts and questions:  \end{quote}
   
@@ -111,7 +115,7 @@
   }
   
   
-  \begin{point}{\revref} %line 212
+  \begin{point}{\revref} 
     Relatedly, why is the dominance coefficient currently limited to between 0 and 1? It's fine that it is for now, but I was curious what makes it more difficult to include other values of h.
   \end{point}
   
@@ -119,16 +123,16 @@
       TODO. \revref
   }
   
-  \begin{point}{\revref} 
+  \begin{point}{} 
     I think it would be helpful to say a bit more about the vaquita earlier in the manuscript. Although some of the authors have worked on the vaquita recently, it is still a fairly obscure organism, 
     so it would be worth describing its unfortunate situation and why it is an interesting comparison with humans throughout these simulations.  
 \end{point}
   
   \reply{
-     TODO. \revref
+     TODO. 
   }
   
-  \begin{point}{\revref} % 
+  \begin{point}{} % 
     It seems as though everything on the backend is being done by SLiM in the demonstrations here 
     (unless I'm missing something about how the sweeps are done), so the runtimes are not really the product of the effort of the authors here. 
     Still, I think it would be good to provide a bit more information on the runtimes for prospective users to get a sense of what doing selection in stdpopsim entails. 
@@ -136,7 +140,7 @@
 \end{point}
   
   \reply{
-      TODO. \revref
+      TODO. 
   }
   
   \begin{point}{\revref} % line 577
@@ -172,7 +176,7 @@
     TODO. \revref
   }
   
-  \begin{point}{\revref} % line 577
+  \begin{point}{} 
     Related to the previous point, I found it a bit odd to that both the style of the DFE (and in particular the h/s relationship) 
     and the demography switched when comparing vaquita and human DFE. 
     It seemed like a missed opportunity to do something hinted at earlier in the manuscript: 
@@ -182,7 +186,7 @@
   \end{point}
   
   \reply{
-    TODO. \revref
+    TODO. 
   }
   
   \begin{point}{\revref} % line 577
@@ -193,10 +197,12 @@
   \end{point}
   
   \reply{
-    TODO. \revref
+    Thanks for the suggestion. $\pi$ is being computed across all three populations,
+    as the point we were trying to make was about the effect of selection locally.
+    We have updated the figure legend to clarify this. \revref
   }
   
-  \begin{point}{\revref} % line 577
+  \begin{point}{} % line 577
     Last comment, and this may be an idiosyncratic opinion on my part, so I do not expect the authors to implement, 
     respond to, or even quote this point in the response letter. I'm merely offering a reaction. 
     In my opinion, three motifs are at a slightly awkward level of detail/coverage. 
@@ -214,7 +220,7 @@
   \end{point}
   
   \reply{
-    Don't respond to this?. \revref
+    Don't respond to this?. 
   }
   
 
@@ -222,6 +228,7 @@
   %%%%%%%%%%%%%%
   \reviewersection{2}
   \begin{quote}
+    \color{gray}
     In this manuscript, Gower et al. extend the functionality of stdpopsim to include selection. 
     They test the performance of a few different methods that infer historical population sizes, 
     the distribution of fitness effects of new deleterious mutations, and those that detect selective sweeps using the simulations in SLiM. 
@@ -262,33 +269,27 @@ TODO. \revref
     You cite only Gillespie 1991 on line 56. 
     Requires many more citations, with at least one to Kimura.  
 \end{point}
+
   \reply{
-  TODO. \revref
+  We have elaborated the list of citations for this point and have now cited Kimura as well. \revref
   }
   
-  \begin{point}{\revref} % 27:
+  \begin{point}{} % 27:
     What fraction of the genome is under selection in the human genome you simulated?
   \end{point}
   
   \reply{
- TODO. \revref
-  }
-  
-  \begin{point}{\revref} % 35:
-   Bayesian $\to$ probabilistic (I think this is more general and would encompas any model-based approach, say max likelihood etc.; alternatively consider using model-based, but probabilistic/statistical assumes we have an underlying model)
-  \end{point}
-  
-  \reply{
-  Done.
+ For simulations with selection we assumed that selected mutations could only fall within exonic regions,
+ thus approximately 2.1\% of the genome is under selection in human simulations and 2.2\% in vaquita simulations.
   }
   
   \begin{point}{\revref} % 47:
-    This is somewhat surprising given that background selection is expected to somewhat interfere with the sweep signature.” (line 349-350) -> I'm not sure what this means. 
+    This is somewhat surprising given that background selection is expected to somewhat interfere with the sweep signature.” (line 349-350) $\to$ I'm not sure what this means. 
     It's unclear to me why background selection will interfere with a sweep signature. 
     Do you have a citation for this?  
 \end{point}
   
   \reply{
-  TODO.
+  We have added a citation to a review paper from Wolfgang Stephan that discusses this point from a number of different perspectives. \revref
   }
   
