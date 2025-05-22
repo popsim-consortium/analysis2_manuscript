@@ -53,15 +53,22 @@
 \newcommand{\includereviews}{
     \ifreviewresponses
     \clearpage
-    \setcounter{page}{1}
-    \setcounter{section}{0}
-    \setcounter{subsection}{0}
+    %\setcounter{page}{1}
+    %\setcounter{section}{0}
+    %\setcounter{subsection}{0}
+    %\newcounter{savedfigure}
+    %\newcounter{savedtable}
+    %\setcounter{savedfigure}{\value{figure}}
+    %\setcounter{savedtable}{\value{table}}
     \nolinenumbers
     % \begin{center}
     %   {\LARGE \bf Response to Reviews}
     % \end{center}
     \pagestyle{plain}
     \input{\responsefile}
+    % Restore figure and table counters
+    %\setcounter{figure}{\value{savedfigure}}
+    %\setcounter{table}{\value{savedtable}}
     \fi
 }
 
