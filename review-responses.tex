@@ -48,6 +48,7 @@
   %%%%%%%%%%%%%%
   \reviewersection{AE}
   \begin{quote}
+    \color{gray}
     Two experts in population genetics examined this manuscript and gave Very High and Medium marks in the Impact of the resource reported. 
     Despite this mixed evaluations, I think this extension of stdpopsim contributed by many authors should be very useful in the community of population genomics. 
     However, referees found many places in the manuscript that need clarification. 
@@ -67,6 +68,7 @@
   
   \reviewersection{1}
   \begin{quote}
+    \color{gray}
     In this manuscript, a large team of authors (Gower, Pope, Rodrigues, Tittes et al) present the next 
     set of developments for the stdpopsim software, which facilitates "standard" population-genetic 
     simulations that can be set to follow estimated demographic and genetic (mutation rates, recombination maps) 
@@ -79,12 +81,14 @@
 \end{quote}
   
   \begin{quote}
+    \color{gray}
     In addition to announcing the new features available in stdpopsim, the paper describes three applications of the software: 
     one on demographic inference in the presence of background selection, another on DFE estimation, and a third on detection of selective sweeps. 
     Two of these contrast the results obtained using human vs. vaquita porpoise parameters.  
 \end{quote}
   
   \begin{quote}
+    \color{gray}
     I am generally supportive of the paper and of the broader stdpopsim project. 
     That said, I do have some constructive thoughts and questions:  \end{quote}
   
@@ -193,7 +197,9 @@
   \end{point}
   
   \reply{
-    TODO. \revref
+    Thanks for the suggestion. $\pi$ is being computed across all three populations,
+    as the point we were trying to make was about the effect of selection locally.
+    We have updated the figure legend to clarify this. \revref
   }
   
   \begin{point}{} % line 577
@@ -222,6 +228,7 @@
   %%%%%%%%%%%%%%
   \reviewersection{2}
   \begin{quote}
+    \color{gray}
     In this manuscript, Gower et al. extend the functionality of stdpopsim to include selection. 
     They test the performance of a few different methods that infer historical population sizes, 
     the distribution of fitness effects of new deleterious mutations, and those that detect selective sweeps using the simulations in SLiM. 
@@ -272,8 +279,8 @@ TODO. \revref
   \end{point}
   
   \reply{
- For simulations with selection we assumed that selected mutations could only fall within CDS regions,
- thus approximately 1\% of the genome is under selection.
+ For simulations with selection we assumed that selected mutations could only fall within exonic regions,
+ thus approximately 2.1\% of the genome is under selection in human simulations and 2.2\% in vaquita simulations.
   }
   
   \begin{point}{\revref} % 47:

@@ -29,7 +29,7 @@
 % drawing from from http://tex.stackexchange.com/questions/2317/latex-style-or-macro-for-detailed-response-to-referee-report
 %% arguments to \point are (name of the point, optional) and (content)
 \newenvironment{point}[1]
-        { \refstepcounter{point} \bigskip \hrule \medskip \noindent 
+        { \color{gray}\refstepcounter{point} \bigskip \hrule \medskip \noindent 
                 \slshape {\fontseries{b}\selectfont (\thereviewer.\thepoint) #1} }
         { }
 \newcommand{\reply}{\normalfont \medskip \noindent \textbf{Reply}:\ }   
@@ -78,7 +78,7 @@
 
 % for italics-quotes
 \newenvironment{itquote}
-{\begin{quote}\itshape}
+{\begin{quote}\color{gray}\itshape}
 {\end{quote}}
                                                                                                          
 % from http://tex.stackexchange.com/questions/43648/why-doesnt-lineno-number-a-paragraph-when-it-is-followed-by-an-align-equation/55297#55297
