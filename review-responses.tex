@@ -111,7 +111,12 @@
 \end{point}
   
   \reply{
-  We have added further descriptions of the implementation to the TODO
+     %IG: I added this because the section I added for comment 1.5 below seems relevant here as well.
+     %    I think that this addresses the first part of the rev's comment, but details need to also be added for selective sweeps
+     We added a new section to the methods that provides detials on how DFE models are implemented using DFE objects \revref.
+     The end of this section contains a brief description of how the simulation engine uses the information specified in a given DFE object when sampling a new mutation.
+     TBD -- DETAILS ABOUT SELECTIVE SWEEPS.
+
   }
   
   
@@ -120,8 +125,10 @@
   \end{point}
   
   \reply{
-      This was a mistake in the original submission. $h$ is not limited to values between 0 and 1, and the 
-      implementation allows for overdominance and underdominance. The clause has been removed. \revref
+      This was a mistake in the original submission. The dominance coefficient is not limited to values between 0 and 1, and the 
+      implementation allows for overdominance and underdominance. This clause has been removed \revref,
+      %IG: I added a note about this in the 2nd part of the newly added methods section
+      and in the newly added methods section about DFE models, we added an explicit note that dominance coefficients can be negative or larger than 1. 
   }
   
   \begin{point}{} 
@@ -144,7 +151,7 @@
       TODO. 
   }
   
-  \begin{point}{\revref} % line 577
+  \begin{point}{} % line 577
     Point of clarification about the flexibility of DFE specification: Is the DFE allowed to be a mixture distribution in a single genomic region? 
     Generally, the paper mentions users can provide a custom DFE, but what does that mean in practice? Does it have to be of a particular distribution family or form? 
     (i.e. the paper mentions "fixed value, normally-distributed, gamma-distributed"). 
@@ -153,7 +160,12 @@
   \end{point}
   
   \reply{
- TODO
+     We added a section to the methods with more details on \stdpopsim's DFE class, which answers these questions \revref.
+     In particular, we clarified that each DFE model is a mixture of different mutation types,
+     and we specified the distribution families that are currently supported by \stdpopsim.
+     We also described in greater detail how the relationship between dominance and selection coefficients is implemented,
+     which as the reviewer guessed, is done separately for each mutation type in the mixture.
+     This framework was designed to be very flexible, while allowing the implementation of most DFE models with few lines of code.
   }
 
   \begin{point}{\revref} % line 577
@@ -165,7 +177,7 @@
     TODO. \revref
   }
 
-  \begin{point}{\revref} % line 577
+  \begin{point}{} % line 577
     It might bear further comment that the gamma distribution is not flexible enough to accommodate the distribution of hs in the vaquita simulation 
     (which is what the DFE inference methods can really see), even if the s values are gamma distributed (bc of the big jump caused in hs by the switch in dominance). 
     This is interesting given how often gammas are used in DFE inference. The paper does mention that using h=1/2 as an assumption can lead to bad estimation of s, 
@@ -174,7 +186,18 @@
   \end{point}
   
   \reply{
-    TODO. \revref
+    Following this insightful comment, we added a few sentences to the discussion addressing this issue \revref:
+    %IG: I added this quote of the text I added to the discussion to clarify our response to the reviewer.
+    %    We'll need to update after we finalize the version in the revision.
+    \textit{``
+    Our analysis suggests that the distributions of $s$ estimated by these methods
+    provide a reasonable approximation for the true distribution of $hs$ (Figure \ref{fig:vaquita-dfe}C).
+    This points to a notable limitation of most existing DFE inference methods,
+    which assume that selection coefficients are gamma-distributed.
+    As shown in Figure \ref{fig:vaquita-dfe}C,
+    while a gamma distribution might fit the distribution of $s$, a relationship between $h$ and $s$ might result in
+    $hs$ which is not well approximated by a gamma distribution.
+    "}
   }
   
   \begin{point}{} 
@@ -198,12 +221,14 @@
   \end{point}
   
   \reply{
-    Thanks for the suggestion. $\pi$ is being computed across all three populations,
-    as the point we were trying to make was about the effect of selection locally.
-    We have updated the figure legend to clarify this. \revref
+    Thanks for the suggestion. In Fig. S1, $\pi$ is computed across all simulated genomes from all three populations,
+    as we wish to focus on the comparison between diversity estimates in different genomic segments in different simulation scenarios.
+    As the results are qualitatively similar when examining each of the three populations separately,
+    we chose to summarize them in a single plot using a measures of $\pi$ across all three populations.
+    We have updated the figure legend to clarify this \revref.
   }
   
-  \begin{point}{} % line 577
+  \begin{point}{}
     Last comment, and this may be an idiosyncratic opinion on my part, so I do not expect the authors to implement, 
     respond to, or even quote this point in the response letter. I'm merely offering a reaction. 
     In my opinion, three motifs are at a slightly awkward level of detail/coverage. 
@@ -221,7 +246,20 @@
   \end{point}
   
   \reply{
-    Don't respond to this?. 
+    %IG: I don't think we need to respond to this, but I did try to draft a polite response that clarifies how we see the paper
+    %    Feel free to shorten/remove this, if you think this is calling for trouble
+    We appreciate this comment.
+    The structure of this manuscript is indeed something we put a lot of thought into because of its somewhat unorthodox nature.
+    The main objective of the manuscript is to report on new capabilities of \stdpopsim,
+    so that the broad scientific community could use them to produce novel scientific discoveries.
+    The analyses presented in the manuscript are meant to demonstrate how features added to \stdpopsim
+    could be used to evaluate inference methods and test hypotheses regarding the effect of natural selection on patterns of diversity.
+    Consequently, the results of these analyses largely lead to more open questions than resolved questions,
+    and this is reflected in the discussion section, as noted by the reviewer.
+    While this is a bit unorthodox, we found this type of structure to be very useful in highlighting
+    \stdpopsim's features in our two previous publications \citep{adrion2020community,lauterbur2023expanding}.
+    We thus structured this manuscript similarly.
+    
   }
   
 
@@ -261,7 +299,21 @@ TODO. \revref
     This should be mentioned in the legend.  \end{point}
   
   \reply{
-  TODO.
+  %IG: I don't think that error bars are appropriate here and I tried to explain why
+  The main purpose of the plots in Figure 3C is to show the actual differences between simulated
+  and inferred distributions of $s$, since differences in mean and shape (shown in panels A-B) are not
+  always very informative or insightful.
+  To do this, we considered the average inferred DFE across the three replicate simualtions.
+  We do not see much use in adding error bars to these plots reflecting the variation across the three replicates.
+  Because of the somewhat noisy nature of this comparison, we only draw conclusions regarding qualitative differences
+  between inferred and simulated distributions, namely,
+  that  \polydfe and \dadicli tend to over-estimate the fraction of mutations under strong selection
+  amd \grapes tends to over-estimate the fraction of mutations under weak selection.
+  %IG: please check that this is correct
+  Regarding the estimates of $\text{E}[s]$ shown in Figure 3A (and also Figure 4A and associated supplementary figures),
+  these are typically values produced directly by the inference methods.
+  In the last paragraph of the methods section on DFE inference, we provide a complete description of the scaling
+  we apply to the output of each method so that they are directly comparable to $s$ as simulated in \slim.
   }
   
   % INTRO
@@ -291,6 +343,6 @@ TODO. \revref
 \end{point}
   
   \reply{
-  We have added a citation to a review paper from Wolfgang Stephan that discusses this point from a number of different perspectives. \revref
+  We have added a citation to a review paper from Wolfgang Stephan that discusses this point from a number of different perspectives \revref.
   }
   
