@@ -440,7 +440,6 @@
         \caption{
         \label{fig:human-demography}
         %citations aren't always allowed in captions. We should check with MBE.
-        %IG:I removed citations from all fig captions. They are prominently specified in the main text
         Inference of $N_e(t)$ from human genomes simulated under an out-of-Africa demographic model
         with and without purifying selection on exons.
         Rows correspond to the three extant populations in the simulation: CHB, CEU, and YRI.
@@ -461,10 +460,7 @@
     A basic summary of nucleotide diversity from these simulations
     shows that the presence of selection decreases polymorphism only slightly
     at the genome-wide level, but more substantially within exonic regions (Figure \ref{fig:homsap-summary-stats}). \revpoint{1}{9}
-    %IG: no need to specify the two scenarios shown in fig
-    %under both a constant population size and the out-of-Africa demographic model
     Following the simulation, inference of $N_e(t)$ was conducted from each of the six simulated datasets using four methods:
-    %IG: removed numbering and reordered to match fig 2
     \stairway \citep{liu2020stairway}, \msmc \citep{Schiffels2020}, \smcpp \citep{terhorst2017robust} and \gone \citep{santiago2020recent}.
 
     Although the estimates produced by the four methods differ from one another,
@@ -504,10 +500,6 @@
     As in the human simulations, we see that the presence of selection
     decreases polymorphism in genomes simulated with selection, but that the effect
     is only readily apparent within exonic regions (Figure \ref{fig:vaquita-summary-stats}).
-    %IG: last sentence seems like an unnecessary distraction. The constant-size simulations are only used to make a minor point in the next section
-    %We also see that the two-epoch demographic model used in the simulations actually leads to a slight increase
-    %in diversity versus the constant population size model.
-    %IG: merged paragraphs
     For these simulations, the SFS-based method (\stairway) produces more accurate
     inference than the two methods based on the sequential Markovian coalescent
     (\smcpp and \msmc; see Figure \ref{fig:vaquita-demography}).
@@ -528,7 +520,6 @@
     Another common application of population genetic inference is to estimate the distribution of fitness effects (DFE) of new mutations
     from genetic data. The new framework of modeling selection in \stdpopsim makes it an ideal tool for easily benchmarking and comparing
     the performance of different methods for inferring the DFE.
-    %IG: Moved up the methods here to provide context for their mention in the next para
     Here, we considered three DFE-inference methods:
     \grapes \citep{galtier2016adaptive}, \polydfe \citep{tataru2020polydfe}, and \dadicli \citep{Huang2023}.
 
@@ -541,10 +532,6 @@
     \dadicli infers the distribution of $2 N_e s$ while \polydfe and \grapes infer the distribution of $4 N_e s$.
     To allow direct comparison, here we have normalized all inference results to the convention used by \slim
     (also used by \stdpopsim; see \textbf{Methods}).
-    %IG - citations suggested in earlier versions to be added (I'm not sure they're necessary)
-    % precursor of polyDFE  from 2017:     https://academic.oup.com/genetics/article/207/3/1103/5930676
-    % fastDFE - the successor to polyDFE:  https://academic.oup.com/mbe/article/41/5/msae070/7641109
-    % paper that uses GRAPES from 2020:    https://academic.oup.com/genetics/article/216/2/559/6066183
 
     \begin{figure}[b!]
         \centering
@@ -641,7 +628,6 @@
     the performance of different methods for detecting selective sweeps from genetic data.
     Because simulation of selective sweeps is very time consuming and evaluation of statistical power requires
     many replicate simulations, we focused on human chromosome 1 and generated replicate simulations on 5cM segments
-    %IG: took out the 7 segments with low rec rate
     of the chromosome in 93 different locations. % (see \textbf{Methods}).
     Selective sweeps were simulated by introducing a beneficial mutation in the center of the 5cM segment
     with a moderately strong selection coefficient ($s = 0.03$; $2N_es \sim 600$; see \textbf{Methods}).
@@ -659,8 +645,6 @@
         \centering
         \includegraphics[width=0.8 \textwidth]{figures/sweeps/chr1_power.pdf}
         \caption{
-        %IG: better not mention 100 if we're filtering out 7 segments
-        %IG: removed citations from fig captions; they are prominently specified in main text
         Power to detect selective sweeps along human
         chromosome 1. Genomic segments were simulated with sweeps under a three population out-of-Africa model
         %\citep{gutenkunst2009inferring}
@@ -875,12 +859,17 @@
     \textit{Homo sapiens} \citep{hunt2018ensembl},
     and \textit{Phocoena sinus} \citep[vaquita porpoise,][]{morin2021}.
 
+    \subsection*{The DFE Class}
+    \revpoint{1}{5}
+    The DFE class has the following attributes for modeling natural selection in a given set of annotated genomic segments.
+    TBA
+    
+
     \subsection*{Quality control and software development}
     Following the protocol established previously for other aspects of \stdpopsim{} \citep{adrion2020community},
     new DFEs are subject to a rigorous quality control (QC) process,
     by which a different individual re-implements the same DFE, and the two implementations
     are programmatically tested for equality.
-    %IG: tried to put a more positive spin on the DFE bug example
     This QC process has proven its effectiveness on numerous occasions in detecting implementation bugs
     and resolving modeling ambiguities.
     For example, this process detected  an error in coding the log-normal distribution of
@@ -1004,10 +993,8 @@
     All methods used the same exon annotations as generated in the simulations. The total number of coding sites
     in the human and vaquita genomes used were 61,644,801 and 31,039,513 respectively.
 
-    % ADK: I've added a section below that describes the DFE inference methods used in this study.
     To facilitate direct comparison between inference methods,
     we scale each program's output to obtain a selection coefficient ($s$) consistent with the one used by \slim.
-    %IG: expanded a bit to justify each scaling decision
     \grapes outputs the mean and shape of the inferred distribution of $4N_es$.
     We thus scale the mean by a factor of  $\frac{\mu}{\theta}$,
     where $\mu$ is the assumed mutation rate and
@@ -1030,8 +1017,6 @@
     segments of human chromosome 1.
     As recombination rate varies across the genome, the size of the region in base pairs simulated varied, however the recombination distance,
     which is critical for the linked effects of a sweep, was held constant.
-    %IG: moved this up here since it makes mroe sense to describe it as if these segments were never simulated
-    % also converted to rec rate from cM. Please check!
     Seven segments in which the central 1Mb had an average recombination rate below $10^{-11}$ were excluded from the analysis.
     Each segment was simulated in each of the following three settings:
     (1) neutral, (2) background selection (BGS), and (3) hard sweep with BGS.
@@ -1078,14 +1063,12 @@
     which were determined using an empirical distribution representing a null model without sweeps.
     We considered two null models: a neutral evolution model (neutral),
     and a model with background selection from deleterious mutations in exons (BGS).
-    %IG: deducted 7000 datasets for the low-rec regions
     Each null model was represented by a different set of $93,000$ simulations generated according to the appropriate model
     (see \textbf{Simulations with selective sweeps} above).
     Thus, for each test statistic we determined two thresholds corresponding to these two different null models (neutral and BGS)
     using the extreme $5\%$ quantile in each empirical distribution.
     Then, power (or true positive rate) to detect a sweep by a given method was determined for
     positions on chromosome 1 as follows:
-    %IG: the 1000 simulations are with hard sweep + BGS
     each sweep-detection method was applied to the 1,000
     simulated datasets generated with a hard sweep and BGS for that position,
     and the power was set to be the proportion of simulations (out of 1,000)
@@ -1129,9 +1112,6 @@ workshop participants who provided feedback and suggestions for improvements.
 
 \section*{Supplementary Material}
 
-%IG: moved supp table here, because otherwise it appeared between the supp figs
-%IG: edited caption and removed annotations column, since they're all exons now.
-%IG: moved commented "all sites" rows to bottom
 \begin{table}[h]
 \centering
 \small
@@ -1239,19 +1219,6 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
         and simulated values represented by dashed horizontal lines.
     }
 \end{figure}
-
-%IG: this fig is not cited anywhere and does not appear to provide crucial insights
-%\begin{figure}[h]
-%    \centering
-%    \includegraphics[width=\textwidth]{figures/HomSap/Constant/HomSap_Constant_Gamma_K17_all_sites_DFE_plot}
-%    \caption{
-%    \label{fig:homsap-dfe.constant.all_sites}
-%    Performance of methods to infer the distribution of fitness effects (DFE) from genetic data
-%    under constant population size  where all sites along the simulated chromosome can experience selected and neutral mutation
-%    as opposed to exonic regions only.\\
-%    }
-%\end{figure}
-
 
 
 % roc curves for sweeps
