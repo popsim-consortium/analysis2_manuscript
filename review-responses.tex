@@ -1,0 +1,296 @@
+\begin{minipage}[b]{2.5in}
+    Resubmission Cover Letter \\
+    {\it Molecular Biology and Evolution}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{2.5in}
+      Andrew Kern (on behalf of all authors)  \\
+    \today
+  \end{minipage}
+  
+  \vskip 2em
+  
+  \noindent
+  {\bf To the Editor(s) -- }
+  
+  \vskip 1em
+  
+  We are writing to submit a revised version of our manuscript,
+  MBE-25-0312
+  titled
+  ``Accessible, realistic genome simulation with selection using stdpopsim''.
+  We appreciate the thoughtful comments by the reviewers.
+  We've done our best to address all the comments,
+  as detailed in our Response to Reviewers.
+  
+  In addition to a Response to Reviewers (in which page/line numbers refer to the revised manuscript file),
+  we also provide a pdf with differences to the previously submitted version highlighted.
+  
+  
+  \vskip 2em
+  
+  \noindent \hspace{4em}
+  \begin{minipage}{3in}
+  \noindent
+  {\bf Sincerely,}
+  
+  \vskip 2em
+  
+  {\bf
+     Andrew Kern (on behalf of all authors)
+  }\\
+  \end{minipage}
+  
+  \vskip 4em
+  
+  \pagebreak
+  
+  %%%%%%%%%%%%%%
+  \reviewersection{AE}
+  \begin{quote}
+    \color{gray}
+    Two experts in population genetics examined this manuscript and gave Very High and Medium marks in the Impact of the resource reported. 
+    Despite this mixed evaluations, I think this extension of stdpopsim contributed by many authors should be very useful in the community of population genomics. 
+    However, referees found many places in the manuscript that need clarification. 
+    These comments should be addressed in revision. 
+  \end{quote}
+  
+  Thanks for your comments on our paper.
+  
+  \begin{point}{\revref} % 
+    In addition, regarding the point discussed in lines 368-373, a recent paper Marsh \& Johri 2024 MBE 41(7):msae118 
+    might be acknowledged because it also developed simulations including the annonation for D. mel and humans and also mutation and recombination rate heterogeneity. 
+  \end{point}
+  
+  \reply{
+    Thanks for the suggestion. We have added this reference to the discussion section. \revref
+  }
+  
+  \reviewersection{1}
+  \begin{quote}
+    \color{gray}
+    In this manuscript, a large team of authors (Gower, Pope, Rodrigues, Tittes et al) present the next 
+    set of developments for the stdpopsim software, which facilitates "standard" population-genetic 
+    simulations that can be set to follow estimated demographic and genetic (mutation rates, recombination maps) 
+    parameters in a number of species and populations, as well as a framework for entering new species and populations 
+    into the collection. stdpopsim has become an important tool in population-genetic research. 
+    The authors here represent a large community of people invested in the maintenance and improvement of the software, 
+    which is open and undergoes thorough unit testing. 
+    The addition of selection to stdpopsim's capabilities is a substantial advance warranting a new publication. 
+    MBE also seems to me an appropriate outlet.  
+\end{quote}
+  
+  \begin{quote}
+    \color{gray}
+    In addition to announcing the new features available in stdpopsim, the paper describes three applications of the software: 
+    one on demographic inference in the presence of background selection, another on DFE estimation, and a third on detection of selective sweeps. 
+    Two of these contrast the results obtained using human vs. vaquita porpoise parameters.  
+\end{quote}
+  
+  \begin{quote}
+    \color{gray}
+    I am generally supportive of the paper and of the broader stdpopsim project. 
+    That said, I do have some constructive thoughts and questions:  \end{quote}
+  
+  Thanks -- we're glad you appreciate both the project and the paper.
+  
+  \begin{point}{}
+    Perhaps my main constructive reaction is that this paper is a bit light on information about the ways in which the new selection features are implemented. 
+    There is a section "implementing selection in stdpopsim", but it is not always easy to figure out from the description here how things work under the hood. 
+    Instead, the section is more like a short tour of the new features aimed at users. 
+    Moreover, there is no section of the methods that really goes over the details of implementation. 
+    The ms says that SLiM is the backend, but there aren't many details about how information passed into stdpopsim is translated into SLiM. 
+    It's also not clear to me how the selective sweep mode is implemented, given that it gives users the option to condition on some range of starting and ending allele frequencies. 
+    I assume that the approach is to run full SLiM iterations until the sweep ends up as desired (though it may not be)? 
+    But one might also simulate the allele-frequency trajectory for the sweeping allele alone until one "works", 
+    and then do coalescent simulations to fill in flanking variation conditional on the allele-frequency trajectory, 
+    a la Hudson \& Kaplan '88 (though I don't quite see how one would do this simultaneously with background selection, 
+    which the sweep simulations include). In any case, I'm not sure how the conditions are being achieved from reading the paper. 
+    (I've refrained from looking at the online documentation for stdpopsim 0.3.0, where there may be more answers, in order to review the paper as an independent product.) 
+    I don't think the paper necessarily needs loads more text on this, but I think there should be more information hinting at implementation in main text and probably a new methods subsection with further details.  
+\end{point}
+  
+  \reply{
+  We have added further descriptions of the implementation to the TODO
+  }
+  
+  
+  \begin{point}{\revref} 
+    Relatedly, why is the dominance coefficient currently limited to between 0 and 1? It's fine that it is for now, but I was curious what makes it more difficult to include other values of h.
+  \end{point}
+  
+  \reply{
+      This was a mistake in the original submission. $h$ is not limited to values between 0 and 1, and the 
+      implementation allows for overdominance and underdominance. The clause has been removed. \revref
+  }
+  
+  \begin{point}{} 
+    I think it would be helpful to say a bit more about the vaquita earlier in the manuscript. Although some of the authors have worked on the vaquita recently, it is still a fairly obscure organism, 
+    so it would be worth describing its unfortunate situation and why it is an interesting comparison with humans throughout these simulations.  
+\end{point}
+  
+  \reply{
+     TODO. 
+  }
+  
+  \begin{point}{} % 
+    It seems as though everything on the backend is being done by SLiM in the demonstrations here 
+    (unless I'm missing something about how the sweeps are done), so the runtimes are not really the product of the effort of the authors here. 
+    Still, I think it would be good to provide a bit more information on the runtimes for prospective users to get a sense of what doing selection in stdpopsim entails. 
+    (It's mentioned that the sweeps were time-consuming, but details aren't given as far as I can tell.)  
+\end{point}
+  
+  \reply{
+      TODO. 
+  }
+  
+  \begin{point}{\revref} % line 577
+    Point of clarification about the flexibility of DFE specification: Is the DFE allowed to be a mixture distribution in a single genomic region? 
+    Generally, the paper mentions users can provide a custom DFE, but what does that mean in practice? Does it have to be of a particular distribution family or form? 
+    (i.e. the paper mentions "fixed value, normally-distributed, gamma-distributed"). 
+    The vaquita DFE seems to be a mixture of several nonoverlapping DFEs with different h values, which suggests to me substantial flexibility, 
+    but I'm not quite clear on the limits. Most of the figures feature fairly few replicates, which makes me think that these simulations are necessarily time/compute intensive.
+  \end{point}
+  
+  \reply{
+ TODO
+  }
+
+  \begin{point}{\revref} % line 577
+    Sentence starting on line 383 about difficulty identifying h and s separately seems to be missing some important citations, 
+    e.g. Fuller et al 2019 (pmid 30962618) and citations therein, including Simons et al 2014; Wright 1937.
+  \end{point}
+  
+  \reply{
+    TODO. \revref
+  }
+
+  \begin{point}{\revref} % line 577
+    It might bear further comment that the gamma distribution is not flexible enough to accommodate the distribution of hs in the vaquita simulation 
+    (which is what the DFE inference methods can really see), even if the s values are gamma distributed (bc of the big jump caused in hs by the switch in dominance). 
+    This is interesting given how often gammas are used in DFE inference. The paper does mention that using h=1/2 as an assumption can lead to bad estimation of s, 
+    but the point that a relationship between s and h can cause hs to be non-gamma even when s is gamma is perhaps a little more subtle. 
+    Generally, I thought the lessons learned from the DFE exercise here could be put more clearly.
+  \end{point}
+  
+  \reply{
+    TODO. \revref
+  }
+  
+  \begin{point}{} 
+    Related to the previous point, I found it a bit odd to that both the style of the DFE (and in particular the h/s relationship) 
+    and the demography switched when comparing vaquita and human DFE. 
+    It seemed like a missed opportunity to do something hinted at earlier in the manuscript: 
+    namely, to try pairing demographies and DFEs from different species. 
+    I.e. it would be interesting in this context to look at simulations that have the human demography and vaquita DFE and vice versa, 
+    even if only in a supplementary figure.
+  \end{point}
+  
+  \reply{
+    TODO. 
+  }
+  
+  \begin{point}{\revref} % line 577
+    Figure S1, right panel. Is pi being computed from all the genomes (CEU/CHB/YRI)? 
+    I think it's okay given the point that's being made, 
+    but it might strike some readers as odd given how much is often made of the pi differences 
+    in these groups under the estimated demography, so maybe it should be said explicitly what's being done.
+  \end{point}
+  
+  \reply{
+    Thanks for the suggestion. $\pi$ is being computed across all three populations,
+    as the point we were trying to make was about the effect of selection locally.
+    We have updated the figure legend to clarify this. \revref
+  }
+  
+  \begin{point}{} % line 577
+    Last comment, and this may be an idiosyncratic opinion on my part, so I do not expect the authors to implement, 
+    respond to, or even quote this point in the response letter. I'm merely offering a reaction. 
+    In my opinion, three motifs are at a slightly awkward level of detail/coverage. 
+    On one hand, they're not enough to please partisans or enthusiasts of any of these three areas. 
+    (The paper is clear about the fact that they're not meant to be thorough benchmarks.) 
+    On the other hand, they are a big part of the paper, substantial on their own, 
+    and the bulk of the discussion is given over to their substantive results rather than to stdpopsim per se. 
+    I personally find many of the results interesting, but I also wondered whether the paper might be stronger 
+    if these segments were streamlined. One way to do this might be to focus less on the three topics themselves, 
+    but to change the emphasis to how selection results change when the species changes, 
+    i.e. to focus the thread of the results primarily on a quick inspection of the human/vaquita differences
+    (one might imagine adding in Drosophila too in such a framing) rather than on separate questions about the effect of 
+    BGS on demographic estimation and sweep inference, and on the effect of h-s relationship on DFE inference. 
+    Again, this is merely offered in the spirit of a friendly comment, and I expect no response.
+  \end{point}
+  
+  \reply{
+    Don't respond to this?. 
+  }
+  
+
+  
+  %%%%%%%%%%%%%%
+  \reviewersection{2}
+  \begin{quote}
+    \color{gray}
+    In this manuscript, Gower et al. extend the functionality of stdpopsim to include selection. 
+    They test the performance of a few different methods that infer historical population sizes, 
+    the distribution of fitness effects of new deleterious mutations, and those that detect selective sweeps using the simulations in SLiM. 
+    The added functionality will be useful to the users of stdpopsim.
+\end{quote}
+  
+  Thanks for your constructive comments on our paper.
+  
+  \begin{point}{\revref} % \&75
+    How do you deal with overlapping annotations in a gff?
+  \end{point}
+  
+  \reply{
+    TODO. \revref
+  }
+  
+  \begin{point}{}
+    The inference of the deleterious DFE with GRAPES is quite inaccurate. 
+    Is it possible that there is a factor of 2 error involved?
+  \end{point}
+  
+  \reply{
+TODO. \revref
+  }
+  
+  \begin{point}{\revref} % 21:
+    Figure 3c does not have any error bars, it’s difficult to conclude if the inference is actually significantly different from the truth. 
+    Which “N” was used to obtain estimates of “s” in Figure 3a? 
+    This should be mentioned in the legend.  \end{point}
+  
+  \reply{
+  TODO.
+  }
+  
+  % INTRO
+  
+  \begin{point}{\revref} % 24:
+    You cite only Gillespie 1991 on line 56. 
+    Requires many more citations, with at least one to Kimura.  
+\end{point}
+
+  \reply{
+  We have elaborated the list of citations for this point and have now cited Kimura as well. \revref
+  }
+  
+  \begin{point}{} % 27:
+    What fraction of the genome is under selection in the human genome you simulated?
+  \end{point}
+  
+  \reply{
+ For simulations with selection we assumed that selected mutations could only fall within exonic regions,
+ thus approximately 2.1\% of the genome is under selection in human simulations and 2.2\% in vaquita simulations.
+  }
+  
+  \begin{point}{\revref} % 47:
+    This is somewhat surprising given that background selection is expected to somewhat interfere with the sweep signature.” (line 349-350) $\to$ I'm not sure what this means. 
+    It's unclear to me why background selection will interfere with a sweep signature. 
+    Do you have a citation for this?  
+\end{point}
+  
+  \reply{
+  We have added a citation to a review paper from Wolfgang Stephan that discusses this point from a number of different perspectives. \revref
+  }
+  
