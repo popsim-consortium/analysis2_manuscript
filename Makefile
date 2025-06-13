@@ -1,6 +1,6 @@
 all: analysis2_manuscript.pdf
 
-analysis2_manuscript.pdf: analysis2_manuscript.tex references.bib
+analysis2_manuscript.pdf: analysis2_manuscript.tex references.bib review-responses.tex
 	pdflatex analysis2_manuscript.tex
 	biber analysis2_manuscript
 	pdflatex analysis2_manuscript.tex
