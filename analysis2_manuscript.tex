@@ -1090,11 +1090,11 @@
     $\theta=4N_{e}\mu$ is the population-scaled mutation rate, as estimated by \grapes.
     \polydfe is similarly scaled by $\frac{2\mu}{\theta}$,
     reflecting the fact that it defines the selection coefficient such that a homozygote has fitness $1+ 2s$.
-    \dadicli infers a gamma distribution for $N_es$ and parameterizes this distribution using the shape ($\alpha$) and rate ($\nu$).
-    %IG: we're still missing justification for the scaling by L and p, but we can leave this for revision
-    Thus, the mean value of $s$ is obtained by  $\frac{4\mu}{\theta} \alpha \nu L p$,
+    \dadicli defines the selection coefficient similarly to \polydfe and infers a gamma distribution for $2 N_e s$, parameterized by the shape ($\alpha$) and rate ($\nu$).
+    It also infers the total population-scaled mutation rate for selected sites over the considered region $\theta = 4 N_e \mu\, L\, p$,
     where $L$ is the total number of sites available for the analysis,
     and $p$ is the proportion of sites under selection.
+    Thus, the mean value of $s$ in \slim terms is obtained by  $\frac{4\mu}{\theta} \alpha \nu L p$.
     Complete details for the DFE inference analysis can be found in the
     \snakemake workflow at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/dfe.snake}.
 
