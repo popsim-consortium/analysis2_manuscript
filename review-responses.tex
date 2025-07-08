@@ -313,16 +313,13 @@ Note that \grapes is also less accurate than \polydfe and \dadicli in inferring 
   %IG: I don't think that error bars are appropriate here and I tried to explain why
   The main purpose of the plots in Figure 3C is to show the actual differences between simulated
   and inferred distributions of $s$, since differences in mean and shape (shown in panels A-B) are not
-  always very informative or insightful.
-  To do this, we considered the average inferred DFE across the three replicate simualtions.
-  We do not see much use in adding error bars to these plots reflecting the variation across the three replicates.
-  Because of the somewhat noisy nature of this comparison, we only draw conclusions regarding qualitative differences
-  between inferred and simulated distributions, namely,
-  that  \polydfe and \dadicli tend to over-estimate the fraction of mutations under strong selection
-  amd \grapes tends to over-estimate the fraction of mutations under weak selection.
-  %IG: please check that this is correct
+  easy to judge assess what practical impact the parameter differences have on the realized distributions. 
+  We have added standard error bars to the mean values in Figure 3C, but the variation among the two parameters themselves 
+  is better for directly assessing the differences among methods. 
   Regarding the estimates of $\text{E}[s]$ shown in Figure 3A (and also Figure 4A and associated supplementary figures),
-  these are typically values produced directly by the inference methods.
+  these values were produced directly by the inference methods, which output their own estimate of $\theta = 4N_{e}\mu$,
+  where $\mu$ is taken from as the value in the stdpopsim catalog for each species. 
+  We have clarified this in the main text.
   In the last paragraph of the methods section on DFE inference, we provide a complete description of the scaling
   we apply to the output of each method so that they are directly comparable to $s$ as simulated in \slim.
   }
