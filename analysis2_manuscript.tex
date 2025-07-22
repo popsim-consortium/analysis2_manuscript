@@ -394,27 +394,26 @@
     (\msprime's selection models are relatively limited and thus not currently used by \stdpopsim).
 
     % sweep interface
-    While the \texttt{DFE} class facilitates the simulation of non-neutral variation across a sequence,
-    it does not provide a means of specifying the origin and fate of particular selected alleles.
-    Thus, we have also implemented an API in \stdpopsim (\texttt{stdpopsim.selective\_sweep}) that enables 
-    selective sweeps to be simulated with a high degree of control.
-    This function augments a demographic model by introducing an advantageous mutation over a given time interval,
-    at a given position along the sequence; and conditions the simulation such that the mutation is above a particular 
-    frequency at the beginning and end of the sweep period.
-    The conditioning is implemented via rejection sampling; if the frequency of the advantageous allele 
-    drifts out of the prescribed bounds, the simulation is restarted from the introduction of
-    % DRS: not editing this because I haven't looked at the implementation, but this doesn't seem right.
-    % Obviously the allele must be allowed to drift outside of the bounds during the simulation, as long as it finishes
-    % within those bounds. So if it is fixed during the sim when the bounds don't extend to 1.0 (or lost when the
-    % bounds don't extent to 0.0) then we restart, and we restart if at the end of the sweep period we are outside of
-    % the bounds. right? If what I am saying is correct then maybe this should be rephrased, and more importantly the
-    % corresponding part of the methods should be corrected.
-    the advantageous allele. If there are competing advantageous alleles (e.g. simultaneous sweeps at distinct loci) 
-    then the simulation is restarted from the introduction of the first of these.
-    As this functionality is implemented on top of the existing \stdpopsim API, it may be combined with other 
-    models of selection and demography to simulate the combined effects of multiple, disparate evolutionary processes
-    on genetic variation in a population.
-
+    While the \texttt{DFE} class facilitates the simulation of non-neutral
+    variation across a sequence, it does not provide a means of specifying the
+    origin and fate of particular selected alleles.  Thus, we have also
+    implemented an API in \stdpopsim (\texttt{stdpopsim.selective\_sweep}) that
+    enables selective sweeps to be simulated with a high degree of control.
+    This function augments a demographic model by introducing a mutation at a
+    particular time and position along the sequence; sets the selection
+    coefficient of the mutation to a positive value over a given time interval;
+    and conditions the simulation such that the mutation is above a particular
+    frequency at the beginning and end of the sweep period.  The conditioning
+    is implemented via rejection sampling; if the advantageous allele is lost
+    or does not have a frequency exceeding a user-specified threshold at the
+    beginning or end of the sweep, the simulation is restarted from the
+    introduction of the advantageous allele.  If there are competing
+    advantageous alleles (e.g.  simultaneous sweeps at distinct loci) then the
+    simulation is restarted from the introduction of the first of these.  As
+    this functionality is implemented on top of the existing \stdpopsim API, it
+    may be combined with other models of selection and demography to simulate
+    the combined effects of multiple, disparate evolutionary processes on
+    genetic variation in a population.
 
     % current numbers of DFEs / species / etc
     At this release (version 0.3.0) the \stdpopsim catalog comprises 27 species (i.e. genome representations),
@@ -937,32 +936,30 @@
     % these may change.
     \subsection*{Selective sweeps and rejection sampling}
 
-    Selective sweeps are implemented in the \slim engine by
-    introducing a mutation with a fitness effect of $h s$ where $h$ is the
-    dominance coefficient (as for the DFE model) and $s \geq 0$ is the
-    selection coefficient.  The allele is introduced in a given population at
-    a specified time and genomic position, and may be either globally or locally
-    adaptive (so that the fitness effect is confined to the population of
-    origin) over a fixed duration. To model sweeps from standing genetic
-    variation (so-called ``soft sweeps''), the allele may be introduced at a
-    given frequency, in which case carriers are selected at random at the
-    initiation of the sweep.
+    Selective sweeps are implemented in the \slim engine by introducing a
+    mutation with a fitness effect of $h s$ where $h$ is the dominance
+    coefficient (as for the DFE model) and $s \geq 0$ is the selection
+    coefficient. The allele is introduced in a given population at a specified
+    time and genomic position, and may be either globally or locally adaptive
+    (so that the fitness effect is confined to the population of origin) over a
+    fixed duration. The start of the sweep may be offset from the introduction
+    of the allele, to model selection on standing genetic variation (so-called
+    ``soft sweeps'').
 
     Crucially, the advantageous allele must remain extant over the course of
     the sweep; this conditioning is accomplished via rejection sampling,
     whereby the simulation is restarted from the onset of the sweep if the
-    allele drifts out of the population of origin (or alternatively, below a
-    user-specified frequency). If there are competing advantageous alleles
-    % DRS: see my earlier comment about how we implement the conditioning here
-    % and correct as needed
-    (simultaneous sweeps at distinct loci) and one of these drifts out of
-    bounds, then the simulation is restarted from the onset of the first sweep;
-    this avoids conditioning on particular (partial) allele frequency
-    trajectories for the remaining alleles.  A downside of this strategy is
-    that rejection becomes more likely with increasing numbers of simultaneous
-    sweeps or with hard-to-satisfy constraints; but it allows for greater
-    flexibility in sweep specification and for interoperability with the
-    \stdpopsim DFE model.
+    allele drifts out of the population of origin. The conditioning may
+    optionally be extended to reject trajectories where the frequency at the
+    beginning and end of the sweep period is below a specified threshold. If
+    there are competing advantageous alleles (simultaneous sweeps at distinct
+    loci) and one of these does not satisfy the acceptance conditions, then the
+    simulation is restarted from the onset of the first sweep; this avoids
+    conditioning on particular (partial) allele frequency trajectories for the
+    remaining alleles.  A downside of this strategy is that rejection becomes
+    more likely with increasing numbers of simultaneous sweeps or with
+    hard-to-satisfy constraints; but it allows for greater flexibility in sweep
+    specification and for interoperability with the \stdpopsim DFE model.
     
 
     \subsection*{Quality control and software development}
