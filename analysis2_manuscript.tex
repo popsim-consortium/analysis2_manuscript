@@ -402,7 +402,13 @@
     at a given position along the sequence; and conditions the simulation such that the mutation is above a particular 
     frequency at the beginning and end of the sweep period.
     The conditioning is implemented via rejection sampling; if the frequency of the advantageous allele 
-    drifts out of the prescribed bounds, the simulation is restarted from the introduction of 
+    drifts out of the prescribed bounds, the simulation is restarted from the introduction of
+    % DRS: not editing this because I haven't looked at the implementation, but this doesn't seem right.
+    % Obviously the allele must be allowed to drift outside of the bounds during the simulation, as long as it finishes
+    % within those bounds. So if it is fixed during the sim when the bounds don't extend to 1.0 (or lost when the
+    % bounds don't extent to 0.0) then we restart, and we restart if at the end of the sweep period we are outside of
+    % the bounds. right? If what I am saying is correct then maybe this should be rephrased, and more importantly the
+    % corresponding part of the methods should be corrected.
     the advantageous allele. If there are competing advantageous alleles (e.g. simultaneous sweeps at distinct loci) 
     then the simulation is restarted from the introduction of the first of these.
     As this functionality is implemented on top of the existing \stdpopsim API, it may be combined with other 
@@ -549,10 +555,10 @@
         DFE is inferred separately for each of the three extant populations (CEU, CHB, and YRI)
         by three different methods: \grapes, \polydfe , and \dadicli.
         (A-B) Mean absolute value of selection coefficient ($\lvert E(s) \rvert $) and shape parameter are
-        shown for each DFE inferred from all three simulated datasets,
+        shown for each DFE inferred from all three simulation replicates,
         with median values marked by horizontal bars
         and simulated values represented by dashed horizontal lines.
-        (C) Binned distribution of $s$ implied by the average DFE inferred from the three simulated datasets (averaging the inferred gamma parameters);
+        (C) Binned distribution of $s$ implied by the average DFE inferred from the three simulated replicates (averaging the inferred gamma parameters);
         white bars represent the distribution used in the simulation. 
         }
         \label{fig:homsap-dfe.ooa}
@@ -604,11 +610,11 @@
         The DFE is inferred by analyzing all simulated genomes jointly by one of three different methods:
         \grapes, \polydfe, and \dadicli.
         (A-B) Mean absolute value of selection coefficient ($\lvert E(s) \rvert $) and shape parameter are
-        shown for each DFE inferred from all three simulated datasets,
+        shown for each DFE inferred from all three simulation replicates,
         with median values marked by horizontal bars
         and simulated values represented by dashed horizontal lines.
         (C) Binned distribution of $2hs$ implied by the simulated DFE compared with
-        the distribution of $s$ implied by the average DFE inferred for each method from the three simulated datasets (averaging the inferred gamma parameters).
+        the distribution of $s$ implied by the average DFE inferred for each method from the three simulated replicates (averaging the inferred gamma parameters).
         The distribution of $2 h s$ is multimodal because of the simulated relationship between $h$ and $s$ (see text).
         }
     \end{figure}
@@ -775,7 +781,9 @@
     empirical data, with reproducibility, computational efficiency, and rigor.
 
     The exploration of performance among methods done here is not meant to be thorough
-    benchmarking, but rather to highlight the utility of the \stdpopsim resource.
+    benchmarking. Rather, we include these analyses as examples to highlight the utility of \stdpopsim
+    for both benchmarking and other tasks where researchers would benefit from the ability to perform
+    simulations using parts of published population genetic models. in a streamlined and quality-controlled fashion.
     Having said that, there are a number of interesting results that merit discussion.
     The first pertains to estimation of demographic history ($N_e(t)$) in the context of
     linked purifying selection. Our simulations of human and vaquita genomes
@@ -814,9 +822,9 @@
     provide a reasonable approximation for the true distribution of $hs$ (Figure \ref{fig:vaquita-dfe}C).
     This points to a notable limitation of most existing DFE inference methods,
     which assume that selection coefficients are gamma-distributed.
+    %DRS: Is the limitatio here that selection coefficients are gamma-distributed, or rather that h is fixed?
     As shown in Figure \ref{fig:vaquita-dfe}C,
-    while a gamma distribution might fit the distribution of $s$, a relationship between $h$ and $s$ might result in
-    $hs$ which is not well approximated by a gamma distribution.
+    while a gamma distribution might fit the conditional distribution of $s$ given $h$, a relationship between $h$ and $s$ might result in a magrinal distribution for $hs$ which is not well approximated by a gamma distribution.
     
     %IG: split this into a separate paragraph because this ended up being a bit long
     Overall, these results are consistent with prior work showing that it is challenging to separately
@@ -877,6 +885,7 @@
     and \textit{Phocoena sinus} \citep[vaquita porpoise,][]{morin2021}.
 
     %IG: added this section to address rev's comment about lacking details in implementation
+    %DRS: I think this section looks great.
     \subsection*{Implementing a DFE model using \stdpopsim's \texttt{DFE} class}
     
     The \texttt{DFE} class 
@@ -944,6 +953,8 @@
     whereby the simulation is restarted from the onset of the sweep if the
     allele drifts out of the population of origin (or alternatively, below a
     user-specified frequency). If there are competing advantageous alleles
+    % DRS: see my earlier comment about how we implement the conditioning here
+    % and correct as needed
     (simultaneous sweeps at distinct loci) and one of these drifts out of
     bounds, then the simulation is restarted from the onset of the first sweep;
     this avoids conditioning on particular (partial) allele frequency
@@ -1287,7 +1298,7 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
        and a gamma-distributed DFE acting on exons (see \textbf{Methods}).
         DFE is inferred by three different methods: \grapes, \polydfe , and \dadicli.
         Mean absolute value of selection coefficient ($\lvert E(s) \rvert$, panel A) and shape parameter (panel B)
-        are shown for each DFE inferred from all three simulated datasets
+        are shown for each DFE inferred from all three simulation replicates
         with median values marked by horizontal bars
         and simulated values represented by dashed horizontal lines.
     }
@@ -1305,7 +1316,7 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
         with a relationship between the selection coefficient ($s$) and dominance coefficient ($h$) (see \textbf{Methods}).
         DFE is inferred by three different methods: \grapes, \polydfe , and \dadicli.
         Mean absolute value of selection coefficient ($\lvert E(s) \rvert$, panel A) and shape parameter (panel B)
-        are shown for each DFE inferred from all three simulated datasets
+        are shown for each DFE inferred from all three simulation replicates
         with median values marked by horizontal bars
         and simulated values represented by dashed horizontal lines.
     }
