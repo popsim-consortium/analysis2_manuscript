@@ -557,8 +557,8 @@
         shown for each DFE inferred from all three simulation replicates,
         with median values marked by horizontal bars
         and simulated values represented by dashed horizontal lines.
-        (C) Binned distribution of $s$ implied by the average DFE inferred from the three simulated replicates (averaging the inferred gamma parameters);
-        white bars represent the distribution used in the simulation. 
+        (C) Binned distribution of $s$ implied by the average DFE inferred from the three simulated datasets (averaging the inferred gamma parameters);
+        white bars represent the distribution used in the simulation. Standard error of the mean for each bin is shown in black. 
         }
         \label{fig:homsap-dfe.ooa}
     \end{figure}
@@ -1360,6 +1360,18 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
         Fitted lines represent loess smoothed regressions.
     }
     \label{fig:power-exon}
+\end{figure}
+
+
+%sweep power vs exon density
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8 \textwidth]{figures/HomSap/sims_runtime_plot.pdf}
+    \caption{
+    Runtime of simulated human chromosomes with and without background selection and demography.
+    Each point represents a single simulation of a single chromosome under conditions labeled by facets.
+    }
+    \label{fig:sim-runtime}
 \end{figure}
 
 \stopsupplement
