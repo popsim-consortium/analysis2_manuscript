@@ -12,11 +12,24 @@ review-diff.tex: analysis2_manuscript.tex
 
 review-diff.pdf: review-diff.tex
 	pdflatex review-diff.tex
+	biber review-diff
 	pdflatex review-diff.tex
-	bibtex review-diff
+	pdflatex review-diff.tex
 	pdflatex review-diff.tex
 
 clean:
 	rm -f analysis2_manuscript.pdf
 	rm -f *.log *.dvi *.aux
 	rm -f *.blg *.bbl
+
+diff-to-%.tex : analysis2_manuscript.tex
+	latexdiff-git --force --flatten -r $* $<
+	mv analysis2_manuscript-diff$*.tex $@
+
+%.pdf : %.tex
+	pdflatex $*
+	biber $*
+	pdflatex $*
+	pdflatex $*
+	pdflatex $*
+

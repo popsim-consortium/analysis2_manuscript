@@ -79,6 +79,7 @@
 \newcommand{\dfe}{\texttt{dfe-alpha}\xspace}
 \newcommand{\polydfe}{\texttt{polyDFE}\xspace}
 \newcommand{\dadicli}{\texttt{dadi-cli}\xspace}
+\newcommand{\dadi}{\texttt{dadi}\xspace}
 \newcommand{\grapes}{\texttt{GRAPES}\xspace}
 
 % add commands for the sweep detection methods
@@ -205,7 +206,7 @@
     species to their environments. The effects of selection
     on genetic variation are complex, and can be difficult to disentangle
     from other evolutionary processes such as mutation, recombination,
-    and genetic drift \citep[e.g.,][]{ohta1973slightly,lewontin1973distribution, kimura1985neutral, tajima1989statistical,gillespie1991causes, kern2018neutral}. \revpoint{2}{4}
+    and genetic drift \citep[e.g.,][]{ohta1973slightly,lewontin1973distribution, kimura1985neutral, Tajima1989, gillespie1991causes, kern2018neutral}. \revpoint{2}{4}
     For instance, changes in population size can lead to fluctuations
     in genetic diversity across a recombining chromosome
     that can mimic the effects of selection \citep{simonsen1995properties},
@@ -301,6 +302,9 @@
     to benchmark and compare the performance of different methods for
     using genetic data to infer demographic history, the distribution of fitness effects,
     and the targets of recent positive selection.
+    The examples use genomes of both humans (\textit{Homo sapiens})
+    and the critically endangered Vaquita porpoise (\textit{Phocoena sinus}),
+    which provides an interesting comparison due to its small recent population size. \revpoint{1}{3}
 
 \section*{Implementing Selection in \stdpopsim}
     \label{selection}
@@ -370,7 +374,7 @@
     and the vaquita porpoise \textit{Phocoena sinus} \citep{robinson2022critically}.
     While the DFEs are from a limited number of species, these DFEs can be applied to other species
     if and when it is suitable,
-    namely, when a species of interest lacks a pubished DFE in the catalog \revpoint{1}{8}.
+    namely, when a species of interest lacks a published DFE in the catalog \revpoint{1}{8}.
     For instance, one could simulate a butterfly species with a gamma-distributed DFE originally
     estimated from humans, or a human population with a DFE estimated from \textit{Drosophila}.
     Indeed, the DFE labeled \texttt{HomSap/Mixed\_K23} is recommended by \citet{kyriazis2023using}
@@ -403,7 +407,7 @@
     particular time and position along the sequence; sets the selection
     coefficient of the mutation to a positive value over a given time interval;
     and conditions the simulation such that the mutation is above a particular
-    frequency at the beginning and end of the sweep period.  The conditioning
+    frequency at the beginning and end of the sweep period.  The conditioning \llabel{sweep_conditioning}
     is implemented via rejection sampling; if the advantageous allele is lost
     or does not have a frequency exceeding a user-specified threshold at the
     beginning or end of the sweep, the simulation is restarted from the
@@ -503,6 +507,8 @@
     we performed a similar benchmark using the vaquita porpoise \textit{Phocoena sinus}.
     We simulated 100 genomes under a two-epoch demographic model inferred for vaquita by \textcite{robinson2022critically},
     and a constant recombination rate across the genome (see \textbf{Methods}).
+    This is particularly interesting because the model was inferred assuming neutrality (with \dadi)
+    and used to inform conservation efforts for this critically endangered species. \llabel{vaquita_note}
     In simulations with selection, we applied the DFE inferred by \textcite{robinson2022critically} to exons
     annotated from the vaquita genome assembly.
     This DFE implements a relationship between selection and dominance
@@ -780,9 +786,10 @@
     empirical data, with reproducibility, computational efficiency, and rigor.
 
     The exploration of performance among methods done here is not meant to be thorough
-    benchmarking. Rather, we include these analyses as examples to highlight the utility of \stdpopsim
+    benchmarking.
+    Rather, we include these analyses as examples to highlight the utility of \stdpopsim \llabel{not_the_point}
     for both benchmarking and other tasks where researchers would benefit from the ability to perform
-    simulations using parts of published population genetic models. in a streamlined and quality-controlled fashion.
+    simulations using parts of published population genetic models in a streamlined and quality-controlled fashion.
     Having said that, there are a number of interesting results that merit discussion.
     The first pertains to estimation of demographic history ($N_e(t)$) in the context of
     linked purifying selection. Our simulations of human and vaquita genomes
@@ -815,19 +822,17 @@
     This performance is not surprising since decreasing $h$ for a given distribution of $s$ will lead to a decrease in $hs$,
     or an apparent decrease in the amount of selection.
     Thus, fitting a mis-specified DFE that assumes $h=0.5$ leads to underestimates of $E[s]$. \revpoint{1}{7}
-    %IG: added this to respond to comment 1.7.
-    %IG: I quote this in the response, so if we edit this, we should copy modified version to the response.
     Our analysis suggests that the distributions of $s$ estimated by these methods
     provide a reasonable approximation for the true distribution of $hs$ (Figure \ref{fig:vaquita-dfe}C).
     This points to a notable limitation of most existing DFE inference methods,
     which assume that selection coefficients are gamma-distributed.
     %DRS: Is the limitatio here that selection coefficients are gamma-distributed, or rather that h is fixed?
     As shown in Figure \ref{fig:vaquita-dfe}C,
-    while a gamma distribution might fit the conditional distribution of $s$ given $h$, a relationship between $h$ and $s$ might result in a magrinal distribution for $hs$ which is not well approximated by a gamma distribution.
+    while a gamma distribution might fit the conditional distribution of $s$ given $h$, a relationship between $h$ and $s$ might result in a marginal distribution for $hs$ which is not well approximated by a gamma distribution.
     
     %IG: split this into a separate paragraph because this ended up being a bit long
     Overall, these results are consistent with prior work showing that it is challenging to separately
-    infer the DFE of $s$ along with $h$ \citep{veeramah2014evidence, kyriazis2024constraining, balick2022overcoming} \revpoint{1}{6}
+    infer the DFE of $s$ along with $h$ (\textcite{wright1937distribution, veeramah2014evidence, simons2014deleterious, fuller2019measuring, balick2022overcoming, kyriazis2024constraining}; reviewed in \textcite{fuller2019measuring}) \revpoint{1}{6}
     and that a large proportion ($>5\%$) of recessive deleterious mutations can confound inferences of $s$ \citep{wade2023quantifying}.
     Given the plethora of evidence for recessive deleterious mutations
     \citep{mukai1972mutation, agrawal2011inferences, huber2018gene, di2024revisiting},
@@ -931,14 +936,57 @@
     \url{https://popsim-consortium.github.io/stdpopsim-docs/main/introduction.html}.
 
 
+    \subsection*{Selective sweeps and rejection sampling}
+
     % NSP: added to address reviewer 1's comments asking for more detail. Not adding
     % any detail regarding the lower-level interface (particular "extended events") as
     % these may change.
-    \subsection*{Selective sweeps and rejection sampling}
+    %
+    %% For reference, from the docs on selective_sweep():
+    % Creates a list of extended events corresponding to a selective sweep at a
+    % single site (see :meth:`Contig.add_single_site`) that may subsequently be
+    % passed to the simulation engine. The sequence of events is:
+
+    %     (1) In generation `mutation_generation_ago`, a **neutral** mutation is
+    %         introduced into `population`.
+
+    %     (2) In generation `start_generation_ago`, the mutation becomes
+    %         beneficial (whether globally or locally is controlled by the
+    %         `globally_adaptive` option). If the frequency of the mutation in
+    %         `population` is below `min_freq_at_start` in this generation, the
+    %         simulation will restart from `mutation_generation_ago`.
+
+    %     (3) In the generation after `end_generation_ago`, the mutation reverts to
+    %         neutrality in `population`. If the frequency of the mutation in
+    %         `population` is below `min_freq_at_end` in this generation, the
+    %         simulation will restart from `mutation_generation_ago`.
+
+    % During the sweep, the fitnesses of individuals that are homozygous or
+    % heterozygous for the beneficial mutation are `1 + selection_coeff` and  `1
+    % + selection_coeff * dominance_coeff`, respectively. If `globally_adaptive`
+    % is `True` (the default), then all individuals carrying the mutation are
+    % impacted regardless of the population they belong to. Otherwise, the
+    % mutation only influences fitness within `population`.
+
+    % If the mutation is lost in `population` at any point between
+    % `mutation_generation_ago` and `end_generation_ago`, then the simulation
+    % will restart from `mutation_generation_ago`. The effect of "restarting"
+    % (aka "rejection sampling") is that the resulting simulations are
+    % conditioned on the mutation being extant after time
+    % `mutation_generation_ago` with frequency above `min_freq_at_start` at
+    % `start_generation_ago` and `min_freq_at_end` at `end_generation_ago`.
+
+    % Because the simulation will restart until the allele frequency conditions
+    % are satisfied, care must be taken to ensure that these are reasonable. For
+    % example, if `start_generation_ago` is very close to
+    % `mutation_generation_ago` and `min_freq_at_start` is substantially greater
+    % than zero, the vast majority of proposed allele frequency trajectories will
+    % be rejected and the simulation may take an infeasibly long time to
+    % complete.
 
     Selective sweeps are implemented in the \slim engine by introducing a
-    mutation with a fitness effect of $h s$ where $h$ is the dominance
-    coefficient (as for the DFE model) and $s \geq 0$ is the selection
+    mutation with a fitness effect of $h s$ in heterozygotes and $s$ in homozygotes,
+    where $h$ is the dominance coefficient (as for the DFE model) and $s \geq 0$ is the selection
     coefficient. The allele is introduced in a given population at a specified
     time and genomic position, and may be either globally or locally adaptive
     (so that the fitness effect is confined to the population of origin) over a
@@ -948,8 +996,8 @@
 
     Crucially, the advantageous allele must remain extant over the course of
     the sweep; this conditioning is accomplished via rejection sampling,
-    whereby the simulation is restarted from the onset of the sweep if the
-    allele drifts out of the population of origin. The conditioning may
+    whereby the simulation is restarted from the time of introduction of the mutation if the
+    allele drifts is lost in the population of origin. The conditioning may
     optionally be extended to reject trajectories where the frequency at the
     beginning and end of the sweep period is below a specified threshold. If
     there are competing advantageous alleles (simultaneous sweeps at distinct
@@ -1011,7 +1059,8 @@
     \citet[\stdpopsim label \texttt{OutOfAfricaArchaicAdmixture\_5R19}]{ragsdale2019models}.
     Simulations with selection additionally applied a DFE model with gamma-distributed selection coefficients inferred by
     \citet[\stdpopsim label \texttt{Gamma\_K17}]{kim2017inference} to exons annotated by the HAVANA group release 104
-    \citep[\stdpopsim label \texttt{ensembl\_havana\_104\_exons}]{ensembl2018}.
+    \citep[\stdpopsim label \texttt{ensembl\_havana\_104\_exons}]{ensembl2018},
+    which covers 2.1\% of the genome. \revpoint{2}{5}
     Each simulation generated 100 diploid genomes from each of three extant human populations (labeled YRI, CEU, and CHB),
     with each genome consisting of 22 autosomes.
     Using these settings, we generated three replicate datasets without selection
@@ -1029,7 +1078,8 @@
     across all chromosomes \citep{morin2021}.
     Simulations with selection additionally applied a DFE model with gamma-distributed selection coefficients inferred by
     \citet[\stdpopsim label \texttt{Gamma\_R22}]{robinson2022critically} to exons annotated from the vaquita porpoise genome assembly
-    \citet[\stdpopsim label \texttt{Phocoena\_sinus.mPhoSin1.pri.110\_exons}]{morin2021}.
+    \citet[\stdpopsim label \texttt{Phocoena\_sinus.mPhoSin1.pri.110\_exons}]{morin2021},
+    which covers 2.2\% of the genome. \llabel{vaquita_percent}
     This DFE model implements a relationship between selection and dominance as follows:
     very deleterious mutations (with $s<-0.1$) are recessive ($h=0$),
     mutations with $s\in [-0.1,-0.01)$ have a dominance coefficient of $h=0.01$,
@@ -1102,7 +1152,7 @@
     It also infers the total population-scaled mutation rate for selected sites over the considered region $\theta = 4 N_e \mu\, L\, p$,
     where $L$ is the total number of sites available for the analysis,
     and $p$ is the proportion of sites under selection.
-    Thus, the mean value of $s$ in \slim terms is obtained by  $\frac{4\mu}{\theta} \alpha \nu L p$.
+    Thus, the mean value of $s$ in \slim terms is obtained by  $4\mu \alpha \nu L p / \theta$.
     Complete details for the DFE inference analysis can be found in the
     \snakemake workflow at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/dfe.snake}.
 

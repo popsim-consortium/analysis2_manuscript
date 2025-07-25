@@ -114,9 +114,10 @@
      %IG: I added this because the section I added for comment 1.5 below seems relevant here as well.
      %    I think that this addresses the first part of the rev's comment, but details need to also be added for selective sweeps
      We added a new section to the methods that provides detials on how DFE models are implemented using DFE objects \revref.
-     The end of this section contains a brief description of how the simulation engine uses the information specified in a given DFE object when sampling a new mutation.
-     TBD -- DETAILS ABOUT SELECTIVE SWEEPS.
-
+     The end of this section contains a brief description of how the simulation engine uses the information specified in a given DFE object when sampling a new mutation,
+     and how the conditioning for selective sweeps is implemented
+     (indeed, by rejection sampling).
+     We've also added a small note earlier in the paper, at \llname{sweep_conditioning}.
   }
   
   
@@ -137,7 +138,7 @@
 \end{point}
   
   \reply{
-     TODO. 
+      Good idea; we have added a bit more context, at \revref and \llname{vaquita_note}.
   }
   
   \begin{point}{} % 
@@ -151,7 +152,7 @@
       TODO. 
   }
   
-  \begin{point}{} % line 577
+  \begin{point}{}
     Point of clarification about the flexibility of DFE specification: Is the DFE allowed to be a mixture distribution in a single genomic region? 
     Generally, the paper mentions users can provide a custom DFE, but what does that mean in practice? Does it have to be of a particular distribution family or form? 
     (i.e. the paper mentions "fixed value, normally-distributed, gamma-distributed"). 
@@ -168,16 +169,21 @@
      This framework was designed to be very flexible, while allowing the implementation of most DFE models with few lines of code.
   }
 
-  \begin{point}{\revref} % line 577
-    Sentence starting on line 383 about difficulty identifying h and s separately seems to be missing some important citations, 
-    e.g. Fuller et al 2019 (pmid 30962618) and citations therein, including Simons et al 2014; Wright 1937.
+  \begin{point}{\revref}
+      Sentence starting [here] % on line 383 
+      about difficulty identifying $h$ and $s$ separately seems to be missing some important citations, 
+      e.g. \textcite{fuller2019measuring}, % Fuller et al 2019 (pmid 30962618) and citations therein, 
+      including 
+      \textcite{simons2014deleterious}; % Simons et al 2014;
+      \textcite{wright1937distribution}. % Wright 1937.
   \end{point}
   
   \reply{
-    TODO. \revref
+      Good point; done \revref; note that we didn't make the list of citations as long as we might have,
+      opting instead to direct readers to \textcite{fuller2019measuring} for the review.
   }
 
-  \begin{point}{} % line 577
+  \begin{point}{}
     It might bear further comment that the gamma distribution is not flexible enough to accommodate the distribution of hs in the vaquita simulation 
     (which is what the DFE inference methods can really see), even if the s values are gamma distributed (bc of the big jump caused in hs by the switch in dominance). 
     This is interesting given how often gammas are used in DFE inference. The paper does mention that using h=1/2 as an assumption can lead to bad estimation of s, 
@@ -186,22 +192,11 @@
   \end{point}
   
   \reply{
-    Following this insightful comment, we added a few sentences to the discussion addressing this issue \revref:
-    %IG: I added this quote of the text I added to the discussion to clarify our response to the reviewer.
-    %    We'll need to update after we finalize the version in the revision.
-    \textit{``
-    Our analysis suggests that the distributions of $s$ estimated by these methods
-    provide a reasonable approximation for the true distribution of $hs$ (Figure \ref{fig:vaquita-dfe}C).
-    This points to a notable limitation of most existing DFE inference methods,
-    which assume that selection coefficients are gamma-distributed.
-    % DRS: see comment in main text on whether the limitation is the gamma for s or the fact that h is fixed
-    As shown in Figure \ref{fig:vaquita-dfe}C,
-    while a gamma distribution might fit the distribution of $s$, a relationship between $h$ and $s$ might result in
-    $hs$ which is not well approximated by a gamma distribution.
-    "}
+    Following this insightful comment, we added a few sentences to the discussion addressing this issue, at \revref.
+    % No need to provide the quote here as they can easily see the change directly using the link.
   }
   
-  \begin{point}{\revref} 
+  \begin{point}{}
     Related to the previous point, I found it a bit odd to that both the style of the DFE (and in particular the h/s relationship) 
     and the demography switched when comparing vaquita and human DFE. 
     It seemed like a missed opportunity to do something hinted at earlier in the manuscript: 
@@ -217,10 +212,11 @@
     Varying both DFE and demography in a systematic way and studying the effects would be interesting and useful, 
     but there is less to learn from only swapping the DFE and demography of two species in this context.
     We have clarified the point in the manuscript that when a given species of interest does not have published demographic and DFE inferences, 
-    one can be borrowed from another species as a next best option.  
+    one can be borrowed from another species as a next best option at \revref,
+    and added another note about the aims of the paper, at \llname{not_the_point}.
   }
   
-  \begin{point}{\revref} % line 577
+\begin{point}{\revref}
     Figure S1, right panel. Is pi being computed from all the genomes (CEU/CHB/YRI)? 
     I think it's okay given the point that's being made, 
     but it might strike some readers as odd given how much is often made of the pi differences 
@@ -298,7 +294,8 @@
   
   \reply{
 As noted in the paper, conversion of selection inferences between tools is challenging.
-We thus consulted with the developers of \polydfe and \grapes to confirm our conversions.
+We thus spent quite a bit of time on this exact point,
+and consulted with the developers of \polydfe and \grapes to confirm our conversions.
 (The developer of \dadicli is an author on this paper.)
 The inaccuracy of \grapes is a surprise to us.
 Note that \grapes is also less accurate than \polydfe and \dadicli in inferring the shape of the distribution (Fig.~\ref{fig:homsap-dfe.ooa}B), which suggests the inaccuracy is not simply a scaling issue.
@@ -342,10 +339,12 @@ Note that \grapes is also less accurate than \polydfe and \dadicli in inferring 
   \reply{
  For simulations with selection we assumed that selected mutations could only fall within exonic regions,
  thus approximately 2.1\% of the genome is under selection in human simulations and 2.2\% in vaquita simulations.
+ We've added notes to this effect, at \revref{} and \llname{vaquita_percent}.
   }
   
   \begin{point}{\revref} % 47:
-    This is somewhat surprising given that background selection is expected to somewhat interfere with the sweep signature.” (line 349-350) $\to$ I'm not sure what this means. 
+    ``This is somewhat surprising given that background selection is expected to somewhat interfere with the sweep signature.'' % (line 349-350)
+      $\to$ I'm not sure what this means. 
     It's unclear to me why background selection will interfere with a sweep signature. 
     Do you have a citation for this?  
 \end{point}
