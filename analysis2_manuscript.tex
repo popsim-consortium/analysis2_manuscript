@@ -476,9 +476,10 @@
     A basic summary of nucleotide diversity from these simulations
     shows that the presence of selection decreases polymorphism only slightly
     at the genome-wide level, but more substantially within exonic regions (Figure \ref{fig:homsap-summary-stats}). \revpoint{1}{9}
+    
+    
     Following the simulation, inference of $N_e(t)$ was conducted from each of the six simulated datasets using four methods:
     \stairway \citep{liu2020stairway}, \msmc \citep{Schiffels2020}, \smcpp \citep{terhorst2017robust} and \gone \citep{santiago2020recent}.
-
     Although the estimates produced by the four methods differ from one another,
     for each method the estimates produced from data with selection (Figure
     \ref{fig:human-demography}; orange) and without selection (Figure
@@ -644,7 +645,7 @@
     \label{sweeps}
     We next highlight how \stdpopsim can be used to benchmark and compare
     the performance of different methods for detecting selective sweeps from genetic data.
-    Because simulation of selective sweeps is very time consuming and evaluation of statistical power requires
+    Because simulation of selective sweeps is time consuming and evaluation of statistical power requires
     many replicate simulations, we focused on human chromosome 1 and generated replicate simulations on 5cM segments
     of the chromosome in 93 different locations. % (see \textbf{Methods}).
     Selective sweeps were simulated by introducing a beneficial mutation in the center of the 5cM segment
@@ -1048,6 +1049,7 @@
     on computational costs. 
     All simulations were implemented using a \snakemake workflow,
     where the code utilized is similar to that shown in Figure~\ref{fig:schematic}B.
+    Simulation runtimes are shown in Figure \ref{fig:sim-runtime}. \revpoint{1}{4}
     The complete simulation workflow is available at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/simulation.snake}
     (see \textbf{Data availability} below).
 
@@ -1160,10 +1162,9 @@
 
     \subsection*{Simulations with selective sweeps}
 
-    To test methods for detecting selective sweeps, we considered 100 evenly distributed 5cM
+    To test methods for detecting selective sweeps, we considered 100 evenly distributed 5Mb
     segments of human chromosome 1.
-    As recombination rate varies across the genome, the size of the region in base pairs simulated varied, however the recombination distance,
-    which is critical for the linked effects of a sweep, was held constant.
+    We included a 2.5cM buffer on either side of each segment to minimize the effect of chromosome ends on patterns of genetic variation.
     Seven segments in which the central 1Mb had an average recombination rate below $10^{-11}$ were excluded from the analysis.
     Each segment was simulated in each of the following three settings:
     (1) neutral, (2) background selection (BGS), and (3) hard sweep with BGS.
@@ -1184,6 +1185,7 @@
     The sequences simulated with a hard sweep and BGS were used for sweep detection,
     and sequences simulated under the other two settings were used to calibrate the thresholds of the test statistics
     used by the three sweep-detection methods (see below).
+    See Figure \ref{fig:sim-sweeps-runtime} for the distribution of runtimes (in minutes) for the simulations of the 100 segments of human chromosome 1. \llabel{sim-sweeps-runtime}
 
     \subsection*{Selective sweeps detection}
 
@@ -1413,7 +1415,7 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
 \end{figure}
 
 
-%sweep power vs exon density
+%demography sims runtime
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8 \textwidth]{figures/HomSap/sims_runtime_plot.pdf}
@@ -1422,6 +1424,16 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
     Each point represents a single simulation of a single chromosome under conditions labeled by facets.
     }
     \label{fig:sim-runtime}
+\end{figure}
+
+%sweep sims runtime
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8 \textwidth]{figures/sweeps/runtime.png}
+    \caption{
+    Distribution of runtimes for the simulated segments of human chromosome 1 under different regimes used in the analyses of sweep detection.
+    }
+    \label{fig:sim-sweeps-runtime}
 \end{figure}
 
 \stopsupplement
