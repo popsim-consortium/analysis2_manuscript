@@ -190,13 +190,13 @@
     and arbitrary distributions of fitness effects (DFE) acting on annotated subsets of the genome (for instance, exons).
     This extension maintains \stdpopsim's core principles of reproducibility and accessibility while adding support
     for species-specific genomic annotations and published DFE estimates.
-    We demonstrate the utility of this framework by benchmarking methods for demographic inference,
+    We demonstrate the utility of this framework by comparing methods for demographic inference,
     DFE estimation, and selective sweep detection across several species and scenarios.
     Our results demonstrate the robustness of demographic inference methods to selection on linked sites,
     reveal the sensitivity of DFE-inference methods to model assumptions,
     and show how genomic features, like recombination rate and functional sequence density, influence power to detect selective sweeps.
     This extension to \stdpopsim{} provides a powerful new resource for the population genetics community
-    to explore the interplay between selection and other evolutionary forces in a reproducible, low-barrier framework.
+    to explore the interplay between selection and other evolutionary forces in a reproducible, user-friendly framework.
 
 \section*{Introduction}
     \label{introduction}
@@ -378,7 +378,7 @@
     For instance, one could simulate a butterfly species with a gamma-distributed DFE originally
     estimated from humans, or a human population with a DFE estimated from \textit{Drosophila}.
     Indeed, the DFE labeled \texttt{HomSap/Mixed\_K23} is recommended by \citet{kyriazis2023using}
-    for ``general'' use across mammals (lacking more specific information).
+    for ``general'' use across mammals, when lacking a more specific DFE.
     Furthermore, the user can specify a custom DFE and provide their own annotations
     of functional elements to simulate selection in a species for which we do not yet have
     a published DFE included in the catalog.
@@ -505,8 +505,7 @@
     explaining its noisy estimates for all but the most recent time periods.
 
     To expand these observations to additional species and to highlight the ease of comparison enabled by \stdpopsim,
-    we performed a similar benchmark using the vaquita porpoise \textit{Phocoena sinus}.
-    We simulated 100 genomes under a two-epoch demographic model inferred for vaquita by \textcite{robinson2022critically},
+    we performed a similar analysis using the vaquita porpoise \textit{Phocoena sinus}. The vaquita offers an intriguing contast to the demographic history of humans. While human poulations continue to expand, the vaquita is critically endangered, with only approxmiately 10 individauls remaining. Previous demographic inference from genetic data \textcite{robinson2022critically} found a long-term effective population size of 4,485 indiviuals which then decreased to 2,807 individuals 2,162 generations ago. The population then severely decreased even more to its current size in the last few generations. We simulated 100 genomes under a two-epoch demographic model inferred for vaquita by \textcite{robinson2022critically},
     and a constant recombination rate across the genome (see \textbf{Methods}).
     This is particularly interesting because the model was inferred assuming neutrality (with \dadi)
     and used to inform conservation efforts for this critically endangered species. \llabel{vaquita_note}
@@ -625,9 +624,8 @@
         }
     \end{figure}
 
-    Next, we benchmarked these three DFE-inference methods on simulations of the vaquita porpoise genome.
-    Recall that these simulations apply a gamma-distributed selection coefficient to mutations in exons
-    with a relationship between the selection and dominance coefficients (see \textbf{Methods}).
+    Next, we examined the performance of these three DFE-inference methods when assuming a different DFE. To do this, we again turned to the vaquita. Unlike the human simulations where all mutations were assumed to be additive (h=0.5), the vaquita DFE applied a gamma-distributed selection coefficient to mutations in exons
+    with a relationship between the selection and dominance coefficients (see \textbf{Methods}). Specifically, more deleterious mutations in the vaquita DFE are assumed to be more recessive. 
     In this setting, all methods perform uniformly worse than in the human genome simulations,
     with consistent underestimation of the mean selection coefficient
     and overestimation of the shape parameter (Figure \ref{fig:vaquita-dfe}A-B, Table \ref{tab:dfe_table}).
@@ -780,7 +778,7 @@
     \label{Discussion}
     In this paper, we have presented an important new addition to the \stdpopsim{} library
     that enables the simulation of genetic variation in the presence of selection.
-    We have demonstrated the utility of this new API by showing how it can be used to benchmark
+    We have demonstrated the utility of this new API by showing several illustrative examples of how it can be used to benchmark
     the performance of different methods for demographic history inference, the inference of the distribution
     of fitness effects of new mutations, and the detection of selective sweeps.
     This allows for a wide range of models of selection to be easily simulated and compared to
@@ -869,7 +867,7 @@
     than when calibrating a method using a null model with and without background selection.
 
     Although we have shown how the new \stdpopsim API can be used to benchmark the performance of different methods,
-    the benchmarks shown here merely scratch the surface of what can be done with the new API.
+    the comparisons shown here merely scratch the surface of what can be done with the new API.
     We envision that, moving forward, many researchers will use
     the new API to simulate data under a wide range of models of selection, demography, and genome architecture, and to develop
     new methods for the analysis of genetic data in the presence of selection.
