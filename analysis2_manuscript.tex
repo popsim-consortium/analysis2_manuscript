@@ -334,7 +334,10 @@
     %IG: I moved this label to the newly added methods section --> \revpoint{1}{5}
     Each \texttt{Annotation} object represents a collection of functional
     genomic elements (e.g., exons, introns, intergenic regions, etc.)
-    whose coordinates are specified using a GFF3 annotation file. \revpoint{2}{1}
+    whose coordinates are specified using a GFF3 annotation file. 
+    For the purposes of \stdpopsim, we do not allow for overlapping annotations -- 
+    any interval covered by an annotation that is added to a given contig
+    is removed from any previously-added annotations. \revpoint{2}{1}
     More concretely, consider implementing a model of selection consistent with the
     DFE inferred by Kim et al. (\citeyear{kim2017inference}) for exons in the human genome.
     The associated \texttt{DFE} object is defined with two mutation types,
