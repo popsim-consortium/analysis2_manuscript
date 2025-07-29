@@ -288,7 +288,11 @@
   \end{point}
   
   \reply{
-    TODO. \revref
+    We have added a note to the implementation section about how we handle overlapping annotations in a GFF file.
+    In short, we do not allow for overlapping annotations in a GFF file, and we prioritize the annotation being modeled (e.g., CDS) 
+    over potentially overlapping annotations of other types (e.g., exons). 
+    Further, we do not currently support multiple overlapping annotations of different types.
+    \revref.
   }
   
   \begin{point}{}
