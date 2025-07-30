@@ -113,11 +113,10 @@
   \reply{
      %IG: I added this because the section I added for comment 1.5 below seems relevant here as well.
      %    I think that this addresses the first part of the rev's comment, but details need to also be added for selective sweeps
-     We added a new section to the methods that provides detials on how DFE models are implemented using DFE objects \revref.
-     The end of this section contains a brief description of how the simulation engine uses the information specified in a given DFE object when sampling a new mutation,
-     and how the conditioning for selective sweeps is implemented
-     (indeed, by rejection sampling).
-     We've also added a small note earlier in the paper, at \llname{sweep_conditioning}.
+     We added two sections to the methods: one that provides detials on how DFE models are implemented using DFE objects and one describing how selective sweeps are modeled \revref.
+     The first section contains a brief description of how the simulation engine uses the information specified in a given DFE object when sampling a new mutation.
+     The second section describes how the conditioning for selective sweeps is implemented (indeed, by rejection sampling).
+     We've also added brief clarification regarding the implementation of sweeps earlier in the paper, at \llname{sweep_conditioning}.
   }
   
   
@@ -149,11 +148,11 @@
 \end{point}
   
   \reply{
-    We have now included two additional figures showing the runtimes for both the whole genome simulations (used in demographic and DFE inference) and the 5Mb segment simulations of human chromosome 1 (used in the analyses of sweep detection) at \revref and \llname{sim-sweeps-runtime}.
-    With respect to the sweep simulations, we show that the simulation of sweeps in each of the segments takes approximately 3 minutes \llname{sim-sweeps-runtime}.
+    We have now included two additional figures showing the runtimes for both the whole genome simulations (used in demographic and DFE inference) and the 5Mb segment simulations of human chromosome 1   (used in the analyses of sweep detection) in Figures \ref{fig:sim-runtime} and \ref{fig:sim-sweeps-runtime}.
+    With respect to the sweep simulations, we show that the simulation of sweeps in each of the segments takes approximately 3 minutes (Figure \ref{fig:sim-sweeps-runtime}).
     Given we simulated 1000 replicates of each one of the 100 segments, this means that the total runtime for the sweep simulations is approximately 300,000 minutes, or 5,000 hours.
-    However, whole chromosome 1 simulations with BGS and sweeps would have been much more time consuming, each taking approximately 200 minutes \revref (or in total, 20,000,000 minutes, or 333,333 hours).
-  
+    However, whole chromosome 1 simulations with BGS and sweeps would have been much more time consuming, each taking approximately 200 minutes (Figure \ref{fig:sim-runtime}),
+    or in total, 20,000,000 minutes, or 333,333 hours). See \revref.
   }
   
   \begin{point}{}
@@ -211,7 +210,7 @@
   
   \reply{
     Thank you for the suggestion. 
-    While it is possible to mix demographies and DFEs in stdpopsim catalog and study the effects, 
+    While it is possible to mix demographies and DFEs in \stdpopsim's catalog and study the effects, 
     this is outside of the motivation for this paper.
     Varying both DFE and demography in a systematic way and studying the effects would be interesting and useful, 
     but there is less to learn from only swapping the DFE and demography of two species in this context.
@@ -228,7 +227,7 @@
   \end{point}
   
   \reply{
-    Thanks for the suggestion. In Fig. S1, $\pi$ is computed across all simulated genomes from all three populations,
+    In Fig. S1, $\pi$ is computed across all simulated genomes from all three populations,
     as we wish to focus on the comparison between diversity estimates in different genomic segments in different simulation scenarios.
     As the results are qualitatively similar when examining each of the three populations separately,
     we chose to summarize them in a single plot using a measures of $\pi$ across all three populations.
@@ -313,12 +312,12 @@ Note that \grapes is also less accurate than \polydfe and \dadicli in inferring 
     This should be mentioned in the legend.  \end{point}
   
   \reply{
-  %IG: I don't think that error bars are appropriate here and I tried to explain why
   The main purpose of the plots in Figure 3C is to show the actual differences between simulated
   and inferred distributions of $s$, since differences in mean and shape (shown in panels A-B) are not
   easy to judge assess what practical impact the parameter differences have on the realized distributions. 
-  We have added standard error bars to the mean values in Figure 3C, but the variation among the two parameters themselves 
-  is better for directly assessing the differences among methods. 
+  Following the reviewer's suggestion, 
+  we added error bars depicting the standard error to the mean values in Figure 3C (reflecting variation among the three replicate simulations).
+  % 
   Regarding the estimates of $\text{E}[s]$ shown in Figure 3A (and also Figure 4A and associated supplementary figures),
   these values were produced directly by the inference methods, which output their own estimate of $\theta = 4N_{e}\mu$,
   where $\mu$ is taken from as the value in the stdpopsim catalog for each species. 
@@ -344,7 +343,9 @@ Note that \grapes is also less accurate than \polydfe and \dadicli in inferring 
   
   \reply{
  For simulations with selection we assumed that selected mutations could only fall within exonic regions,
- thus approximately 2.1\% of the genome is under selection in human simulations and 2.2\% in vaquita simulations.
+ which cover 2.1\% of the human genome and 2.2\% of the vaquita genome.
+ In each of these simulations, 70\% of exonic sites are assumed to be under selection (with gamma-distributed selection coefficients)
+ and the remaining 30\% are assumed to be neutral.
  We've added notes to this effect, at \revref{} and \llname{vaquita_percent}.
   }
   
