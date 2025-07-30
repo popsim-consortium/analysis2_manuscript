@@ -335,9 +335,6 @@
     Each \texttt{Annotation} object represents a collection of functional
     genomic elements (e.g., exons, introns, intergenic regions, etc.)
     whose coordinates are specified using a GFF3 annotation file. 
-    For the purposes of \stdpopsim, we do not allow for overlapping annotations -- 
-    any interval covered by an annotation that is added to a given contig
-    is removed from any previously-added annotations. \revpoint{2}{1}
     More concretely, consider implementing a model of selection consistent with the
     DFE inferred by Kim et al. (\citeyear{kim2017inference}) for exons in the human genome.
     The associated \texttt{DFE} object is defined with two mutation types,
@@ -390,7 +387,11 @@
     with a collection of genomic segments defined using an \texttt{Annotation} object.
     Multiple such pairings can be defined in one simulation
     to provide a rich model of how selection may vary along a chromosome.
-    For example, coding sequences may be associated with one DFE and non-coding sequences in exons with another DFE.
+    For example, coding sequences may be associated with one DFE and non-coding sequences in exons with another DFE. \revpoint{2}{1}
+    %%IG: I moved the comment about GFF overlaps here and edited because it fits here better than in the prev location.
+    We note that if a genomic interval belongs to more than one \texttt{Annotation} object,
+    then it will be eventually associated with the last \texttt{Annotation} object added
+    to the simulated contig and removed from any previously-added annotations. 
     Simulations with selection are then implemented by specifying a species,
     a portion of the genome to simulate,
     a genetic map if available, a model of demography, and pairings of DFEs with genomic segments
@@ -416,7 +417,7 @@
     beginning or end of the sweep, the simulation is restarted from the
     introduction of the advantageous allele.  If there are competing
     advantageous alleles (e.g.  simultaneous sweeps at distinct loci) then the
-    simulation is restarted from the introduction of the first of these.  As
+    simulation is restarted from the introduction of the first of these (see \textbf{Methods}).  As
     this functionality is implemented on top of the existing \stdpopsim API, it
     may be combined with other models of selection and demography to simulate
     the combined effects of multiple, disparate evolutionary processes on
@@ -467,6 +468,7 @@
         Each plot depicts the inferred $N_e(t)$ on the three datasets simulated without selection (blue)
         and the three datasets simulated with the background effects of purifying selection on exons (orange),
         alongside the true values of $N_e$ used in simulation (black).
+        The X axis depicts time back from present (in years) and the Y axis depicts $N_e$ (number of individuals).
         }
     \end{figure}
 
@@ -508,10 +510,11 @@
     explaining its noisy estimates for all but the most recent time periods.
 
     To expand these observations to additional species and to highlight the ease of comparison enabled by \stdpopsim,
-    we performed a similar analysis using the vaquita porpoise \textit{Phocoena sinus}. The vaquita offers an intriguing contast to the demographic history of humans. While human poulations continue to expand, the vaquita is critically endangered, with only approxmiately 10 individauls remaining. Previous demographic inference from genetic data \textcite{robinson2022critically} found a long-term effective population size of 4,485 indiviuals which then decreased to 2,807 individuals 2,162 generations ago. The population then severely decreased even more to its current size in the last few generations. We simulated 100 genomes under a two-epoch demographic model inferred for vaquita by \textcite{robinson2022critically},
+    we performed a similar analysis using the vaquita porpoise \textit{Phocoena sinus}. \llabel{vaquita_note}
+    The vaquita offers an intriguing contast to the demographic history of humans. While human poulations continue to expand, the vaquita is critically endangered, with only approxmiately 10 individauls remaining. Previous demographic inference from genetic data \textcite{robinson2022critically} found a long-term effective population size of 4,485 indiviuals which then decreased to 2,807 individuals 2,162 generations ago. The population then severely decreased even more to its current size in the last few generations. We simulated 100 genomes under a two-epoch demographic model inferred for vaquita by \textcite{robinson2022critically},
     and a constant recombination rate across the genome (see \textbf{Methods}).
     This is particularly interesting because the model was inferred assuming neutrality (with \dadi)
-    and used to inform conservation efforts for this critically endangered species. \llabel{vaquita_note}
+    and used to inform conservation efforts for this critically endangered species.
     In simulations with selection, we applied the DFE inferred by \textcite{robinson2022critically} to exons
     annotated from the vaquita genome assembly.
     This DFE implements a relationship between selection and dominance
@@ -566,8 +569,9 @@
         shown for each DFE inferred from all three simulation replicates,
         with median values marked by horizontal bars
         and simulated values represented by dashed horizontal lines.
-        (C) Binned distribution of $s$ implied by the average DFE inferred from the three simulated datasets (averaging the inferred gamma parameters);
-        white bars represent the distribution used in the simulation. Standard error of the mean for each bin is shown in black. 
+        (C) Binned distribution of $s$ implied by the average DFE inferred from the three simulated datasets (averaging the inferred gamma parameters),
+        with error bars depicting the standard error of the mean for each bin.
+        White bars represent the distribution used in the simulation. 
         }
         \label{fig:homsap-dfe.ooa}
     \end{figure}
@@ -692,7 +696,7 @@
     using each of the two null models separately -- neutral and with background selection (BGS)
     -- and controlling for a $5\%$ false positive rate.
     %
-    We then applied each method to data simulated with sweeps for two samples (YRI and CEU)
+    We then applied each method to data simulated with sweeps in one of two populations (YRI and CEU)
     in each of the simulated locations along human chromosome 1 (Figure \ref{fig:chr1_power}).
     First and most strikingly, the power to detect sweeps varies considerably along the chromosome,
     and this variation is much greater than the variation in power between CEU and YRI or between
@@ -772,8 +776,8 @@
     The other null model, which assumes background selection from exons,
     appears to consistently lead to reduced power for detecting sweeps regardless of the recombination rate.
     Interestingly, we do not see a clear correlation between power to detect sweeps and
-    local exon density (Figure \ref{fig:power-exon}).
-    This is somewhat surprising given that background selection is expected to somewhat interfere with the sweep signature (reviewed in \citet{stephan2010genetic}) \revpoint{2}{6}
+    local exon density (Figure \ref{fig:power-exon}).  \revpoint{2}{6}
+    This is somewhat surprising given that background selection is expected to somewhat interfere with the sweep signature (reviewed by \citet{stephan2010genetic}).
     This might suggest that the effects of realistic background selection on genome variation
     may not be as similar to those of sweeps as previously thought \citep{schrider2020background}.
 
@@ -802,7 +806,7 @@
     perturbations in genome-wide diversity. Thus, it is not surprising that estimates of $N_e(t)$
     from genome-wide data from which exons have been masked should be accurate
     (e.g., Figures \ref{fig:human-demography} and \ref{fig:vaquita-demography}).
-    Indeed our results echo those of \citet{marsh2024biases} who found \revpoint{AE}{1}
+    Indeed, our results echo those of \citet{marsh2024biases} who found \revpoint{AE}{1}
     similar results on realistic human simulations that included selection.
     However, the question remains to what extent this would be true in empirical data where
     selection is not constrained to coding positions. For instance, we know
@@ -827,10 +831,11 @@
     Our analysis suggests that the distributions of $s$ estimated by these methods
     provide a reasonable approximation for the true distribution of $hs$ (Figure \ref{fig:vaquita-dfe}C).
     This points to a notable limitation of most existing DFE inference methods,
-    which assume that selection coefficients are gamma-distributed.
-    %DRS: Is the limitatio here that selection coefficients are gamma-distributed, or rather that h is fixed?
+    which assume that fitness effects ($hs$) are gamma-distributed.
     As shown in Figure \ref{fig:vaquita-dfe}C,
-    while a gamma distribution might fit the conditional distribution of $s$ given $h$, a relationship between $h$ and $s$ might result in a marginal distribution for $hs$ which is not well approximated by a gamma distribution.
+    while a gamma distribution might fit the marginal distribution of $s$,
+    a relationship between $h$ and $s$ might result in fitness effects ($hs$),
+    which are not gamma-distributed.
     
     %IG: split this into a separate paragraph because this ended up being a bit long
     Overall, these results are consistent with prior work showing that it is challenging to separately
@@ -839,7 +844,7 @@
     Given the plethora of evidence for recessive deleterious mutations
     \citep{mukai1972mutation, agrawal2011inferences, huber2018gene, di2024revisiting},
     these results suggest the need for care in DFE inference.
-    Kyriazis and Lohmueller \citeyear{kyriazis2024constraining} inferred the DFE of $s$ for nonsynonymous mutations
+    Kyriazis and Lohmueller (\citeyear{kyriazis2024constraining}) inferred the DFE of $s$ for nonsynonymous mutations
     in humans when considering different values of $h$.
     Intriguingly, additive models showed a satisfactory fit to the SFS of nonsynonymous variants in humans,
     and more complex models of dominance did not substantially improve the fit.
@@ -896,9 +901,9 @@
     
     The \texttt{DFE} class 
     has the following attributes for modeling natural selection in a given set of annotated genomic segments.\revpoint{1}{1}\revpoint{1}{5}
-    As with demographic models, each \texttt{DFE} object is associated with a unique identifier, description strings for documentation,
+    Similarly to other \stdpopsim classes, the \texttt{DFE} class has fields for specifying the model identifier, description strings for documentation,
     and a citation object for the publication containing information on the inference on which the DFE model is based.
-    Each \texttt{DFE} object also specifies a mixture of mutation types,
+    A \texttt{DFE} model is specified using a mixture of mutation types,
     each associated with a frequency and a distribution of the seletion coefficient ($s$).
     Thus, each \texttt{DFE} object contains a list of \texttt{MutationType} objects
     and a separate list (of identical length) of positive frequencies (that sum up to 1).
@@ -999,7 +1004,7 @@
     Crucially, the advantageous allele must remain extant over the course of
     the sweep; this conditioning is accomplished via rejection sampling,
     whereby the simulation is restarted from the time of introduction of the mutation if the
-    allele drifts is lost in the population of origin. The conditioning may
+    allele is lost in the population of origin. The conditioning may
     optionally be extended to reject trajectories where the frequency at the
     beginning and end of the sweep period is below a specified threshold. If
     there are competing advantageous alleles (simultaneous sweeps at distinct
@@ -1043,14 +1048,14 @@
     All simulations were executed using the \slim engine with a burn-in of $10N$ generations
     (where $N$ is the initial population size), and a scaling factor of 1 (no scaling).
     We note that aggressive scaling of forward-in-time simulations
-    can lead to quite different outcomes when selection in involved
-    \cite{uricchio2014robust,ferrari2024towards, dabi2025population},
+    can lead to quite different outcomes when selection is involved
+    \citep{uricchio2014robust,ferrari2024towards, dabi2025population},
     and we caution users against using high degrees of scaling for drawing
     final inferences, although we recommend it during development to save
     on computational costs. 
     All simulations were implemented using a \snakemake workflow,
     where the code utilized is similar to that shown in Figure~\ref{fig:schematic}B.
-    Simulation runtimes are shown in Figure \ref{fig:sim-runtime}. \revpoint{1}{4}
+    % Simulation runtimes are shown in Figure \ref{fig:sim-runtime}. \revpoint{1}{4}
     The complete simulation workflow is available at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/simulation.snake}
     (see \textbf{Data availability} below).
 
@@ -1063,7 +1068,7 @@
     Simulations with selection additionally applied a DFE model with gamma-distributed selection coefficients inferred by
     \citet[\stdpopsim label \texttt{Gamma\_K17}]{kim2017inference} to exons annotated by the HAVANA group release 104
     \citep[\stdpopsim label \texttt{ensembl\_havana\_104\_exons}]{ensembl2018},
-    which covers 2.1\% of the genome. \revpoint{2}{5}
+    which cover 2.1\% of the genome. \revpoint{2}{5}
     Each simulation generated 100 diploid genomes from each of three extant human populations (labeled YRI, CEU, and CHB),
     with each genome consisting of 22 autosomes.
     Using these settings, we generated three replicate datasets without selection
@@ -1073,6 +1078,7 @@
     Each of these simulations generated 100 diploid genomes.
     The configuration file used in combination with our \snakemake workflow
     for these simulations can be found at \url{https://github.com/popsim-consortium/analysis2/blob/main/workflows/config/snakemake/production_config_HomSap.yml}.
+    The running times of these simulations depend on chromosome length, the demographic model, and incorporation of selection (Figure \ref{fig:sim-runtime}).
 
     \subsubsection*{Simulations of complete vaquita porpoise genomes}
     Simulation of vaquita porpoise genomes used
@@ -1082,14 +1088,16 @@
     Simulations with selection additionally applied a DFE model with gamma-distributed selection coefficients inferred by
     \citet[\stdpopsim label \texttt{Gamma\_R22}]{robinson2022critically} to exons annotated from the vaquita porpoise genome assembly
     \citet[\stdpopsim label \texttt{Phocoena\_sinus.mPhoSin1.pri.110\_exons}]{morin2021},
-    which covers 2.2\% of the genome. \llabel{vaquita_percent}
+    which cover 2.2\% of the genome. \llabel{vaquita_percent}
     This DFE model implements a relationship between selection and dominance as follows:
     very deleterious mutations (with $s<-0.1$) are recessive ($h=0$),
     mutations with $s\in [-0.1,-0.01)$ have a dominance coefficient of $h=0.01$,
     mutations with $s\in [-0.01,-0.001)$ have a dominance coefficient of $h=0.1$,
     and very mild mutations (with $s\in [-0.001,0)$) are nearly additive ($h=0.4$).
     This discretized relationship matches that used by \textcite{robinson2022critically},
-    and is easily implemented in \stdpopsim's \texttt{DFE} class (see above). %IG: added ref to newly added methods section
+    and is specified using the following attributes in the \texttt{DFE} class:
+    \texttt{dominance\_coeff\_list}$=(0,0.01,0.1,0.4)$, and
+    \texttt{dominance\_coeff\_breaks}$=(-0.1,-0.01,-0.001)$.
     Each simulation generates 100 diploid genomes,
     with each genome consisting of 21 autosomes.
     Using these settings, we generated three replicate datasets without selection
@@ -1186,7 +1194,7 @@
     The sequences simulated with a hard sweep and BGS were used for sweep detection,
     and sequences simulated under the other two settings were used to calibrate the thresholds of the test statistics
     used by the three sweep-detection methods (see below).
-    See Figure \ref{fig:sim-sweeps-runtime} for the distribution of runtimes (in minutes) for the simulations of the 100 segments of human chromosome 1. \llabel{sim-sweeps-runtime}
+    See Figure \ref{fig:sim-sweeps-runtime} for the distribution of runtimes for these simulations. \llabel{sim-sweeps-runtime}
 
     \subsection*{Selective sweeps detection}
 
@@ -1276,8 +1284,8 @@ species ID & demography & \makecell{MAE \\ $E|s|$ \\ dadi-cli} & \makecell{MAE \
 \midrule
 HomSap & Constant  & \bf{0.0012} & 0.0101 & 0.0023 & 0.030 & 0.0086 & \bf{0.0068} \\
 HomSap & OOA 5R19  & 0.014 & 0.0111 & \bf{0.0072} & 0.031 & 0.051 & \bf{0.024} \\
-PhoSin & Constant  & 0.024 & 0.025 & 0.024 & \bf{0.23} & 0.25 & 0.23 \\
-PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0.21 \\
+PhoSin & Constant  & \bf{0.024} & 0.025 & \bf{0.024} & \bf{0.23} & 0.25 & \bf{0.23} \\
+PhoSin & Vaquita2Epoch 1R22  & \bf{0.024} & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0.21 \\
 %HomSap & Constant & all sites & 0.0027 & 0.0111 & \bf{0.0018} & \bf{0.00071} & 0.029 & 0.014 \\
 %HomSap & OOA 5R19 & all sites & 0.012 & 0.012 & \bf{0.0074} & \bf{0.027} & 0.055 & 0.035 \\
 %PhoSin & Constant & all sites & \bf{0.024} & 0.025 & 0.024 & 0.21 & 0.24 & \bf{0.19} \\
@@ -1334,6 +1342,7 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
     Each plot depicts the inferred $N_e(t)$ on the three datasets simulated without selection (blue)
     and the three datasets simulated with the background effects of purifying selection on exons (orange),
     alongside the true values of $N_e$ used in simulation (black).
+    The X axis depicts time back from present (in years) and the Y axis depicts $N_e$ (number of individuals).
 }
 \end{figure}
 
@@ -1421,8 +1430,10 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
     \centering
     \includegraphics[width=0.8 \textwidth]{figures/HomSap/sims_runtime_plot.pdf}
     \caption{
-    Runtime of simulated human chromosomes with and without background selection and demography.
+    Simulation runtimes for human chromosomes with and without selection applied to exons and under two demographic models:
+    a single population with constant size (left) and a three-population out-of-Africa model (right).
     Each point represents a single simulation of a single chromosome under conditions labeled by facets.
+    %IG: TODO: add spec of machine
     }
     \label{fig:sim-runtime}
 \end{figure}
@@ -1432,7 +1443,9 @@ PhoSin & Vaquita2Epoch 1R22  & 0.024 & 0.025 & \bf{0.024} & \bf{0.18} & 0.23 & 0
     \centering
     \includegraphics[width=0.8 \textwidth]{figures/sweeps/runtime.png}
     \caption{
-    Distribution of runtimes for the simulated segments of human chromosome 1 under different regimes used in the analyses of sweep detection.
+    Distribution of simulation runtimes for segments of human chromosome 1 simulated for the sweep detection analysis.
+    Runtimes are summarized separately for each of the six simulation conditions used in the analysis.
+    %IG: TODO: add spec of machine
     }
     \label{fig:sim-sweeps-runtime}
 \end{figure}
